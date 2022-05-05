@@ -8,7 +8,11 @@
         <h1><a href="/">Eddig vásárolt alapanyagok listája</a></h1>
     </div>
     
-    <h2>Kávék: </h2> <a class="btn btn-default" href="{% url 'ware_new' %}"><span class="glyphicon glyphicon-plus"></span></a>
+    <h2>Kávék: </h2> 
+    {% if user.is_authenticated %}
+    <a class="btn btn-default" href="{% url 'ware_new' %}"><span class="glyphicon glyphicon-plus"> Új Kávé fajta</span></a>
+    {% endif %}
+    <p></p>
     <table border="1">
     {% for coffee in coffees %}
         <tr>       
@@ -16,7 +20,10 @@
             <td>{{ coffee.ware_brand_name }}</td>
             <td>{{ coffee.ware_weight }}</td>
             <td>{{ coffee.ware_price }}</td>
-            <td> </td>
+            {% if user.is_authenticated %}
+            <td><a class="btn btn-default" href="{% url 'ware_edit' pk=coffee.pk %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+            <td><a class="btn btn-default" href="{% url 'ware_remove' pk=coffee.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </table>
