@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <p>{{ milks }}</p>
+    <p>{{ coffes }}</p>
+
+    <div>
+        <h1><a href="/">Eddig vásárolt alapanyagok listája</a></h1>
+    </div>
+    
+    <h2>Kávék: </h2>
+    <table border="1">
+    {% for coffe in coffes %}
+        <tr>
+            <td>{{ coffe }}</td>            
+            <td><a href="">{{ cofee.ware_brand }}</a></td>
+            <td>{{ cofee.ware_brand_name}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Tejek: </h2>
+    <table border="1">
+    {% for milk in milks %}
+        <tr>
+            <td><a href="">{{ milk.ware_brand }}</a></td>
+            <td>{{ milk.ware_brand_name}}</td>
+        </tr>
+    {% endfor %}
+
+    </table>
+
+{% endblock %}
