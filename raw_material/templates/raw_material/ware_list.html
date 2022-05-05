@@ -3,8 +3,6 @@
 
 
 {% block content %}
-    <p>{{ milks }}</p>
-    <p>{{ coffes }}</p>
 
     <div>
         <h1><a href="/">Eddig vásárolt alapanyagok listája</a></h1>
@@ -12,11 +10,12 @@
     
     <h2>Kávék: </h2>
     <table border="1">
-    {% for coffe in coffes %}
-        <tr>
-            <td>{{ coffe }}</td>            
-            <td><a href="">{{ cofee.ware_brand }}</a></td>
-            <td>{{ cofee.ware_brand_name}}</td>
+    {% for coffee in coffees %}
+        <tr>       
+            <td><a href="">{{ coffee.ware_brand }}</a></td>
+            <td>{{ coffee.ware_brand_name }}</td>
+            <td>{{ coffee.ware_weight }}</td>
+            <td>{{ coffee.ware_price }}</td>
         </tr>
     {% endfor %}
     </table>
@@ -26,7 +25,9 @@
     {% for milk in milks %}
         <tr>
             <td><a href="">{{ milk.ware_brand }}</a></td>
-            <td>{{ milk.ware_brand_name}}</td>
+            <td>{{ milk.ware_brand_name }}</td>
+            <td>{{ milk.ware_weight }}</td>
+            <td>{{ milk.ware_price }}</td>
         </tr>
     {% endfor %}
 
