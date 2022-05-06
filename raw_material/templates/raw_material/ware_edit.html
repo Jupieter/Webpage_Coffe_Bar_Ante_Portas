@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Új Kávé felvétele</h1>
+    <h1>Új Alapanyag felvétele</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         {% if user.is_authenticated %}

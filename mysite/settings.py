@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
     'shop.apps.ShopConfig',
     'raw_material.apps.RawMaterialConfig',
 ]
