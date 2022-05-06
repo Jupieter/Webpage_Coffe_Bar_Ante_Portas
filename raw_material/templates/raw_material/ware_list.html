@@ -7,38 +7,39 @@
     <div>
         <h1><a href="/">Eddig vásárolt alapanyagok listája</a></h1>
     </div>
+    <p>{{wares_type_list}}</p>
+    <p>{{wares}}</p>
+    <p>{{wares_name_list}}</p>
+
+    {% for ware_type  in wares_type_list %}
+    <h2> {{ ware_type }} </h2> 
     
-    <h2>Kávék: </h2> 
+
     {% if user.is_authenticated %}
-    <a class="btn btn-default" href="{% url 'ware_new' %}"><span class="glyphicon glyphicon-plus"> Új Kávé fajta</span></a>
+    <a class="btn btn-default" href="{% url 'ware_new' %}"><span class="glyphicon glyphicon-plus"> Új {{ ware_type }} fajta</span></a>
     {% endif %}
+
     <p></p>
     <table border="1">
-    {% for coffee in coffees %}
-        <tr>       
-            <td><a href="">{{ coffee.ware_brand }}</a></td>
-            <td>{{ coffee.ware_brand_name }}</td>
-            <td>{{ coffee.ware_weight }}</td>
-            <td>{{ coffee.ware_price }}</td>
-            {% if user.is_authenticated %}
-            <td><a class="btn btn-default" href="{% url 'ware_edit' pk=coffee.pk %}"><span class="glyphicon glyphicon-edit"></span></a></td>
-            <td><a class="btn btn-default" href="{% url 'ware_remove' pk=coffee.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+        {% for ware in wares %}
+        
+            <tr>   
+            {% if ware.ware_type == ware_type %}   
+                <td><a href="">{{ ware.ware_brand }}</a></td>
+                <td>{{ ware.ware_brand_name }}</td>
+                <td>{{ ware.ware_weight }}</td>
+                <td>{{ ware.ware_price }}</td>
+                {% if user.is_authenticated %}
+                <td><a class="btn btn-default" href="{% url 'ware_edit' pk=ware.pk %}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                <td><a class="btn btn-default" href="{% url 'ware_remove' pk=ware.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                {% endif %}
             {% endif %}
-        </tr>
-    {% endfor %}
-    </table>
-
-    <h2>Tejek: </h2>
-    <table border="1">
-    {% for milk in milks %}
-        <tr>
-            <td><a href="">{{ milk.ware_brand }}</a></td>
-            <td>{{ milk.ware_brand_name }}</td>
-            <td>{{ milk.ware_weight }}</td>
-            <td>{{ milk.ware_price }}</td>
-        </tr>
-    {% endfor %}
+            </tr>
+        {% endfor %}
 
     </table>
+    {% endfor %}
+    <p></p>
+    
 
 {% endblock %}
