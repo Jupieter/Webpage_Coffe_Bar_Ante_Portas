@@ -4,6 +4,7 @@
     <h1>Új Alapanyag felvétele</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
+        <button type="cancel" class="cancel btn btn-default" onclick="window.history.back();">Cancel</button>
         {% if user.is_authenticated %}
             <button type="submit" class="save btn btn-default">Save</button>
         {% endif %}

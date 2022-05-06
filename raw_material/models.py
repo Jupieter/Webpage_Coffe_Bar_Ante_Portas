@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
+from django.contrib.auth.models import AbstractBaseUser
+# Create your models here.
+from accounts.managers import MyUserManager
+
 class WareTypes(models.Model):
     ware_types = models.CharField(verbose_name='Anyag fajta',max_length=10,)
     ware_wght= models.IntegerField(verbose_name='Egységnyi tömeg [g]', default=0)
@@ -27,3 +31,4 @@ class ProductIngredient(models.Model):
     material2 = models.IntegerField(default=0)
     material3 = models.IntegerField(default=0)
     pub_date = models.DateTimeField('date published')
+
