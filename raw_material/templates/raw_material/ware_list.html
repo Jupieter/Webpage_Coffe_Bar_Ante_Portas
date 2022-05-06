@@ -10,9 +10,12 @@
     <p>{{wares_type_list}}</p>
     <p>{{wares}}</p>
     <p>{{wares_name_list}}</p>
+    <p>{{ware_type_list}}</p>
+    <p>{{ware_dict}}</p>
 
     {% for ware_type  in wares_type_list %}
     <h2> {{ ware_type }} </h2> 
+    <h2> {{ ware_name }} </h2> 
     
 
     {% if user.is_authenticated %}

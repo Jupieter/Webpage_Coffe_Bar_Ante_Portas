@@ -9,24 +9,17 @@ def ware_list(request):
     i = 0
     wares_type_list = []
     wares_name_list = []
-    ware_dict = {}
     while i < len(ware_type_list):
         p = ware_type_list[i]
         pkey= p[0]
         pname= p[1]
         wares_type_list.append(pkey)
         wares_name_list.append(pname)
-        ware_dict[pkey] = pname
         i = i + 1
     
     
     wares = WareData.objects.all().order_by('ware_type')
-    return render(request, 'raw_material/ware_list.html',
-        {'wares': wares, 
-        'wares_type_list':wares_type_list,
-        'wares_name_list':wares_name_list, 
-        'ware_type_list':ware_type_list,
-        'ware_dict':ware_dict})
+    return render(request, 'raw_material/ware_list.html', {'wares': wares, 'wares_type_list':wares_type_list,'wares_name_list':wares_name_list, 'ware_type_list':ware_type_list})
     # milks = WareData.objects.filter(ware_type='milks').order_by('ware_brand')}
     # coffees = WareData.objects.filter(ware_type='coffe').order_by('ware_brand')
     # return render(request, 'raw_material/ware_list.html', {'milks': milks, 'coffees':coffees})
