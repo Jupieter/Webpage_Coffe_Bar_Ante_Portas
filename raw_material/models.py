@@ -1,9 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
-from django.contrib.auth.models import AbstractBaseUser
 # Create your models here.
-from accounts.managers import MyUserManager
+
 
 class WareTypes(models.Model):
     ware_types = models.CharField(verbose_name='Anyag fajta',max_length=10,)

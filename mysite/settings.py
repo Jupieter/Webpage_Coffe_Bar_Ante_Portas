@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+        # our apps
+    'accounts',
+    'raw_material',
     'static',
-    'bootstrap4',
-    'shop.apps.ShopConfig',
-    'raw_material.apps.RawMaterialConfig',
-    'accounts.apps.AccountsConfig',
+    'shop', 
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    ]
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+
+
+LOGIN_REDIRECT_URL = 'home_url'
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
 
 # Default primary key field type
