@@ -9,10 +9,11 @@
 {% block content %}
 
     <div>
-        <h1><a href="/">Eddig vásárolt alapanyagok listája</a></h1>
-        {% if user.is_authenticated %}
-        <a class="btn btn-default" href="{% url 'ware_new' %}">  Új alapanyag  <span class="glyphicon glyphicon-plus"> </span></a>
-        {% endif %}
+        <h1><a href="/">Eddig vásárolt alapanyagok listája</a>
+            {% if user.is_authenticated %}
+                <a class="btn btn-primary btn-lg" href="{% url 'raw_material:ware_new' %}">  Új alapanyag  <span class="fa fa-plus"> </span></a>
+            {% endif %}
+        </h1>
     </div>
       
     {% for ware_type  in ware_type_list %}
@@ -22,18 +23,20 @@
 
 
     <p></p>
-    <table border="1">
-        <tr>  
-            <th>*     Márka    *</th>
-            <th>*    Típus     *</th>
-            <th>*Kiszerelés [g]*</th>
-            <th>*  Csomag ára  *</th>
-            <th>*  Szerkeszt   *</th>
-            <th>*     Töröl    *</th>
-        </tr>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>  
+                <th scope="col">     Márka    </th>
+                <th scope="col">    Típus     </th>
+                <th scope="col">Kiszerelés [g]</th>
+                <th scope="col">  Csomag ára  </th>
+                <th scope="col">  Szerkeszt   </th>
+                <th scope="col">     Töröl    </th>
+            </tr>
+            <i class="glyphicon glyphicon-plus"></i>
+        </thead>
         {% for ware in wares %}
         
-
             <tr>
             {% if ware.ware_type == ware_type %}   
                 <td><a href="">{{ ware.ware_brand }}</a></td>
@@ -41,8 +44,8 @@
                 <td>{{ ware.ware_weight }}</td>
                 <td>{{ ware.ware_price }}</td>
                 {% if user.is_authenticated %}
-                <td><a class="btn btn-default" href="{% url 'ware_edit' pk=ware.pk %}"><span class="glyphicon glyphicon-edit"></span></a></td>
-                <td><a class="btn btn-default" href="{% url 'ware_remove' pk=ware.pk %}"><span class="glyphicon glyphicon-remove"></span></a></td>
+                <td><a class="btn btn-primary btn-sm" href="{% url 'raw_material:ware_edit' pk=ware.pk %}"><span class="fa fa-pencil"></span></a></td>
+                <td><a class="btn btn-primary btn-sm" href="{% url 'raw_material:ware_remove' pk=ware.pk %}"><span class="fa fa-trash-o"></span></a></td>
                 {% endif %}
             {% endif %}
             </tr>

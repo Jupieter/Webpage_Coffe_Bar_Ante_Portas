@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    ware edit
+{% endblock %}
+
+{% block head %} Alapanyag felvétele {% endblock %}
+
 {% block content %}
-    <h1>Új Alapanyag felvétele</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
-        <button type="cancel" class="cancel btn btn-default" onclick="window.history.back();">Cancel</button>
+        <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
         {% if user.is_authenticated %}
-            <button type="submit" class="save btn btn-default">Save</button>
+            <button type="submit" class="save btn btn-primary">Save</button>
         {% endif %}
     </form>
 {% endblock %}

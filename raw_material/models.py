@@ -19,7 +19,7 @@ class WareData(models.Model):
     ware_type = models.ForeignKey(WareTypes, on_delete=models.CASCADE)
     ware_brand = models.CharField(verbose_name='Márkája', max_length=50,)
     ware_brand_name = models.CharField(verbose_name='Fajtája', max_length=50)
-    ware_weight= models.IntegerField(verbose_name='Csomag tömege [g]', default=0)
+    ware_weight= models.IntegerField(verbose_name='Csomag tömege [g]', default=250)
     ware_price = models.IntegerField(verbose_name='Csomag ára [g]',default=0)
     pub_date = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
 

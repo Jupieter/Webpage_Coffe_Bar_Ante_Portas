@@ -3,16 +3,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
-    {% block head %}{% endblock %}
     {% include "base/css.html" %}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
 </head>
+
 <body>
-
-{% include "base/navbar.html" with site_title='Imre kávézója' %}
-
-    <div class="container">
+    <div class="page-header">
+        <div class="row-md-2">
+            <div class="col-md-12">
+                {% include "base/navbar.html" with site_title='Imre kávézója' %}
+            </div>
+        </div>        
+    </div>>
+    <div class="content container">
+        <div class="row">
+            </br>
+            </br>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
         {% block content %}{% endblock %}
+            </div>
+        </div>
     </div>
 
     {% include "base/js.html" %}
