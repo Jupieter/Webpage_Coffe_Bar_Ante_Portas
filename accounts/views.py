@@ -1,18 +1,72 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, redirect 
 from django.contrib.auth import get_user_model, authenticate, login
-
+from .forms import RegisterForm, LoginForm, GuestForm
+from .models import User
+# from django.utils.http import is_safe_url
 from django.contrib import messages
 
 User = get_user_model()
 
 
 def register_page(request):
-    return render(request, "accounts/register.html")
+    form = RegisterForm(request.POST or None)
+
+    if form.is_valid():
+        data = form.cleaned_data
+        email = data.get('email')
+        password = data.get('password')
+        first_name = data.get('first_name')
+        last_name = data.get('last_name')
+        new_user = User.objects.create_user(email, password, first_name, last_name)
+        if new_user is not None:
+            messages.success(request, "Created User.")
+            return redirect('accounts:login')
+        
+        messages.warning(request, "Create Error !")
+
+
+    context = {
+        "form": form
+    }
+
+    return render(request, "accounts/register.html", context)
 
 
 def login_page(request):
-    return render(request, "accounts/login.html")
+    if request.user.is_authenticated:
+        return redirect('home_url')
 
+    
+    next_ = request.GET.get('next')
+    next_post = request.POST.get('next')
+    redirect_path = next_ or next_post or None
+    adat = 'Üres'
+    form = LoginForm(request.POST or None)
+    context = { "form": form }
 
-def guest_register_view(request):
-   return render(request, "accounts/login.html")
+    if form.is_valid():
+        data = form.cleaned_data
+        email = data.get('email')
+        password = data.get('password')
+        user = authenticate(request, email=email, password=password)
+        user_list = get_object_or_404(User, email=email)       
+        first_name = user_list.first_name
+        if user is not None:
+            adat = first_name
+            # render(request, "accounts/login.html",{"form": form, 'adat': adat} )
+            login(request, user)
+            return redirect('home_url')
+            try:
+                del request.session['guest_email_id']
+            except:
+                pass
+
+        else:
+            # adat = ['invalid', email, password, user, first_name]
+            # render(request, "accounts/login.html", {"form": form, 'adat': adat})
+            messages.warning(request, 'Credentials error.')
+
+    
+    return render(request, "accounts/login.html", {"form": form, 'adat': adat})
+    
+    

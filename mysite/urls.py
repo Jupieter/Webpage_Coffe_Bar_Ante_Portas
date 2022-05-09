@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import home_page
 
-app_name = "mysite"
+app_name = 'mysite'
 
 urlpatterns = [
     path('admin/', admin.site.urls),

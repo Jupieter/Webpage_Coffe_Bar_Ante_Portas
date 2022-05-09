@@ -18,10 +18,10 @@
         <a class="nav-link nav-cart-count" href="{% url 'raw_material:ware_list' %}">{{ request.session.cart_items }} <i class="fas fa-shopping-cart"></i></a>
       </li>
       <li class="nav-item {% if request.path == products_list_url %}active{% endif %}">
-        <a class="nav-link" href='raw_material/ware_list.html'>Products</a>
+        <a class="nav-link" href="{% url 'raw_material:ware_new' %}">Products</a>
       </li>
       <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
-        <a class="nav-link" href='raw_material/ware_list.html'>Contact us</a>
+        <a class="nav-link" href="{% url 'raw_material:ware_edit' %}">Contact us</a>
       </li>
      {% if request.user.is_authenticated %}
      <li class="nav-item dropdown">
@@ -37,7 +37,6 @@
         </div>
       </li>
 
-
      {% else %}
       <li class="nav-item {% if request.path == login_url %}active{% endif %}">
         <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
@@ -46,6 +45,11 @@
         <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
       </li>
      {% endif %}
+     {% if request.user.is_authenticated %}
+     <li class="nav-item {% if request.user.is_authenticated %}active{% endif %}">
+      <h6 class="nav-link" >Welcome: {{request.user}}</h6>
+    </li>     
+      {% endif %}
     </ul>
     <!-- include 'search/snippets/search-form.html' -->
   </div>
