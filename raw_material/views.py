@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect 
 from django.utils import timezone
-from .models import WareTypes, WareData, ProductIngredient
-from .forms import WareDataForm
+from .models import WareTypes, WareData, ProductIngredient, ProductAcquisition
+from .forms import WareDataForm, AquisitionForm
 from django.shortcuts import redirect
 
 def ware_list(request):
@@ -22,10 +22,12 @@ def ware_new(request):
         form = WareDataForm()
     return render(request, 'raw_material/ware_edit.html', {'form': form})
 
+
 def ware_remove(request, pk):
     ware = get_object_or_404(WareData, pk=pk)
     ware.delete()
     return redirect('raw_material:ware_list')
+
 
 def ware_edit(request, pk):
     ware = get_object_or_404(WareData, pk=pk)
@@ -39,3 +41,10 @@ def ware_edit(request, pk):
     else:
         form = WareDataForm(instance=ware)
     return render(request, 'raw_material/ware_edit.html', {'form': form})
+
+
+def acquisition_new(request):
+    user = request.user.pk
+    form = AquisitionForm()
+    
+    return render(request, 'raw_material/acquisition_new.html', {'form': form, 'user':user})
