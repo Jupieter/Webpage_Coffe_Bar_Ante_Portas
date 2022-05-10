@@ -4,9 +4,9 @@
     ware edit
 {% endblock %}
 
-{% block head %} Alapanyag felvétele {% endblock %}
 
 {% block content %}
+<h2> Alapanyag felvétele </h2>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
