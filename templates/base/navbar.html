@@ -53,7 +53,10 @@
       <h6 class="nav-link" >Welcome: {{request.user}}</h6>
     </li>     
       {% endif %}
-    <li class="nav-item"> {%block head %}{% endblock %} </li>
+    <li class="nav-item"> 
+      <a class="nav-link"><img {{ sub_site_logo }} alt="Sub Logo" style="width:50px;" class="rounded-pill"></a>
+    </li>
+    
     </ul>
     <!-- include 'search/snippets/search-form.html' -->
   </div>

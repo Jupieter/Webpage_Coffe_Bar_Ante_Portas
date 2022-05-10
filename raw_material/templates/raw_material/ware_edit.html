@@ -3,10 +3,22 @@
 {% block title %}
     ware edit
 {% endblock %}
-
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/Coffee-Table-Backgrounds.jpg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+    </style>
+{% endblock %}  
 
 {% block content %}
 <h2> Alapanyag felvétele </h2>
+
+<div class="input-group mb-3">
+
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
@@ -14,4 +26,5 @@
             <button type="submit" class="save btn btn-primary">Save</button>
         {% endif %}
     </form>
+</div>
 {% endblock %}

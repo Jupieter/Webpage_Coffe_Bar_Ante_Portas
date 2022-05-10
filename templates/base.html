@@ -6,14 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     {% include "base/css.html" %}
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block style%}{% endblock %}
+
 </head>
 
 <body>
     <div class="page-header">
         <div class="row-md-1">
             <div class="col-md-12">
-                {% include "base/navbar.html" with site_title=' I me kávézója '  site_logo="src='/static/image/coffe_draw.webp'"  %}             
+                {% include "base/navbar.html" with site_title=' I me kávézója '  site_logo="src='/static/image/coffe_draw.webp'" %}             
             </div>
         </div>        
     </div>>
@@ -23,7 +25,7 @@
             </br>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
         {% block content %}{% endblock %}
             </div>
         </div>

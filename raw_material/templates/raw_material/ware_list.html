@@ -1,32 +1,48 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-    ware list
-    {% endblock %}
-    
+{% block title %}    
+    ware list    
+{% endblock %}
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/Coffee-Table-PPT-Backgrounds.jpg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        td, th  {
+        text-align: center;
+        }
+    </style>
+{% endblock %}    
     
     {% block content %}
     
-    <div class="container-lg pt-5 border">
-        <div class="raw border">
-            <div class="col-sm-8 border">
-                <h2>Alapanyagok listája
+    <div class="container pt-2"></div>
+        <div class="row">
+            <div class="col-sm-1">
+                
+                <a>
+                    <img src="{% static 'image/coffe_bean_draw.jfif' %}" class="rounded" style="height:70px;" alt="coffe_draw">
+                </a>
+                
+            </div>
+            
+            <div class="col-sm-7">
+                <h2 style="text-align:center">Alapanyagok listája</h2>
+            </div>
+            <div class="col-sm-3">
                     {% if user.is_authenticated %}
                     <a class="btn btn-primary btn-lg" href="{% url 'raw_material:ware_new' %}">  Új alapanyag  <span class="fa fa-plus"> </span></a>
                     {% endif %}
-                </h2>
-            </div>
-            <div class="col-sm-3 border">    </div>
-            <div class="col-sm-1 border">
-                <h2>
-                    <img src="{% static 'image/coffe_bean_draw.jfif' %}" class="rounded img-fluid right"  alt="coffe_draw">
-                </h2>
+                
             </div>
         </div>
     </div>
-</br>
-    <div class="container-lg pt-5 border">
+
+    <div class="container sm-6 pt-2">
 
         {% for ware_type  in ware_type_list %}
         <h3> {{ ware_type }} </h3> 
@@ -34,15 +50,15 @@
     
     
         <p></p>
-        <table class="table table-hover">
+        <table class="table table-sm-6 table-hover">
             <thead class="table-dark">
                 <tr>  
-                    <th scope="col">     Márka    </th>
-                    <th scope="col">    Típus     </th>
-                    <th scope="col">Kiszerelés [g]</th>
-                    <th scope="col">  Csomag ára  </th>
-                    <th scope="col">  Szerkeszt   </th>
-                    <th scope="col">     Töröl    </th>
+                    <th class="col-sm-1">     Márka    </th>
+                    <th class="col-sm-1">    Típus     </th>
+                    <th class="col-sm-1">Kiszerelés [g]</th>
+                    <th class="col-sm-1">  Csomag ára  </th>
+                    <th class="col-sm-1">  Szerkeszt   </th>
+                    <th class="col-sm-1">     Töröl    </th>
                 </tr>
                 <i class="glyphicon glyphicon-plus"></i>
             </thead>
@@ -50,7 +66,7 @@
             
                 <tr>
                 {% if ware.ware_type == ware_type %}   
-                    <td><a href="">{{ ware.ware_brand }}</a></td>
+                    <th>{{ ware.ware_brand }}</th>
                     <td>{{ ware.ware_brand_name }}</td>
                     <td>{{ ware.ware_weight }}</td>
                     <td>{{ ware.ware_price }}</td>
