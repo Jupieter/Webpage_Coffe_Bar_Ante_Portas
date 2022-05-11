@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}    
+    ware list    
+{% endblock %}
+
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/bean_bg.jpg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        h2, h3 {
+        text-align: left;
+        color:blanchedalmond;
+        }
+        
+    </style>
+{% endblock %}    
+    
+{% block content %}
+
+<div class="container pt-2">
+
+    <div class="row">
+        <div class="col-sm">
+            <h2 style="text-align:center">Alapanyagok választása</h2>
+        </div>
+    </div>
+    <div class="row">
+        </br>
+    </div>
+    
+    
+    <div class="row">
+        {% for ware_type  in ware_type_list %}
+            <div class="col-sm-3">
+                <h3> {{ ware_type }} </h3> 
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        {% for ware_type  in ware_type_list %}
+            <div class="col-sm-3">        
+                <a  href="{% url 'raw_material:ware_list' pk=ware_type.pk %}">                
+                    <img src ="{% static 'image/'|add:ware_type.ware_image %}" class="rounded" style="height:150px"; alt="choice">                 
+                </a>
+            </div>
+        {% endfor %}
+    </div>        
+        
+</div>
+
+{% endblock %}
+    

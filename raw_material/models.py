@@ -7,6 +7,7 @@ from accounts.models import User
 class WareTypes(models.Model):
     ware_types = models.CharField(verbose_name='Anyag fajta',max_length=10,)
     ware_wght= models.IntegerField(verbose_name='Egységnyi tömeg [g]', default=0)
+    ware_image = models.CharField(verbose_name='Ikonja',max_length=100, default='')
     
     def __str__(self):
         return self.ware_types
@@ -22,6 +23,7 @@ class WareData(models.Model):
     ware_weight= models.IntegerField(verbose_name='Csomag tömege [g]', default=250)
     ware_price = models.IntegerField(verbose_name='Csomag ára [Ft]',default=0)
     pub_date = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
+    
 
 
 class ProductIngredient(models.Model):
@@ -33,10 +35,20 @@ class ProductIngredient(models.Model):
 
 class ProductAcquisition(models.Model):
     ware_type = models.ForeignKey(WareData, on_delete=models.CASCADE, related_name='Áru', verbose_name='Áru' )
-    acquisitor_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=False, related_name='Beszerző', verbose_name= 'Beszerző')
+    acquisitor_user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, 
+        null=True, blank=False, 
+        related_name='Beszerző', 
+        verbose_name= 'Beszerző',
+        default=User)
     acquisition = models.BooleanField(default=False, verbose_name='Beszerezve [I/N]')
     acquisition_date = models.DateTimeField(default=timezone.now, verbose_name='Beszerzés dátuma')
-    store_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=False, related_name='Bevételezte',verbose_name='Bevételezte')
+    store_user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, 
+        null=True, blank=False, 
+        related_name='Bevételezte',
+        verbose_name='Bevételezte'
+        )
     stores = models.BooleanField(default=False, verbose_name='Bevételezve [I/N]')
     store_date = models.DateTimeField(default=timezone.now, verbose_name='Raktározás dátuma')
     stock = models.IntegerField(default=0, verbose_name='Készleten [g]')

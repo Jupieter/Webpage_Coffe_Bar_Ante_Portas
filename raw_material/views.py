@@ -4,10 +4,16 @@ from .models import WareTypes, WareData, ProductIngredient, ProductAcquisition
 from .forms import WareDataForm, AquisitionForm
 from django.shortcuts import redirect
 
-def ware_list(request):
+def ware_choice(request):
     ware_type_list = WareTypes.objects.all().order_by('ware_types')
     wares = WareData.objects.all().order_by('ware_type').order_by('ware_brand')
-    return render (request, 'raw_material/ware_list.html', {'wares': wares, 'ware_type_list':ware_type_list})
+    return render (request, 'raw_material/ware_choice.html', {'wares': wares, 'ware_type_list':ware_type_list})
+
+def ware_list(request, pk):
+    ware_type_list = get_object_or_404(WareTypes, pk=pk)
+    sub_site_logo = "src=static/image/coffe_bean_draw.jfif"
+    wares = WareData.objects.filter(ware_type=ware_type_list)
+    return render (request, 'raw_material/ware_list.html', {'wares': wares, 'ware_type_list':ware_type_list, 'sub_site_logo':sub_site_logo})
 
 
 def ware_new(request):      
@@ -44,7 +50,8 @@ def ware_edit(request, pk):
 
 
 def acquisition_new(request):
-    user = request.user.pk
-    form = AquisitionForm()
+    user = request.user
     
-    return render(request, 'raw_material/acquisition_new.html', {'form': form, 'user':user})
+    form = AquisitionForm(request.POST)
+    
+    return render(request, 'raw_material/acquisition_new.html', {'form': form})
