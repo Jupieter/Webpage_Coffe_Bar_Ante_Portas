@@ -23,6 +23,8 @@ class WareData(models.Model):
     ware_weight= models.IntegerField(verbose_name='Csomag tömege [g]', default=250)
     ware_price = models.IntegerField(verbose_name='Csomag ára [Ft]',default=0)
     pub_date = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
+    ware_name = str(ware_brand) + str(ware_brand_name)+ '(' + str(ware_type) + ')'
+    
     
 
 

@@ -1,5 +1,6 @@
 from django import forms
 from .models import WareData, ProductAcquisition
+from django.utils import timezone
 
 
 class WareDataForm(forms.ModelForm):
@@ -11,4 +12,8 @@ class WareDataForm(forms.ModelForm):
 class AquisitionForm(forms.ModelForm):
     class Meta:
         model = ProductAcquisition
-        fields = ('ware_type', 'acquisitor_user', 'acquisition_date', 'acquisition')
+        fields = ('acquisitor_user', 'acquisition_date',)
+    # acquisition_date = forms.DateField(required=True, label='Beszerezve:', initial=timezone.now)
+    # stock = forms.IntegerField(required=True, label='Készlet [g]')
+
+    

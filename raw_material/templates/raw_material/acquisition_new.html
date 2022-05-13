@@ -13,22 +13,35 @@
           background-size: 100% 100%;
         }
         h2  {
-        text-align: center;
+        text-align: left;
         color: rgb(247, 155, 17);
         }
     </style>
 {% endblock %} 
 
 {% block content %}
-<h2> USER_Id: {{user}}</h2>
-<div class="input-group mb-3">
+<h2> Termék: {{ware.id}} {{ware.ware_brand}} {{ware.ware_brand_name}} {{ware.ware_weight}}g ( {{ware.ware_type}} )</h2>
 
+
+<div class="input-group mb-3">
     <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
+        
+        <h4></h4>
+        {% if user.is_staff %}
+            <h4> Beszerző: {{ form.acquisitor_user }}</h4>
+            <h4> Beszerezve: {{form.acquisition_date}}</h4>
+            {% else %}
+                <h4> Beszerző: {{user}}</h4>
+                <h4> Átadva: {{now}}</h4>
+        {% endif %}
+
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
         {% if user.is_authenticated %}
             <button type="submit" class="save btn btn-primary">Save</button>
         {% endif %}
+
+        <h6>{{ form.as_p }}</h6>
+
     </form>
 </div>
 {% endblock%}

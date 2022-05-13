@@ -21,7 +21,7 @@
         <a class="nav-link nav-cart-count" href="{% url 'raw_material:ware_choice' %}">{{ request.session.cart_items }} <i class="fas fa-shopping-cart"></i></a>
       </li>
       <li class="nav-item {% if request.path == products_list_url %}active{% endif %}">
-        <a class="nav-link" href="{% url 'raw_material:acquisition_new' %}">Products</a>
+        <a class="nav-link" href="{% url 'raw_material:ware_choice' %}">Products</a>
       </li>
       <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
         <a class="nav-link" href="{% url 'raw_material:ware_choice' %}">Contact us</a>

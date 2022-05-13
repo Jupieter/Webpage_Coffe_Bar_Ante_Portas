@@ -16,42 +16,57 @@ def ware_list(request, pk):
     return render (request, 'raw_material/ware_list.html', {'wares': wares, 'ware_type_list':ware_type_list, 'sub_site_logo':sub_site_logo})
 
 
-def ware_new(request):      
+def ware_new(request):
+      
     if request.method == "POST":
         form = WareDataForm(request.POST)
         if form.is_valid():
             ware = form.save(commit=False)
             ware.pub_date = timezone.now()
             ware.save()
-            return redirect('raw_material:ware_list')
+            return redirect('raw_material:ware_choice')
     else:
         form = WareDataForm()
     return render(request, 'raw_material/ware_edit.html', {'form': form})
 
 
-def ware_remove(request, pk):
-    ware = get_object_or_404(WareData, pk=pk)
+def ware_remove(request, pk, pkey):
+    ware = get_object_or_404(WareData, pk=pkey)
     ware.delete()
-    return redirect('raw_material:ware_list')
+    return redirect('raw_material:ware_list', pk=pk)
 
 
-def ware_edit(request, pk):
-    ware = get_object_or_404(WareData, pk=pk)
+def ware_edit(request, pk, pkey):
+    ware = get_object_or_404(WareData, pk=pkey)
     if request.method == "POST":
         form = WareDataForm(request.POST, instance=ware)
         if form.is_valid():
             ware = form.save(commit=False)
             ware.pub_date = timezone.now()
             ware.save()
-            return redirect('raw_material:ware_list')
+            return redirect('raw_material:ware_list', pk=pk)
     else:
         form = WareDataForm(instance=ware)
     return render(request, 'raw_material/ware_edit.html', {'form': form})
 
 
-def acquisition_new(request):
+def acquisition_new(request, pk, pkey):
+    ware = get_object_or_404(WareData, pk=pkey) 
+    
+    ware_name = 'semmi' # ware.ware_type + ware.ware_brand + ware.ware_brand_name
     user = request.user
-    
-    form = AquisitionForm(request.POST)
-    
-    return render(request, 'raw_material/acquisition_new.html', {'form': form})
+    now = timezone.now()
+    if request.method == "POST":
+        form = AquisitionForm(request.POST)
+        form.ware_type= ware.ware_brand_name 
+        if form.is_valid():
+            acquisition_new = form.save(commit=False)
+            acquisition_new.ware_type = ware
+            acquisition_new.acquisition = True
+            acquisition_new.acquisition_date = timezone.now()
+            acquisition_new.save()
+            return redirect('raw_material:ware_list', pk=pk)
+    else:
+        form = AquisitionForm( ) 
+        form.ware_type= ware.ware_brand_name   
+    return render(request, 'raw_material/acquisition_new.html', {'form': form, 'ware':ware, 'now':now})
