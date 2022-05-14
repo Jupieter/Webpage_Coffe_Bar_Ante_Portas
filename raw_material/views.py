@@ -5,9 +5,8 @@ from .forms import WareDataForm, AquisitionForm
 from django.shortcuts import redirect
 
 def ware_choice(request):
-    ware_type_list = WareTypes.objects.all().order_by('ware_types')
-    wares = WareData.objects.all().order_by('ware_type').order_by('ware_brand')
-    return render (request, 'raw_material/ware_choice.html', {'wares': wares, 'ware_type_list':ware_type_list})
+    ware_type_list = WareTypes.objects.all().order_by('ware_types')    
+    return render (request, 'raw_material/ware_choice.html', {'ware_type_list':ware_type_list})
 
 def ware_list(request, pk):
     ware_type_list = get_object_or_404(WareTypes, pk=pk)
@@ -52,21 +51,33 @@ def ware_edit(request, pk, pkey):
 
 def acquisition_new(request, pk, pkey):
     ware = get_object_or_404(WareData, pk=pkey) 
-    
-    ware_name = 'semmi' # ware.ware_type + ware.ware_brand + ware.ware_brand_name
     user = request.user
     now = timezone.now()
     if request.method == "POST":
         form = AquisitionForm(request.POST)
         form.ware_type= ware.ware_brand_name 
+        form.acquisition_price= ware.ware_price
         if form.is_valid():
             acquisition_new = form.save(commit=False)
             acquisition_new.ware_type = ware
             acquisition_new.acquisition = True
             acquisition_new.acquisition_date = timezone.now()
+            acquisition_new.stock = ware.ware_weight
             acquisition_new.save()
             return redirect('raw_material:ware_list', pk=pk)
     else:
-        form = AquisitionForm( ) 
-        form.ware_type= ware.ware_brand_name   
+        form = AquisitionForm(initial={'acquisition_price':ware.ware_price, 'ware_type':ware.ware_type}) 
+  
     return render(request, 'raw_material/acquisition_new.html', {'form': form, 'ware':ware, 'now':now})
+
+def acquisition_list(request):
+    ware_type_list = WareTypes.objects.all().order_by('ware_types')
+    wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisitor_user')
+    return render (request, 'raw_material/acquisition_list.html', {'wares': wares, 'ware_type_list':ware_type_list})
+
+def acquisition_remove(request, pkey):
+    ware = get_object_or_404(ProductAcquisition, pk=pkey)
+    ware.delete()
+    return redirect('raw_material:acquisition_list')
+
+

@@ -23,8 +23,8 @@ class WareData(models.Model):
     ware_weight= models.IntegerField(verbose_name='Csomag tömege [g]', default=250)
     ware_price = models.IntegerField(verbose_name='Csomag ára [Ft]',default=0)
     pub_date = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
-    ware_name = str(ware_brand) + str(ware_brand_name)+ '(' + str(ware_type) + ')'
-    
+    ware_name = [ware_type, ware_brand, ware_brand_name,]
+        
     
 
 
@@ -36,7 +36,12 @@ class ProductIngredient(models.Model):
     pub_date = models.DateTimeField('date published')
 
 class ProductAcquisition(models.Model):
-    ware_type = models.ForeignKey(WareData, on_delete=models.CASCADE, related_name='Áru', verbose_name='Áru' )
+    ware_type = models.ForeignKey(
+        WareData, 
+        on_delete=models.CASCADE, 
+        related_name='Áru', 
+        verbose_name='Áru' 
+        )
     acquisitor_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=False, 
@@ -45,6 +50,7 @@ class ProductAcquisition(models.Model):
         default=User)
     acquisition = models.BooleanField(default=False, verbose_name='Beszerezve [I/N]')
     acquisition_date = models.DateTimeField(default=timezone.now, verbose_name='Beszerzés dátuma')
+    acquisition_price = models.IntegerField(default=0, verbose_name='Ára [Ft]')
     store_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=False, 

@@ -23,50 +23,56 @@
     
     <div class="container pt-2"></div>
         <div class="row">
-            <div class="col-sm-2">
-                    <a href="{% url 'raw_material:ware_choice' %}">   
-                        <span>
-                            <img src ="{% static 'image/'|add:ware_type_list.ware_image %}" class="rounded" style="height:100px" alt="choice_back">  
-                        </a>                
-                        </span>
-            </div>
+
             
             <div class="col-sm-8">
-                <h2 style="text-align:center">{{ware_type_list}} lista</h2>
+                <h2 style="text-align:center">Beszerzett áruk</h2>
             </div>
     </div>
 
-    <div class="container sm-6 pt-2">
-        <table class="table table-sm-6 table-hover">
-            <thead class="table-dark">
+{% for ware_type  in ware_type_list %}
+    <h3>{{ ware_type.ware_types }}</h3>
+    <div class="container sm-12 pt-2">
+        <table class="table table-md-12 table-hover">
+            <thead class="table-light">
                 <tr>  
-                    <th class="col-sm-1">     Márka    </th>
-                    <th class="col-sm-1">    Típus     </th>
+                    <th class="col-sm-2">Áru</th>
+                    <th class="col-sm-2">Beszerző</th>
+                    <th class="col-sm-2">Dátum</th>
                     <th class="col-sm-1">Kiszerelés [g]</th>
-                    <th class="col-sm-1">  Csomag ára  </th>
-                    <th class="col-sm-1">  Szerkeszt   </th>
+                    <th class="col-sm-1">Csomag ára</th>
+                    <th class="col-sm-2">  Szerkeszt   </th>
                     
                 </tr>
                 <i class="glyphicon glyphicon-plus"></i>
             </thead>
 
-            {% for ware in wares %}            
-                <tr>                   
-                    <th>{{ ware.ware_brand }}</th>
-                    <td>{{ ware.ware_brand_name }}</td>
-                    <td>{{ ware.ware_weight }}</td>
-                    <td>{{ ware.ware_price }}</td>
-                    <td>
+            {% for ware in wares %}          
+                <tr>
+                {% if ware.ware_type.ware_type == ware_type %}
+
+                    <th class="col-sm-2">{{ ware.ware_type.ware_brand }} {{ ware.ware_type.ware_brand_name }}</th>
+                    <td class="col-sm-2">{{ ware.acquisitor_user }}</td>
+                    <td class="col-sm-2">{{ ware.acquisition_date }}</td>
+                    <td class="col-sm-1">{{ ware.stock }}</td>
+                    <td class="col-sm-1">{{ ware.acquisition_price }}</td>
+                    
+                    <td class="col-sm-2">
                     {% if user.is_staff %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'raw_material:ware_edit' pk=ware_type_list.pk pkey=ware.pk %}"><span class="fa fa-pencil"></span></a>
-                        <a class="btn btn-primary btn-sm" href="{% url 'raw_material:ware_remove' pk=ware_type_list.pk pkey=ware.pk %}"><span class="fa fa-trash-o"></span></a>
+                        <a class="btn btn-primary btn-sm" 
+                            href="{% url 'raw_material:acquisition_list' %}"><span class="fa fa-pencil"></span></a>
+                        <a class="btn btn-primary btn-sm" 
+                            href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}"><span class="fa fa-trash-o"></span></a>
                         {% endif %}
                         {% if user.is_authenticated %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_new' pk=ware_type_list.pk pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_list' %}"><span class="fa fa-shopping-basket"></span></a>
                         {% endif %}
-                    </td>                
+                    </td>
+                {% endif %}                
                 </tr>
             {% endfor %}    
         </table>
-    </div>  
+    </div>
+    {% endfor %} 
+
     {% endblock %}

@@ -21,6 +21,7 @@
 
 {% block content %}
 <h2> Termék: {{ware.id}} {{ware.ware_brand}} {{ware.ware_brand_name}} {{ware.ware_weight}}g ( {{ware.ware_type}} )</h2>
+{{ware.ware_price}}
 
 
 <div class="input-group mb-3">
@@ -30,6 +31,7 @@
         {% if user.is_staff %}
             <h4> Beszerző: {{ form.acquisitor_user }}</h4>
             <h4> Beszerezve: {{form.acquisition_date}}</h4>
+            <h4> Ára [Ft]: {{form.acquisition_price}}</h4>
             {% else %}
                 <h4> Beszerző: {{user}}</h4>
                 <h4> Átadva: {{now}}</h4>

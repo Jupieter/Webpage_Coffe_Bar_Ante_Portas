@@ -11,4 +11,6 @@ urlpatterns = [
     path('(<int:pk>)/(<int:pkey>)/edit/', views.ware_edit, name='ware_edit'),
     path('(<int:pk>)/(<int:pkey>)/remove/', views.ware_remove, name='ware_remove'),
     path('(<int:pk>)/(<int:pkey>)/acquisition_new/', views.acquisition_new, name='acquisition_new'),
+    path('acquisition_list/', views.acquisition_list, name='acquisition_list'),
+    path('acquisition_list/(<int:pkey>)/', views.acquisition_remove, name='acquisition_remove'),
 ]
