@@ -12,5 +12,7 @@ urlpatterns = [
     path('(<int:pk>)/(<int:pkey>)/remove/', views.ware_remove, name='ware_remove'),
     path('(<int:pk>)/(<int:pkey>)/acquisition_new/', views.acquisition_new, name='acquisition_new'),
     path('acquisition_list/', views.acquisition_list, name='acquisition_list'),
-    path('acquisition_list/(<int:pkey>)/', views.acquisition_remove, name='acquisition_remove'),
+    path('acquisition_list/(<int:pkey>)/remove/', views.acquisition_remove, name='acquisition_remove'),
+    path('acquisition_list/(<int:pkey>)/edit/', views.acquisition_edit, name='acquisition_edit'),
+    path('acquisition_list/(<int:pkey>)/storing/', views.acquisition_storing, name='acquisition_storing'),
 ]

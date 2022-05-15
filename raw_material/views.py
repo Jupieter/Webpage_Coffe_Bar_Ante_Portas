@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect 
 from django.utils import timezone
 from .models import WareTypes, WareData, ProductIngredient, ProductAcquisition
-from .forms import WareDataForm, AquisitionForm
+from .forms import WareDataForm, AquisitionForm, AquisitionStockedForm
 from django.shortcuts import redirect
 
 def ware_choice(request):
@@ -80,4 +80,35 @@ def acquisition_remove(request, pkey):
     ware.delete()
     return redirect('raw_material:acquisition_list')
 
+def acquisition_edit(request, pkey):
+    ware = get_object_or_404(ProductAcquisition, pk=pkey)
+    if request.method == "POST":
+        form = AquisitionForm(request.POST, instance=ware)
+        if form.is_valid():
+            acquisition_edit = form.save(commit=False)
+            acquisition_edit.acquisition = True
+            acquisition_edit.ware_type = ware
+            acquisition_edit.acquisition_date = timezone.now()
+            acquisition_edit.save()
+            return redirect('raw_material:acquisition_list.html')
+    else:
+        form = AquisitionForm(instance=ware) 
+  
+    return render(request, 'raw_material/acquisition_new.html', {'form': form, 'ware':ware})
 
+def acquisition_storing(request, pkey):
+    ware = get_object_or_404(ProductAcquisition, pk=pkey)
+    user = request.user
+    now = timezone.now()
+    if request.method == "POST":
+        form = AquisitionStockedForm(request.POST)
+        if form.is_valid():
+            acquisition_storing = form.save(commit=False)
+            acquisition_storing.stores=True
+            acquisition_storing.store_date = timezone.now()
+            acquisition_storing.save()
+            return redirect('raw_material:acquisition_list.html')
+    else:
+        form = AquisitionStockedForm(initial={'store_user':ware.store_user, 'store_date':ware.store_date}) 
+  
+    return render(request, 'raw_material/acquisition_storing.html', {'form': form, 'ware':ware})

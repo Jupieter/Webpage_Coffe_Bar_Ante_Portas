@@ -60,14 +60,11 @@
                     <td class="col-sm-2">
                     {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" 
-                            href="{% url 'raw_material:acquisition_list' %}"><span class="fa fa-pencil"></span></a>
+                            href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}"><span class="fa fa-pencil"></span></a>
                         <a class="btn btn-primary btn-sm" 
                             href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}"><span class="fa fa-trash-o"></span></a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
                         {% endif %}
-                        {% if user.is_authenticated %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_list' %}"><span class="fa fa-shopping-basket"></span></a>
-                        {% endif %}
-                        {{ ware.acquisition }}{{ ware.stores }}
                     </td>
                 {% endif %}                
                 </tr>

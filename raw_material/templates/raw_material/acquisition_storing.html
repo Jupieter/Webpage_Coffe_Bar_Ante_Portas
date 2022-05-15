@@ -22,11 +22,9 @@
 {% block content %}
 
 <div class="container pt-2">
-    {% if ware.acquisition == True %}
+
         <h2> Termék: {{ware.id}} {{ware.ware_type.ware_brand}} {{ware.ware_type.ware_brand_name}} {{ware.ware_type.ware_weight}}g ( {{ware.ware_type.ware_type}} ) {{ware.ware_type.ware_price}}Ft</h2>
-    {% else %}
-        <h2> Termék: {{ware.id}} {{ware.ware_brand}} {{ware.ware_brand_name}} {{ware.ware_weight}}g ( {{ware.ware_type}} {{  ware.ware_price}}Ft ) </h2>
-    {% endif %}
+
 </div>
 
 
@@ -35,17 +33,12 @@
     <form method="POST" class="post-form">{% csrf_token %}
         
         <h4></h4>
-        {% if user.is_staff %}
-            <h4> Beszerző: {{ form.acquisitor_user }}</h4>
-            <h4> Beszerezve: {{form.acquisition_date}}</h4>
-            <h4> Ára [Ft]: {{form.acquisition_price}}</h4>
-            {% else %}
-                <h4> Beszerző: {{user}}</h4>
-                <h4> Átadva: {{now}}</h4>
-        {% endif %}
+        
+        <h4> Bevételező: {{ user }}</h4>
+        <h4> Bevételezve: {{ form.store_date }}</h4>
 
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
-        {% if user.is_authenticated %}
+        {% if user.is_staff %}
             <button type="submit" class="save btn btn-primary">Save</button>
         {% endif %}
         

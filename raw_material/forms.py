@@ -20,3 +20,8 @@ class AquisitionListForm(forms.ModelForm):
     class Meta:
         model = ProductAcquisition
         fields = ('ware_type', 'acquisitor_user', 'acquisition_date',)
+
+class AquisitionStockedForm(forms.ModelForm):
+    class Meta:
+        model = ProductAcquisition
+        fields = ('store_user', 'store_date',)
