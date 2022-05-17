@@ -12,14 +12,8 @@ class WareDataForm(forms.ModelForm):
 class AquisitionForm(forms.ModelForm):
     class Meta:
         model = ProductAcquisition
-        fields = ('ware_type','acquisitor_user', 'acquisition_date',  'acquisition_price',)
-    # acquisition_date = forms.DateField(required=True, label='Beszerezve:', initial=timezone.now)
-    # stock = forms.IntegerField(required=True, label='Készlet [g]')
+        fields = ('acquisiton_user', 'acquisition_date',  'acquisition_price',)
 
-class AquisitionListForm(forms.ModelForm):
-    class Meta:
-        model = ProductAcquisition
-        fields = ('ware_type', 'acquisitor_user', 'acquisition_date',)
 
 class AquisitionStockedForm(forms.ModelForm):
     class Meta:

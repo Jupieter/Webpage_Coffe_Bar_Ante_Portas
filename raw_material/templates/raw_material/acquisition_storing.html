@@ -24,7 +24,7 @@
 <div class="container pt-2">
 
         <h2> Termék: {{ware.id}} {{ware.ware_type.ware_brand}} {{ware.ware_type.ware_brand_name}} {{ware.ware_type.ware_weight}}g ( {{ware.ware_type.ware_type}} ) {{ware.ware_type.ware_price}}Ft</h2>
-
+        <h4>Bevételezés dátuma: {{now}}</h4>
 </div>
 
 
@@ -34,8 +34,8 @@
         
         <h4></h4>
         
-        <h4> Bevételező: {{ user }}</h4>
-        <h4> Bevételezve: {{ form.store_date }}</h4>
+        <h4>{{form.as_p}}</h4>
+        
 
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
         {% if user.is_staff %}

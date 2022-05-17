@@ -31,19 +31,30 @@
 
 
 
-<div class="input-group mb-3">
+<div class="input-group mb-5">
     <form method="POST" class="post-form">{% csrf_token %}
         
         <h4></h4>
         {% if user.is_staff %}
-            <h4> Beszerző: {{ form.acquisitor_user }}</h4>
-            <h4> Beszerezve: {{form.acquisition_date}}</h4>
-            <h4> Ára [Ft]: {{form.acquisition_price}}</h4>
-            {% else %}
-                <h4> Beszerző: {{user}}</h4>
-                <h4> Átadva: {{now}}</h4>
+        <h4>{{form.as_p}}</h4>
+        
+        {% else %}
+            <h4> Beszerző: {{user}}</h4>
+            <h4> Átadva: {{now}}</h4>
+            {% for forms in form %}
+                {% if forms.name == 'acquisition_price' %}
+                    <div class="visible">
+                        <h4>{{forms.label}}</h4>
+                        <h4>{{forms}}</h4>
+                    </div>                        
+                {% else %}
+                    <div class="invisible">
+                        <h4>{{forms}}</h4>
+                    </div>
+                {% endif %}
+            {% endfor %}                
         {% endif %}
-
+        
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
         {% if user.is_authenticated %}
             <button type="submit" class="save btn btn-primary">Save</button>

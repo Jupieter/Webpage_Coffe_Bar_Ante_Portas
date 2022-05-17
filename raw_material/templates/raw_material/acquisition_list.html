@@ -21,12 +21,25 @@
     
     {% block content %}
     
-    <div class="container pt-2"></div>
+    <div class="container"></div>
         <div class="row">
 
             
-            <div class="col-sm-8">
-                <h2 style="text-align:center">Beszerzett áruk</h2>
+            <div class="col-sm-10">
+                <div class="row ">
+                    <div class="col-sm-6 ">
+                        <h2 style="text-align:Left">Készletek</h2>
+                    </div>
+
+                    <div class="col-sm-4 ">
+                        <form>
+                            <input type="checkbox" id="store1" name="store1" value="Bike">
+                            <label for="vehicle1">Beszerzett áruk</label><br>
+                            <input type="checkbox" id="store2" name="store2" value="Car">
+                            <label for="vehicle2"> Raktározott Áruk</label><br>
+                        </form>
+                    </div>
+                </div>
             </div>
     </div>
 
@@ -34,14 +47,14 @@
     <h3>{{ ware_type.ware_types }}</h3>
     <div class="container sm-12 pt-2">
         <table class="table table-md-12 table-hover">
-            <thead class="table-light">
+            <thead class="table-light align-text-top">
                 <tr>  
-                    <th class="col-sm-2">Áru</th>
-                    <th class="col-sm-2">Beszerző</th>
-                    <th class="col-sm-2">Dátum</th>
-                    <th class="col-sm-1">Kiszerelés [g]</th>
-                    <th class="col-sm-1">Csomag ára</th>
-                    <th class="col-sm-2">  Szerkeszt   </th>
+                    <th class="col-sm-2">Áru </th>
+                    <th class="col-sm-2">Beszerző <br> Bevételező</th>
+                    <th class="col-sm-2">Beszerzési Dátum <br> Raktár dátum</th>
+                    <th class="col-sm-1">Kiszerelés [g] <br> Raktáron [g]</th>
+                    <th class="col-sm-1">Csomag ára </th>
+                    <th class="col-sm-2">  Szerkeszt </th>
                     
                 </tr>
                 <i class="glyphicon glyphicon-plus"></i>
@@ -51,10 +64,11 @@
                 <tr>
                 {% if ware.ware_type.ware_type == ware_type and ware.acquisition and not ware.stores %}
 
-                    <th class="col-sm-2">{{ ware.ware_type.ware_brand }} {{ ware.ware_type.ware_brand_name }}</th>
-                    <td class="col-sm-2">{{ ware.acquisitor_user }}</td>
-                    <td class="col-sm-2">{{ ware.acquisition_date }}</td>
-                    <td class="col-sm-1">{{ ware.stock }}</td>
+                    <th class="col-sm-2">{{ ware.ware_type.ware_brand }} {{ ware.ware_type.ware_brand_name }}  <br>
+                         {{ ware.id }} </th>
+                    <td class="col-sm-2">{{ ware.acquisiton_user }} <br>  {{ ware.store_user }}</td>
+                    <td class="col-sm-2">{{ ware.acquisition_date }} <br> {{ ware.store_date }}</td>
+                    <td class="col-sm-1">{{ ware.ware_type.ware_weight }} <br> {{ ware.stock }}</td>
                     <td class="col-sm-1">{{ ware.acquisition_price }}</td>
                     
                     <td class="col-sm-2">
@@ -71,6 +85,6 @@
             {% endfor %}    
         </table>
     </div>
-    {% endfor %} 
+{% endfor %} 
 
-    {% endblock %}
+{% endblock %}

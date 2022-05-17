@@ -39,24 +39,28 @@ class ProductAcquisition(models.Model):
     ware_type = models.ForeignKey(
         WareData, 
         on_delete=models.CASCADE, 
-        related_name='Áru', 
-        verbose_name='Áru' 
-        )
-    acquisitor_user = models.ForeignKey(
+        related_name = 'Áru', 
+        verbose_name = 'Áru')
+    acquisiton_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=False, 
-        related_name='Beszerző', 
-        verbose_name= 'Beszerző',
+        related_name ='Beszerző', 
+        verbose_name = 'Beszerző',
         default=User)
     acquisition = models.BooleanField(default=False, verbose_name='Beszerezve [I/N]')
-    acquisition_date = models.DateTimeField(default=timezone.now, verbose_name='Beszerzés dátuma')
+    acquisition_date = models.DateTimeField(
+        default=0, 
+        verbose_name='Beszerzés dátuma', 
+        null=True, blank=True,)
     acquisition_price = models.IntegerField(default=0, verbose_name='Ára [Ft]')
     store_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
-        null=True, blank=False, 
-        related_name='Bevételezte',
-        verbose_name='Bevételezte'
-        )
+        null=True, blank=True,
+        related_name = 'Bevételezte',
+        verbose_name ='Bevételezte' )
     stores = models.BooleanField(default=False, verbose_name='Bevételezve [I/N]')
-    store_date = models.DateTimeField(default=timezone.now, verbose_name='Raktározás dátuma')
+    store_date = models.DateTimeField(
+        default=0, 
+        verbose_name='Raktározás dátuma', 
+        null=True, blank=True,)
     stock = models.IntegerField(default=0, verbose_name='Készleten [g]')

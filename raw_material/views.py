@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from django.shortcuts import render, get_object_or_404, redirect 
 from django.utils import timezone
 from .models import WareTypes, WareData, ProductIngredient, ProductAcquisition
@@ -51,12 +52,12 @@ def ware_edit(request, pk, pkey):
 
 def acquisition_new(request, pk, pkey):
     ware = get_object_or_404(WareData, pk=pkey) 
-    user = request.user
+    acquisiton_user = request.user
     now = timezone.now()
     if request.method == "POST":
         form = AquisitionForm(request.POST)
-        form.ware_type= ware.ware_brand_name 
-        form.acquisition_price= ware.ware_price
+        # form.ware_type= ware.ware_brand_name 
+        # form.acquisition_price= ware.ware_price
         if form.is_valid():
             acquisition_new = form.save(commit=False)
             acquisition_new.ware_type = ware
@@ -66,13 +67,16 @@ def acquisition_new(request, pk, pkey):
             acquisition_new.save()
             return redirect('raw_material:ware_list', pk=pk)
     else:
-        form = AquisitionForm(initial={'acquisition_price':ware.ware_price, 'ware_type':ware.ware_type}) 
+        form = AquisitionForm(initial=
+            {'acquisition_price':ware.ware_price,
+            'acquisiton_user':acquisiton_user,
+            }) 
   
     return render(request, 'raw_material/acquisition_new.html', {'form': form, 'ware':ware, 'now':now})
 
 def acquisition_list(request):
     ware_type_list = WareTypes.objects.all().order_by('ware_types')
-    wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisitor_user')
+    wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisition_date')
     return render (request, 'raw_material/acquisition_list.html', {'wares': wares, 'ware_type_list':ware_type_list})
 
 def acquisition_remove(request, pkey):
@@ -86,11 +90,9 @@ def acquisition_edit(request, pkey):
         form = AquisitionForm(request.POST, instance=ware)
         if form.is_valid():
             acquisition_edit = form.save(commit=False)
-            acquisition_edit.acquisition = True
-            acquisition_edit.ware_type = ware
             acquisition_edit.acquisition_date = timezone.now()
             acquisition_edit.save()
-            return redirect('raw_material:acquisition_list.html')
+            return redirect('raw_material:acquisition_list')
     else:
         form = AquisitionForm(instance=ware) 
   
@@ -104,11 +106,19 @@ def acquisition_storing(request, pkey):
         form = AquisitionStockedForm(request.POST)
         if form.is_valid():
             acquisition_storing = form.save(commit=False)
+            #acquisition_storing.ware_type = ware.ware_type
             acquisition_storing.stores=True
-            acquisition_storing.store_date = timezone.now()
+            # acquisition_storing.store_date = now
             acquisition_storing.save()
-            return redirect('raw_material:acquisition_list.html')
+            return redirect('raw_material:acquisition_list')
     else:
-        form = AquisitionStockedForm(initial={'store_user':ware.store_user, 'store_date':ware.store_date}) 
+        form = AquisitionStockedForm(initial={'store_user':user, 'store_date':now}) 
   
-    return render(request, 'raw_material/acquisition_storing.html', {'form': form, 'ware':ware})
+    return render(request, 'raw_material/acquisition_storing.html', {'form': form, 'ware':ware, 'now':now})
+
+def store_date_null():
+    wares = ProductAcquisition.objects.all().order_by('ware_type')
+    for ware in wares:
+        ware.store_date = NULL
+        ware.save()
+    return print("Törölve")
