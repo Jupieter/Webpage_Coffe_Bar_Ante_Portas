@@ -74,22 +74,39 @@ def acquisition_new(request, pk, pkey):
   
     return render(request, 'raw_material/acquisition_new.html', {'form': form, 'ware':ware, 'now':now})
 
+
 def acquisition_list(request):
     ware_type_list = WareTypes.objects.all().order_by('ware_types')
+    wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisition_date')
     if request.method == "POST":
         form = WareListChoice(request.POST)
         if form.is_valid():
-            if request.POST["store_list"] :
-                wares = WareData.objects.filter(stores=True).order_by('ware_type').order_by('acquisition_date')
-            elif request.POST["acquisition_list"] :
-                wares = WareData.objects.filter(acquisition=True).order_by('ware_type').order_by('acquisition_date')
-            elif request.POST["acquisition_list"] and  request.POST["store_list"]:
+            acq = request.POST.get("acquisition_list", False)
+            store = request.POST.get("store_list", False)
+
+            if store and not acq :
+                wares = ProductAcquisition.objects.filter(stores=True).order_by('ware_type').order_by('acquisition_date')
+                return render (request, 'raw_material/acquisition_list.html', 
+                {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
+
+            elif acq and not store :
+                wares = ProductAcquisition.objects.filter(stores=False).order_by('ware_type').order_by('acquisition_date')
+                return render (request, 'raw_material/acquisition_list.html', 
+                {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
+
+            elif acq and store:
                 wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisition_date')
-            return render (request, 'raw_material/ware_list.html', {'form': form,'wares': wares, 'ware_type_list':ware_type_list, 'sub_site_logo':sub_site_logo})
+                return render (request, 'raw_material/acquisition_list.html', 
+                {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
+
+            elif not acq and not store:
+                return render (request, 'raw_material/acquisition_list.html', 
+                {'form': form, 'ware_type_list':ware_type_list})
+
     else:
-        wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisition_date')
         form = WareListChoice()
     return render (request, 'raw_material/acquisition_list.html', {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
+
 
 def acquisition_remove(request, pkey):
     ware = get_object_or_404(ProductAcquisition, pk=pkey)

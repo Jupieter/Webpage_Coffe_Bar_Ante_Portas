@@ -25,16 +25,21 @@
     <div class="container"></div>
         <div class="row">                                  
             <div class="col-sm-10">
-                <div class="row ">
-                    <div class="col-sm-5 ">
+                <div class="row border">
+                    <div class="col-sm-3">
                         <h2 style="text-align:Left">Készletek</h2>
                     </div>
                     
-                    <div class="col-sm-5 ">
-                            <form method="POST" class="post-form">{% csrf_token %}
-                                <input type="checkbox" id="acquisition_list" name="acquisition_list"  onclick="window.location.reload()">
-                                <label for="acquisition_list">Beszerezve</label><br>
-                                {{ form.as_p }}
+                    <div class="col-sm-7 border">
+                            <form method="POST" >{% csrf_token %}
+                                
+                                <h4> 
+                                    <button type="submit" class="save btn btn-primary middle">
+                                    {% for forms in form %}
+                                        <label>|{{forms}}  {{forms.label}}|</label>
+                                    {% endfor %}
+                                    </button>
+                                </h4>
                             </form>
                         </div>
                     </div>
@@ -75,9 +80,10 @@
                     {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" 
                             href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}"><span class="fa fa-pencil"></span></a>
-                        <a class="btn btn-primary btn-sm" 
-                            href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}"><span class="fa fa-trash-o"></span></a>
-                        <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                            <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                            <a class="btn btn-danger btn-sm" 
+                                href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}" onclick="return confirm('Biztosan törölni akarja?')">
+                                <span class="fa fa-trash-o"></span></a>
                         {% endif %}
                     </td>
                 {% endif %}                
