@@ -8,6 +8,10 @@ class WareDataForm(forms.ModelForm):
         model = WareData
         fields = ('ware_type','ware_brand', 'ware_brand_name','ware_weight','ware_price')
 
+class WareListChoice(forms.Form):
+    acquisition_list = forms.BooleanField(required=False, label='Beszerezve')
+    store_list = forms.BooleanField(required=False, label='Raktározva')
+
 
 class AquisitionForm(forms.ModelForm):
     class Meta:
@@ -18,4 +22,4 @@ class AquisitionForm(forms.ModelForm):
 class AquisitionStockedForm(forms.ModelForm):
     class Meta:
         model = ProductAcquisition
-        fields = ('store_user', 'store_date',)
+        fields = ('store_user', )

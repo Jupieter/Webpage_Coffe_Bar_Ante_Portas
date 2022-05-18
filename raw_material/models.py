@@ -49,7 +49,6 @@ class ProductAcquisition(models.Model):
         default=User)
     acquisition = models.BooleanField(default=False, verbose_name='Beszerezve [I/N]')
     acquisition_date = models.DateTimeField(
-        default=0, 
         verbose_name='Beszerzés dátuma', 
         null=True, blank=True,)
     acquisition_price = models.IntegerField(default=0, verbose_name='Ára [Ft]')
@@ -60,7 +59,6 @@ class ProductAcquisition(models.Model):
         verbose_name ='Bevételezte' )
     stores = models.BooleanField(default=False, verbose_name='Bevételezve [I/N]')
     store_date = models.DateTimeField(
-        default=0, 
         verbose_name='Raktározás dátuma', 
         null=True, blank=True,)
     stock = models.IntegerField(default=0, verbose_name='Készleten [g]')
