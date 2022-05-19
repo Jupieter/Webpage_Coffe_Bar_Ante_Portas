@@ -24,7 +24,10 @@ class WareData(models.Model):
     ware_price = models.IntegerField(verbose_name='Csomag ára [Ft]',default=0)
     pub_date = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
     ware_name = [ware_type, ware_brand, ware_brand_name,]
-        
+    
+    def __type__(self):
+        return self.ware_name
+       
     
 
 
@@ -36,6 +39,7 @@ class ProductIngredient(models.Model):
     pub_date = models.DateTimeField('date published')
 
 class StatusChoise(models.IntegerChoices):
+    MINDEGYIK = 0
     BESZEREZVE  = 1
     BEVÉTELEZVE = 2
     KIBONTVA = 3
@@ -48,33 +52,43 @@ class ProductAcquisition(models.Model):
         on_delete=models.CASCADE, 
         related_name = 'Áru', 
         verbose_name = 'Áru')
+    store_status = models.IntegerField(default=0, choices=StatusChoise.choices)
+    acquisition_price = models.IntegerField(default=0, verbose_name='Ára [Ft]')
+
     acquisiton_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=False, 
         related_name ='Beszerző', 
         verbose_name = 'Beszerző',
         default=User)
-    acquisition = models.BooleanField(default=False, verbose_name='Beszerezve [I/N]')
     acquisition_date = models.DateTimeField(
         verbose_name='Beszerzés dátuma', 
         null=True, blank=True,)
-    acquisition_price = models.IntegerField(default=0, verbose_name='Ára [Ft]')
+
     store_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=True,
         related_name = 'Bevételezte',
         verbose_name ='Bevételezte' )
-    stores = models.BooleanField(default=False, verbose_name='Bevételezve [I/N]')
     store_date = models.DateTimeField(
         verbose_name='Raktározás dátuma', 
         null=True, blank=True,)
     stock = models.IntegerField(default=0, verbose_name='Készleten [g]')
-    open_box = models.BooleanField(default=False, verbose_name='Megkezdve [I/N]')
+
+    open_user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, 
+        null=True, blank=True,
+        related_name = 'Kibontotta',
+        verbose_name ='Kibontotta' )
     open_date = models.DateTimeField(
-        verbose_name='Kibontás dátuma', 
+        verbose_name='Kifogyás dátuma', 
         null=True, blank=True,)
-    empty_box = models.BooleanField(default=False, verbose_name='Elfogyott [I/N]')
+    
+    empty_user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, 
+        null=True, blank=True,
+        related_name = 'Leírta',
+        verbose_name ='Leírta' )
     empty_date = models.DateTimeField(
         verbose_name='Kifogyás dátuma', 
         null=True, blank=True,)
-    store_status = models.IntegerField(default=0, choices=StatusChoise.choices)

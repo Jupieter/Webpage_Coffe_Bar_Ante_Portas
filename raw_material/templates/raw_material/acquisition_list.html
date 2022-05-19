@@ -32,21 +32,21 @@
                     
                     <div class="col-sm-7 border">
                             <form method="POST" >{% csrf_token %}
-                                
+                                {{form}}                                  
                                 <h4> 
-                                    <button type="submit" class="save btn btn-primary middle">
-                                    {% for forms in form %}
-                                        <label>|{{forms}}  {{forms.label}}|</label>
-                                    {% endfor %}
+                                    <button type="submit" class="save btn btn-primary middle"> 
+                                        Küld                                  
                                     </button>
                                 </h4>
                             </form>
                         </div>
                     </div>
-
+                    
                 </div>
             </div>
-    </div>
+        </div>
+{{acq}}
+<p>{{ wares }}</p>
 
 {% for ware_type  in ware_type_list %}
     <h3>{{ ware_type.ware_types }}</h3>
@@ -67,16 +67,12 @@
 
             {% for ware in wares %}          
                 <tr>
-                {% if ware.ware_type.ware_type == ware_type and ware.acquisition %}
+                {% if ware.ware_type.ware_type == ware_type %}
 
                     <th class="col-sm-2">
                         {{ ware.ware_type.ware_brand }} {{ ware.ware_type.ware_brand_name }} {{ ware.id }}  
-                        <br>
-                        {% if ware.empty_box %} Elfogyott 
-                        {% elif ware.open_box and not ware.empty_box %} Megkezdve
-                        {% elif ware.stores and not ware.open_box and not ware.empty_box %} Bevételezve
-                        {% else %} Beszerezve
-                        {% endif%}</th>
+                        <br> {{ware.store_status.name}}
+                        </th>
                     <td class="col-sm-2">{{ ware.acquisiton_user }} <br>  {{ ware.store_user }}</td>
                     <td class="col-sm-2">{{ ware.acquisition_date }} <br> {{ ware.store_date }}</td>
                     <td class="col-sm-1">{{ ware.ware_type.ware_weight }} <br> {{ ware.stock }}</td>
@@ -86,18 +82,28 @@
                     {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" 
                             href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}" >
-                                <span class="fa fa-pencil"></span></a>
-                            <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}">
+                            <span class="fa fa-pencil"></span></a>
+                        {% if ware.store_status == 1 %}
+                            <a class="btn btn-primary btn-sm" 
+                                href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}">
                                 <span class="fa fa-cube"></span></a>
+                        {% endif %}
+                        {% if ware.store_status == 2 %}
                             <a class="btn btn-primary btn-sm" 
-                                href="{% url 'raw_material:box_open' pkey=ware.pk %}" onclick="return confirm('A csomag meg lett kezdve?')">
+                                href="{% url 'raw_material:box_open' pkey=ware.pk %}" 
+                                onclick="return confirm('A csomag meg lett kezdve?')">
                                 <span class="fa fa-dropbox"></span></a>
+                        {% endif %}
+                        {% if ware.store_status == 3 %}
                             <a class="btn btn-primary btn-sm" 
-                                href="{% url 'raw_material:box_empty' pkey=ware.pk %}" onclick="return confirm('A csomag kiürült?')">
+                                href="{% url 'raw_material:box_empty' pkey=ware.pk %}" 
+                                onclick="return confirm('A csomag kiürült?')">
                                 <span class="fa fa-share-square-o"></span></a>
-                            <a class="btn btn-danger btn-sm" 
-                                href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}" onclick="return confirm('Biztosan törölni akarja?')">
-                                <span class="fa fa-trash-o"></span></a>
+                        {% endif %}
+                        <a class="btn btn-danger btn-sm" 
+                            href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}" 
+                            onclick="return confirm('Biztosan törölni akarja?')">
+                            <span class="fa fa-trash-o"></span></a>
                         {% endif %}
                     </td>
                 {% endif %}                
