@@ -85,24 +85,22 @@ def acquisition_list(request):
             store = request.POST.get("store_list", False)
 
             if store and not acq :
-                wares = ProductAcquisition.objects.filter(stores=True).order_by('ware_type').order_by('acquisition_date')
-                return render (request, 'raw_material/acquisition_list.html', 
-                {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
+                wares = ProductAcquisition.objects.filter(stores=True)
+
 
             elif acq and not store :
-                wares = ProductAcquisition.objects.filter(stores=False).order_by('ware_type').order_by('acquisition_date')
-                return render (request, 'raw_material/acquisition_list.html', 
-                {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
+                wares = ProductAcquisition.objects.filter(stores=False)
+
 
             elif acq and store:
-                wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisition_date')
-                return render (request, 'raw_material/acquisition_list.html', 
-                {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
+                wares = ProductAcquisition.objects.all()
 
             elif not acq and not store:
-                return render (request, 'raw_material/acquisition_list.html', 
-                {'form': form, 'ware_type_list':ware_type_list})
+                wares = None
 
+        wares.order_by('ware_type').order_by('acquisition_date')
+        return render (request, 'raw_material/acquisition_list.html', 
+            {'form': form, 'wares':wares, 'ware_type_list':ware_type_list})
     else:
         form = WareListChoice()
     return render (request, 'raw_material/acquisition_list.html', {'form': form,'wares': wares, 'ware_type_list':ware_type_list})
@@ -145,3 +143,18 @@ def acquisition_storing(request, pkey):
   
     return render(request, 'raw_material/acquisition_storing.html', {'form': form, 'ware':ware, 'now':now})
 
+def box_open(request, pkey):
+    ware = get_object_or_404(ProductAcquisition, pk=pkey)
+    if ware.stores:
+        ware.store_date = timezone.now()
+        ware.open_box = True
+        ware.save()
+    return redirect('raw_material:acquisition_list')
+
+def box_empty(request, pkey):
+    ware = get_object_or_404(ProductAcquisition, pk=pkey)
+    if ware.open_box:
+        ware.empty_date = timezone.now()
+        ware.empty_box = True
+        ware.save()
+    return redirect('raw_material:acquisition_list')

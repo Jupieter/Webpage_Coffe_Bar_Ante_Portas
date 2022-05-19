@@ -54,12 +54,12 @@
         <table class="table table-md-12 table-hover">
             <thead class="table-light align-text-top">
                 <tr>  
-                    <th class="col-sm-2">Áru </th>
-                    <th class="col-sm-2">Beszerző <br> Bevételező</th>
+                    <th class="col-sm-2">Áru <br> Helyzete </th>
+                    <th class="col-sm-2">Beszerző<br>  Bevételező</th>
                     <th class="col-sm-2">Beszerzési Dátum <br> Raktár dátum</th>
-                    <th class="col-sm-1">Kiszerelés [g] <br> Raktáron [g]</th>
+                    <th class="col-sm-2">Kiszerelés [g] <br> Raktáron [g]</th>
                     <th class="col-sm-1">Csomag ára </th>
-                    <th class="col-sm-2">  Szerkeszt </th>
+                    <th class="col-sm-2">  Szerkeszt Bevételez <br> Kibont Elfogyott</th>
                     
                 </tr>
                 <i class="glyphicon glyphicon-plus"></i>
@@ -69,8 +69,14 @@
                 <tr>
                 {% if ware.ware_type.ware_type == ware_type and ware.acquisition %}
 
-                    <th class="col-sm-2">{{ ware.ware_type.ware_brand }} {{ ware.ware_type.ware_brand_name }}  <br>
-                         {{ ware.id }} </th>
+                    <th class="col-sm-2">
+                        {{ ware.ware_type.ware_brand }} {{ ware.ware_type.ware_brand_name }} {{ ware.id }}  
+                        <br>
+                        {% if ware.empty_box %} Elfogyott 
+                        {% elif ware.open_box and not ware.empty_box %} Megkezdve
+                        {% elif ware.stores and not ware.open_box and not ware.empty_box %} Bevételezve
+                        {% else %} Beszerezve
+                        {% endif%}</th>
                     <td class="col-sm-2">{{ ware.acquisiton_user }} <br>  {{ ware.store_user }}</td>
                     <td class="col-sm-2">{{ ware.acquisition_date }} <br> {{ ware.store_date }}</td>
                     <td class="col-sm-1">{{ ware.ware_type.ware_weight }} <br> {{ ware.stock }}</td>
@@ -79,8 +85,16 @@
                     <td class="col-sm-2">
                     {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" 
-                            href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}"><span class="fa fa-pencil"></span></a>
-                            <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                            href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}" >
+                                <span class="fa fa-pencil"></span></a>
+                            <a class="btn btn-primary btn-sm" href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}">
+                                <span class="fa fa-cube"></span></a>
+                            <a class="btn btn-primary btn-sm" 
+                                href="{% url 'raw_material:box_open' pkey=ware.pk %}" onclick="return confirm('A csomag meg lett kezdve?')">
+                                <span class="fa fa-dropbox"></span></a>
+                            <a class="btn btn-primary btn-sm" 
+                                href="{% url 'raw_material:box_empty' pkey=ware.pk %}" onclick="return confirm('A csomag kiürült?')">
+                                <span class="fa fa-share-square-o"></span></a>
                             <a class="btn btn-danger btn-sm" 
                                 href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}" onclick="return confirm('Biztosan törölni akarja?')">
                                 <span class="fa fa-trash-o"></span></a>

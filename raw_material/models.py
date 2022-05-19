@@ -35,6 +35,13 @@ class ProductIngredient(models.Model):
     material3 = models.IntegerField(default=0)
     pub_date = models.DateTimeField('date published')
 
+class StatusChoise(models.IntegerChoices):
+    BESZEREZVE  = 1
+    BEVÉTELEZVE = 2
+    KIBONTVA = 3
+    ELFOGYOTT = 4
+
+
 class ProductAcquisition(models.Model):
     ware_type = models.ForeignKey(
         WareData, 
@@ -62,3 +69,12 @@ class ProductAcquisition(models.Model):
         verbose_name='Raktározás dátuma', 
         null=True, blank=True,)
     stock = models.IntegerField(default=0, verbose_name='Készleten [g]')
+    open_box = models.BooleanField(default=False, verbose_name='Megkezdve [I/N]')
+    open_date = models.DateTimeField(
+        verbose_name='Kibontás dátuma', 
+        null=True, blank=True,)
+    empty_box = models.BooleanField(default=False, verbose_name='Elfogyott [I/N]')
+    empty_date = models.DateTimeField(
+        verbose_name='Kifogyás dátuma', 
+        null=True, blank=True,)
+    store_status = models.IntegerField(default=0, choices=StatusChoise.choices)

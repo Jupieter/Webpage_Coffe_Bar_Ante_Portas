@@ -9,8 +9,10 @@ class WareDataForm(forms.ModelForm):
         fields = ('ware_type','ware_brand', 'ware_brand_name','ware_weight','ware_price')
 
 class WareListChoice(forms.Form):
-    acquisition_list = forms.BooleanField(required=False, label='Beszerezve')
-    store_list = forms.BooleanField(required=False, label='Raktározva')
+    acquisition_list = forms.BooleanField(required=False, label='Beszerezve', initial=True)
+    store_list = forms.BooleanField(required=False, label='Raktározva', initial=True)
+    opened_list = forms.BooleanField(required=False, label='Kibontva', initial=True)
+    empty_list = forms.BooleanField(required=False, label='Elfogyott', initial=False)
 
 
 class AquisitionForm(forms.ModelForm):

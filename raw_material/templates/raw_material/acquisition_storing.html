@@ -39,7 +39,7 @@
 
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
         {% if user.is_staff %}
-            <button type="submit" class="save btn btn-primary">Save</button>
+            <button type="submit" class="save btn btn-primary"onclick="return confirm('Átvette az árut?')">Save</button>
         {% endif %}
         
     </form>
