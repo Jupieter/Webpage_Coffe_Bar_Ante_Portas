@@ -18,8 +18,22 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item {% if request.path == cart_home_url %}active{% endif %}">
-        <a class="nav-link nav-cart-count" href="{% url 'raw_material:ware_choice' %}">{{ request.session.cart_items }} <i class="fas fa-shopping-cart"></i></a>
+        <a class="nav-link nav-cart-count" href="{% url 'raw_material:acquisition_list' %}">{{ request.session.cart_items }} <i class="fas fa-shopping-cart"></i></a>
       </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Alapanyagok
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            {% if user.is_staff %}
+              <a class="dropdown-item" href="{% url 'raw_material:acquisition_list' %}">Raktár</a>
+            {% endif %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'raw_material:ware_choice' %}">Áruk</a>
+        </div>
+      </li>
+
       <li class="nav-item {% if request.path == products_list_url %}active{% endif %}">
         <a class="nav-link" href="{% url 'raw_material:acquisition_list' %}">Products</a>
       </li>
