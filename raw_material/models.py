@@ -41,7 +41,7 @@ class ProductIngredient(models.Model):
 class StatusChoise(models.IntegerChoices):
     MINDEGYIK = 0
     BESZEREZVE  = 1
-    BEVÉTELEZVE = 2
+    RAKTÁRON = 2
     KIBONTVA = 3
     ELFOGYOTT = 4
 
@@ -52,7 +52,7 @@ class ProductAcquisition(models.Model):
         on_delete=models.CASCADE, 
         related_name = 'Áru', 
         verbose_name = 'Áru')
-    store_status = models.IntegerField(default=0, choices=StatusChoise.choices)
+    store_status = models.IntegerField(default=0, choices=StatusChoise.choices, verbose_name="Raktározási státusz")
     acquisition_price = models.IntegerField(default=0, verbose_name='Ára [Ft]')
 
     acquisiton_user = models.ForeignKey(

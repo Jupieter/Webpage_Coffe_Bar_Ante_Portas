@@ -78,16 +78,18 @@ def acquisition_new(request, pk, pkey):
 
 def acquisition_list(request):
     ware_type_list = WareTypes.objects.all().order_by('ware_types')
-    wares = ProductAcquisition.objects.all().order_by('ware_type').order_by('acquisition_date')
+    wares = ProductAcquisition.objects.all().order_by('store_status').order_by('ware_type').order_by('acquisition_date')
     if request.method == "POST":
         form = WareListChoice(request.POST)
         if form.is_valid():
-            acq = request.POST.get("store_status", False)
-            wares = ProductAcquisition.objects.filter(store_status=acq)
-
-        wares.order_by('ware_type').order_by('acquisition_date')
+            acq = request.POST.get('store_status', 0)
+            if acq == "0":
+                wares = ProductAcquisition.objects.all()
+            else:
+                wares = ProductAcquisition.objects.filter(store_status=acq)
+        wares.order_by('store_status').order_by('ware_type').order_by('acquisition_date')
         return render (request, 'raw_material/acquisition_list.html', 
-            {'form': form, 'wares':wares, 'ware_type_list':ware_type_list,})
+            {'form': form, 'acq':acq, 'wares':wares, 'ware_type_list':ware_type_list,})
     else:
         form = WareListChoice()
 
@@ -133,16 +135,20 @@ def acquisition_storing(request, pkey):
 
 def box_open(request, pkey):
     ware = get_object_or_404(ProductAcquisition, pk=pkey)
+    user = request.user
     if ware.store_status == 2:
-        ware.store_date = timezone.now()
+        ware.open_date = timezone.now()
+        ware.open_user = user
         ware.store_status = 3
         ware.save()
     return redirect('raw_material:acquisition_list')
 
 def box_empty(request, pkey):
     ware = get_object_or_404(ProductAcquisition, pk=pkey)
+    user = request.user
     if ware.store_status == 3:
         ware.empty_date = timezone.now()
+        ware.empty_user = user
         ware.store_status = 4
         ware.save()
     return redirect('raw_material:acquisition_list')
