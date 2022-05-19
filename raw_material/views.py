@@ -118,20 +118,13 @@ def acquisition_edit(request, pkey):
 def acquisition_storing(request, pkey):
     ware = get_object_or_404(ProductAcquisition, pk=pkey)
     user = request.user
-    now = timezone.now()
-    if request.method == "POST":
-        form = AquisitionStockedForm(request.POST, instance=ware)
-        if form.is_valid():
-            acquisition_storing = form.save(commit=False)
-            acquisition_storing.ware_type = ware.ware_type
-            acquisition_storing.store_date = now
-            acquisition_storing.store_status = 2
-            acquisition_storing.save()
-            return redirect('raw_material:acquisition_list')
-    else:
-        form = AquisitionStockedForm(instance=ware, initial={'store_user':user, 'store_date':now}) 
+    if ware.store_status == 1:
+        ware.store_date = timezone.now()
+        ware.store_user = user
+        ware.store_status = 2
+        ware.save()
+    return redirect('raw_material:acquisition_list')
   
-    return render(request, 'raw_material/acquisition_storing.html', {'form': form, 'ware':ware, 'now':now})
 
 def box_open(request, pkey):
     ware = get_object_or_404(ProductAcquisition, pk=pkey)

@@ -115,7 +115,8 @@
                             href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}" >
                             <span class="fa fa-pencil"></span></a>
                             <a class="btn btn-primary btn-sm" 
-                                href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}">
+                                href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}"
+                                onclick="return confirm('Az árut bevételezi?')">
                                 <span class="fa fa-cube"></span></a>
                         {% endif %}
                         {% if ware.store_status == 2 %}
