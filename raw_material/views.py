@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import WareTypes, WareData, ProductIngredient, ProductAcquisition
 from .forms import WareDataForm, AquisitionForm, AquisitionStockedForm, WareListChoice
-from django.shortcuts import redirect
+
 
 def ware_choice(request):
     ware_type_list = WareTypes.objects.all().order_by('ware_types')    

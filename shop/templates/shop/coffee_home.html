@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Coffee Home
+{% endblock %}
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/coffee_bg_3.jfif);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        h2  {
+        text-align: center;
+        color: rgb(178, 169, 155);
+        }
+    </style>
+{% endblock %}  
+
+{% block content %}
+
+<div class="container pt-2 middle border">
+    <h2> Kávé adatlaplap </h2>
+    <h4>{{wares}}</h4>
+
+    
+</div>
+<div class="container sm-8 pt-2 border">
+    <div class="col-sm-2 right border">
+        <a  href="{% url 'shop:coffee_make' %}">                
+            <img src ="{% static '/image/coffee_machine_1.jfif' %}" class="rounded" style="height:150px"; alt="choice">                 
+        </a>
+    </div>
+</div>
+
+{% endblock%}

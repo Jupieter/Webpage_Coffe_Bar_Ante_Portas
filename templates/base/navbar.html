@@ -33,6 +33,20 @@
           <a class="dropdown-item" href="{% url 'raw_material:ware_choice' %}">Áruk</a>
         </div>
       </li>
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Coffee-Bar
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'shop:coffee_home' %}">Home</a>
+            {% if user.is_staff %}
+              <a class="dropdown-item" href="{% url 'shop:coffee_make' %}">Főzés</a>
+            {% endif %}
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{% url 'raw_material:ware_choice' %}">Rendelés</a>
+        </div>
+      </li>
 
       <li class="nav-item {% if request.path == products_list_url %}active{% endif %}">
         <a class="nav-link" href="{% url 'raw_material:acquisition_list' %}">Products</a>
