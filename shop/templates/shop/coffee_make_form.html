@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Coffee Make
+{% endblock %}
+
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/coffee_bg_6.jpgg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        h2  {
+        text-align: middle;
+        color: rgb(51, 31, 1);
+        }
+    </style>
+{% endblock %}  
+
+{% block content %}
+
+<div class="container sm ">
+    <h2> Kávé főzés </h2>
+    <h4>Választott kávé:</h4>
+    {% if ware.stock <= stock_min %}
+        <h4 style="color:red; bold"> {{ alrt }}</h4>
+    {% endif %}
+
+</div>
+<div class="container sm-6 pt-3 ">
+    <table class="table table sm-6 ">
+        <thead class="table-dark">
+            <tr>  
+                <th class="col-sm-1">     Márka    </th>
+                <th class="col-sm-1">    Típus     </th>
+                <th class="col-sm-1">Kiszerelés [g]</th>
+                <th class="col-sm-1">  Maradék [g]  </th>
+                <th class="col-sm-1">  Szerkeszt   </th>
+                
+            </tr>
+        </thead>
+        
+        <tr> 
+            <td class="col-sm-1">{{ware.ware_type.ware_brand}}</td>
+            <td class="col-sm-1">{{ware.ware_type.ware_brand_name}} </td>
+            <td class="col-sm-1">{{ware.ware_type.ware_weight}}g</td>
+            {% if ware.stock <= stock_min %}
+                <td class="col-sm-1" style="color:red; bold">{{ware.stock}}g</td>
+            {% else %}
+                <td class="col-sm-1">{{ware.stock}}g</td>
+            {% endif %}
+            <th class="col-sm-1">{{ware.id}}</th>
+        </tr>
+        
+    </table>
+</div>
+
+
+        
+
+<div class="input-group pt-3 pb-3 mb-10 mr-sm-8 ">
+    <form method="POST" class="post-form was-validated">{% csrf_token %}
+        <div class="row ">  
+            <div class="col-sm-12" >
+                <h4>{{form.as_p}}</h4>
+            </div>                
+        </div>
+        <div class="row ">
+            <div class="col-sm-6 " >
+                <button type="cancel" class="cancel btn btn-primary" 
+                onclick="window.history.back();">Cancel</button>
+            </div>
+            <div class="col-sm-6 " >
+                <button type="submit" class="save btn btn-primary">Save</button>
+            </div>               
+        </div>
+    </form>
+</div>
+
+<div class="container sm-6 pt-3 border">
+    <p>{{cm}}</p>
+    <p>{{dt}}</p>
+    <p>{{field_names}}</p>
+    <p>{{coffe_new}}</p>   
+    <p>{{coffe_new.as_p}}</p> 
+</div>
+{% endblock%}

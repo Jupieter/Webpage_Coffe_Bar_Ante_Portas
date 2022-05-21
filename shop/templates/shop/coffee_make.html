@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     Coffee Make
 {% endblock %}
+
 {% block style %}    
     <style>
         body {
@@ -20,31 +22,59 @@
 
 {% block content %}
 
-<div class="container pt-2 middle">
-    <h2> Kávé főzés </h2>
-    <h4>{{wares}}</h4>
-    {% for ware in wares %}
-        <h2> Termék: {{ware.id}} {{ware.ware_type.ware_brand}} {{ware.ware_type.ware_brand_name}} 
-            {{ware.ware_type.ware_weight}}g ( {{ware.ware_type.ware_type}} ) {{ware.ware_type.ware_price}}Ft</h2>
-
-        
-    {% endfor %}
+<div class="container sm ">
+    <div class="row-sm-2">
+        <div class="col-sm-2 right border">
+            <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_home' %}" {% endif %}>                
+                <img src ="{% static '/image/coffee_machine_1.jfif' %}" class="rounded" 
+                style="width:100px;height:100px; border:5px solid; "; alt="choice">                 
+            </a>
+        </div>
+        <div class="col-sm-6 right border">
+            <h2> Kávé főzés {{dt}} </h2>
+            <h4> Kibontott kávék</h4>
+        </div>    
+    </div>
 </div>
 
-<div class="input-group mb-5">
-    <form method="POST" class="post-form">{% csrf_token %}
-        
-        <h4>{{ind}} {{ware_name}}</h4>
-    
-        <h4>{{form.as_p}}</h4>
-        
-
-        
-        <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
-        {% if user.is_authenticated %}
-            <button type="submit" class="save btn btn-primary">Save</button>
-        {% endif %}
-        
-    </form>
+<div class="container sm ">
+    <div class="row-sm-6">
+        <table class="table table table-hover border">
+            <thead class="table-dark">
+                <tr>  
+                    <th class="col-sm-1">     Márka    </th>
+                    <th class="col-sm-1">    Típus     </th>
+                    <th class="col-sm-1">Kiszerelés [g]</th>
+                    <th class="col-sm-1">  Maradék [g]  </th>
+                    <th class="col-sm-1">  Azonosító   </th>
+                    <th class="col-sm-1">  Főzés    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for ware in wares %}
+                <tr> 
+                    <td>{{ware.ware_type.ware_brand}}</td>
+                    <td>{{ware.ware_type.ware_brand_name}} </td>
+                    <td>{{ware.ware_type.ware_weight}}g</td>
+                    {% if ware.stock <= stock_min %}
+                    <td style="background-color:powderblue; 
+                        color:red; bold">{{ware.stock}}g</td>
+                    {% else %}
+                    <td>{{ware.stock}}g</td>
+                    {% endif %}
+                    <th>{{ware.id}}</th>
+                    <td>
+                        {% if user.is_staff %}
+                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                        {% endif %}
+                    </td>       
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+     
 {% endblock%}
