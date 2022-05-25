@@ -48,9 +48,6 @@
         </div>
       </li>
 
-      <li class="nav-item {% if request.path == products_list_url %}active{% endif %}">
-        <a class="nav-link" href="{% url 'raw_material:acquisition_list' %}">Products</a>
-      </li>
       <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
         <a class="nav-link" href="{% url 'raw_material:ware_choice' %}">Contact us</a>
       </li>
