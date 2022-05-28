@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}    
+    Storing    
+{% endblock %}
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/cup.jpg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        h2  {
+        text-align: left;
+        color: rgb(247, 155, 17);
+        }
+    </style>
+{% endblock %} 
+
+{% block content %}
+
+<div class="container pt-2">
+
+        <h1> Foglalok a : {{ware.c_make_date}}-i </h1>
+        <h2> {{ware.id}} {{ware.c_make_ware.ware_type.ware_brand}} 
+            {{ware.c_make_ware.ware_type.ware_brand_name}} kávéra</h2>
+        <h4>{{dose}}</h4>
+</div>
+
+
+
+<div class="input-group mb-3">
+    <form method="POST" class="post-form">{% csrf_token %}
+        
+        <h4></h4>
+        
+        <h4>{{form.as_p}}</h4>
+        
+
+        <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
+        {% if user.is_staff %}
+            <button type="submit" class="save btn btn-primary">Save</button>
+        {% endif %}
+        
+    </form>
+</div>
+{% endblock%}
