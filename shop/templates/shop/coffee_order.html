@@ -32,12 +32,9 @@
         </div>
         <div class="col-sm-6 right border">
             <h1> Következő Kávézás</h1>
-            <h3>Mai   {{dt_start}} </h3>
-            <h3>End {{dt_end}}</h3>
-            
+            <h3>End {{dt_end}}</h3>            
             <h3>adat {{adat}}</h3>
             <h3>ordered {{ordered}}</h3>
-            <h3>select {{ordered.coffe_selected}}</h3>
             <h4>Kávéfőzés ekkor:</h4>
         </div>    
     </div>
@@ -49,10 +46,14 @@
         <table class="table table table-hover border">
             <thead class="table-dark">
                 <tr>  
-                    <th class="col-sm-1">{{coffee.id}}, {{coffee.c_make_ware.ware_type.ware_brand}}</th>
-                    <th class="col-sm-1">{{coffee.c_make_ware.ware_type.ware_brand_name}}</th>
+                    <th class="col-sm-2">{{coffee.id}}, 
+                        {{coffee.c_make_ware.ware_type.ware_brand}}, 
+                        {{coffee.c_make_ware.ware_type.ware_brand_name}}</th>                   
                     <th class="col-sm-1">{{coffee.c_make_date}}</th>
-                    <th class="col-sm-1">  Maradék [g]  </th>                    
+                    <th class="col-sm-1">  Kávé adag </th>                    
+                    <th class="col-sm-1">  Cukor adag </th>                    
+                    <th class="col-sm-1">  Tej adag </th>                    
+                    <th class="col-sm-1">  Ízesítő adag </th>                    
                     <th class="col-sm-1">                        
                          {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
@@ -64,17 +65,21 @@
             <tbody>
                 {% for order in ordered %}
                 <tr> 
-                    <td>{{order.c_make_ware.ware_type.ware_brand}}</td>
-                    <td>{{order.c_make_ware.ware_type.ware_brand_name}} </td>
-                    <td>{{order.c_make_date}}</td>                    
-                    <td style="background-color:powderblue; 
-                        color:red; bold">{{coffee.stock}}g</td>
+                    {% if order.coffee_selected.id == coffee.id %}
+                    
+                    <td>{{order.id}}., {{order.coffe_user}}</td>
+                    <td>{{order.coffee_reg}} </td>
+                    <td>{{order.coffee_dose}}</td>                    
+                    <td>{{order.sugar_dose}}</td>
+                    <td>{{order.milk_dose}}</td>
+                    <td>{{order.flavour_dose}}</td>
                     <td>
                         {% if user.is_staff %}
                         <a class="btn btn-danger btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
                             <span class="fa fa-trash-o"></span></a>
                         {% endif %}
-                    </td>       
+                    </td>
+                    {% endif %}       
                 </tr>
                 {% endfor %}
             </tbody>
