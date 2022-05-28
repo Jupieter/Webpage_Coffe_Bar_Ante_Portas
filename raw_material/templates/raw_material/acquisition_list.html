@@ -103,9 +103,12 @@
                             {{ ware.empty_date|time:"H:i" }}
                         {% endif %} 
                     </td>
-
-                    <td class="col-sm-2">{{ ware.ware_type.ware_weight }}  /  {{ ware.stock }}
-                    </td>
+                    {% if ware.stock <= 40 %}
+                    <td style="background-color:powderblue; color:red; bold">
+                    {{ ware.ware_type.ware_weight }}  /  {{ware.stock}}g</td>
+                    {% else %}
+                    <td class="col-sm-2">{{ ware.ware_type.ware_weight }}  /  {{ ware.stock }}</td>
+                    {% endif %}
                     <td class="col-sm-1">{{ ware.acquisition_price }}</td>
                     
                     <td class="col-sm-2">
