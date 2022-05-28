@@ -54,10 +54,12 @@
                     <th class="col-sm-1">  Cukor adag </th>                    
                     <th class="col-sm-1">  Tej adag </th>                    
                     <th class="col-sm-1">  Ízesítő adag </th>                    
+                    {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
                     <th class="col-sm-1">                        
-                         {% if user.is_authenticated %}
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_order_form' pkey=coffee.pk %}">
                             <span class="fa fa-shopping-basket"> Foglalok </span></a>
+                        {% else %}
+                        <th>Betelt</th>
                         {% endif %}</th>
                     
                 </tr>
@@ -65,7 +67,7 @@
             <tbody>
                 {% for order in ordered %}
                 <tr> 
-                    {% if order.coffee_selected.id == coffee.id %}
+                    {% if order.coffee_selected.id == coffee.id  %}
                     
                     <td>{{order.id}}., {{order.coffe_user}}</td>
                     <td>{{order.coffee_reg}} </td>
@@ -74,7 +76,7 @@
                     <td>{{order.milk_dose}}</td>
                     <td>{{order.flavour_dose}}</td>
                     <td>
-                        {% if user.is_staff and order.coffee_dose > 1.5%}
+                        {% if user.is_staff %}
                         <a class="btn btn-danger btn-sm" 
                         href="{% url 'shop:coffee_order_remove' pk=order.pk %}"
                         onclick="return confirm('Biztosan törölni akarja?')">
