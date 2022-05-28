@@ -77,10 +77,11 @@ def coffee_order(request):
     adat = []
     for coffee in coffees:
         adat.append(coffee.id)
-    order_start = min(adat)
-    ordered = max(adat)
+    # order_start = min(adat)
+    # ordered = max(adat)
     coffees = coffees.order_by('c_make_date')
-    # ordered = CoffeeOrder.objects.filter(coffe_selected__range =(order_start, order_end))
+    # ordered = CoffeeOrder.objects.filter(coffe_selected_in = adat)
+    ordered = CoffeeOrder.objects.all()
 
     return render(request, 'shop/coffee_order.html', 
         {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})

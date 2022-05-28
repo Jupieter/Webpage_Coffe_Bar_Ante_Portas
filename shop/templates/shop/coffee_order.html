@@ -32,12 +32,13 @@
         </div>
         <div class="col-sm-6 right border">
             <h1> Következő Kávézás</h1>
-            <h3>   {{dt}} </h3>
-            <h3>{{coffes}}</h3>
-            <h3>{{end}}</h3>
-            <h3>{{adat}}</h3>
-            <h3>{{ordered}}</h3>
-            <h4> Kibontott kávék</h4>
+            <h3>Mai   {{dt_start}} </h3>
+            <h3>End {{dt_end}}</h3>
+            
+            <h3>adat {{adat}}</h3>
+            <h3>ordered {{ordered}}</h3>
+            <h3>select {{ordered.coffe_selected}}</h3>
+            <h4>Kávéfőzés ekkor:</h4>
         </div>    
     </div>
 </div>
@@ -61,23 +62,21 @@
                 </tr>
             </thead>
             <tbody>
+                {% for order in ordered %}
                 <tr> 
-                    <td>{{coffee.c_make_ware.ware_type.ware_brand}}</td>
-                    <td>{{coffee.c_make_ware.ware_type.ware_brand_name}} </td>
-                    <td>{{coffee.c_make_date}}</td>
-                    {% if coffee.stock <= stock_min %}
+                    <td>{{order.c_make_ware.ware_type.ware_brand}}</td>
+                    <td>{{order.c_make_ware.ware_type.ware_brand_name}} </td>
+                    <td>{{order.c_make_date}}</td>                    
                     <td style="background-color:powderblue; 
                         color:red; bold">{{coffee.stock}}g</td>
-                    {% else %}
-                    <td>{{coffee.stock}}g</td>
-                    {% endif %}
                     <td>
                         {% if user.is_staff %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
-                            <span class="fa fa-shopping-basket"></span></a>
+                        <a class="btn btn-danger btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
+                            <span class="fa fa-trash-o"></span></a>
                         {% endif %}
                     </td>       
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
