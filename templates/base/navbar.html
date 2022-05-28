@@ -40,11 +40,11 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'shop:coffee_home' %}">Home</a>
+          <div class="dropdown-divider"></div>
             {% if user.is_staff %}
               <a class="dropdown-item" href="{% url 'shop:coffee_make' %}">Főzés</a>
             {% endif %}
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'raw_material:ware_choice' %}">Rendelés</a>
+          <a class="dropdown-item" href="{% url 'shop:coffee_order' %}">Rendelés</a>
         </div>
       </li>
 

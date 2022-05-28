@@ -86,6 +86,10 @@ def coffee_order(request):
     return render(request, 'shop/coffee_order.html', 
         {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
 
+def coffee_order_remove(request, pk):
+    coffee1 = get_object_or_404(CoffeeOrder, pk=pk)
+    coffee1.delete()
+    return redirect('shop:coffee_order')
 
 def coffee_order_form(request, pkey):
     ware = get_object_or_404(CoffeeMake, pk=pkey)
@@ -93,9 +97,13 @@ def coffee_order_form(request, pkey):
         form = CoffeeOrderForm(request.POST)
         if form.is_valid():
             ware = form.save(commit=False)
-           #  ware.pub_date = timezone.now()
-            # ware.save()
-            return redirect('shop/coffee_order.html')
+            ware.id = pkey
+            ware.coffee_reg = timezone.now() 
+            ware.save()
+            return redirect('shop:coffee_order')
     else:
         form = CoffeeOrderForm()
+        form.fields['coffee_selected'].initial = ware.id
+        form.fields['coffee_selected'].widget.attrs['readonly'] = True
+        
     return render(request, 'shop/c_order_form.html', {'form': form, 'ware':ware})

@@ -35,7 +35,7 @@
             <h3>End {{dt_end}}</h3>            
             <h3>adat {{adat}}</h3>
             <h3>ordered {{ordered}}</h3>
-            <h4>Kávéfőzés ekkor:</h4>
+            <h4>del {{coffee1}}:</h4>
         </div>    
     </div>
 </div>
@@ -75,7 +75,9 @@
                     <td>{{order.flavour_dose}}</td>
                     <td>
                         {% if user.is_staff %}
-                        <a class="btn btn-danger btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
+                        <a class="btn btn-danger btn-sm" 
+                        href="{% url 'shop:coffee_order_remove' pk=order.pk %}"
+                        onclick="return confirm('Biztosan törölni akarja?')">
                             <span class="fa fa-trash-o"></span></a>
                         {% endif %}
                     </td>
