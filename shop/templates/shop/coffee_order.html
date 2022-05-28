@@ -32,7 +32,7 @@
         </div>
         <div class="col-sm-6 right border">
             <h1> Kávé rendelés {{dt}} </h1>
-            <h3>{{coffe}}</h3>
+            <h3>{{coffes}}</h3>
             <h3>{{end}}</h3>
             <h4> Kibontott kávék</h4>
         </div>    
@@ -54,21 +54,21 @@
                 </tr>
             </thead>
             <tbody>
-                {% for ware in wares %}
+                {% for coffee in coffees %}
                 <tr> 
-                    <td>{{ware.c_make_ware}}</td>
-                    <td>{{ware.ware_type.ware_brand_name}} </td>
-                    <td>{{ware.ware_type.ware_weight}}g</td>
-                    {% if ware.stock <= stock_min %}
+                    <td>{{coffee.c_make_coffee}}</td>
+                    <td>{{coffee.coffee_type.coffee_brand_name}} </td>
+                    <td>{{coffee.coffee_type.coffee_weight}}g</td>
+                    {% if coffee.stock <= stock_min %}
                     <td style="background-color:powderblue; 
-                        color:red; bold">{{ware.stock}}g</td>
+                        color:red; bold">{{coffee.stock}}g</td>
                     {% else %}
-                    <td>{{ware.stock}}g</td>
+                    <td>{{coffee.stock}}g</td>
                     {% endif %}
-                    <th>{{ware.id}}</th>
+                    <th>{{coffee.id}}</th>
                     <td>
                         {% if user.is_staff %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}"><span class="fa fa-shopping-basket"></span></a>
                         {% endif %}
                     </td>       
                 </tr>
