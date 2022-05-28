@@ -55,7 +55,7 @@
                     <th class="col-sm-1">  Tej adag </th>                    
                     <th class="col-sm-1">  Ízesítő adag </th>                    
                     <th class="col-sm-1">                        
-                         {% if user.is_staff %}
+                         {% if user.is_authenticated %}
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
                             <span class="fa fa-shopping-basket"> Foglalok </span></a>
                         {% endif %}</th>
