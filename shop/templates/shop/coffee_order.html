@@ -31,7 +31,8 @@
             </a>
         </div>
         <div class="col-sm-6 right border">
-            <h1> Kávé rendelés {{dt}} </h1>
+            <h1> Következő Kávézás</h1>
+            <h3>   {{dt}} </h3>
             <h3>{{coffes}}</h3>
             <h3>{{end}}</h3>
             <h4> Kibontott kávék</h4>
@@ -40,25 +41,29 @@
 </div>
 
 <div class="container sm ">
+    {% for coffee in coffees %}
     <div class="row-sm-6">
         <table class="table table table-hover border">
             <thead class="table-dark">
                 <tr>  
-                    <th class="col-sm-1">     Márka    </th>
-                    <th class="col-sm-1">    Típus     </th>
-                    <th class="col-sm-1">Kiszerelés [g]</th>
+                    <th class="col-sm-1">{{coffee.id}}, {{coffee.c_make_ware.ware_type.ware_brand}}</th>
+                    <th class="col-sm-1">{{coffee.c_make_ware.ware_type.ware_brand_name}}</th>
+                    <th class="col-sm-1">{{coffee.c_make_date}}</th>
                     <th class="col-sm-1">  Maradék [g]  </th>
                     <th class="col-sm-1">  Azonosító   </th>
-                    <th class="col-sm-1">  Főzés    </th>
+                    <th class="col-sm-1">                        
+                         {% if user.is_staff %}
+                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
+                            <span class="fa fa-shopping-basket"> Lefoglalom </span></a>
+                        {% endif %}</th>
                     
                 </tr>
             </thead>
             <tbody>
-                {% for coffee in coffees %}
                 <tr> 
-                    <td>{{coffee.c_make_coffee}}</td>
-                    <td>{{coffee.coffee_type.coffee_brand_name}} </td>
-                    <td>{{coffee.coffee_type.coffee_weight}}g</td>
+                    <td>{{coffee.c_make_ware.ware_type.ware_brand}}</td>
+                    <td>{{coffee.c_make_ware.ware_type.ware_brand_name}} </td>
+                    <td>{{coffee.c_make_date}}</td>
                     {% if coffee.stock <= stock_min %}
                     <td style="background-color:powderblue; 
                         color:red; bold">{{coffee.stock}}g</td>
@@ -68,14 +73,15 @@
                     <td>{{coffee.id}}</td>
                     <td>
                         {% if user.is_staff %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
+                            <span class="fa fa-shopping-basket"></span></a>
                         {% endif %}
                     </td>       
                 </tr>
-                {% endfor %}
             </tbody>
         </table>
     </div>
+    {% endfor %}
 </div>
 
      
