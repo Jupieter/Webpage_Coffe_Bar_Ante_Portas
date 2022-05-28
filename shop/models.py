@@ -18,10 +18,10 @@ class CoffeeMake(models.Model):
 
 class CoffeeOrder(models.Model):
     coffee_selected = models.ForeignKey(CoffeeMake, on_delete=models.CASCADE, verbose_name='Lefoglalt Kávé')
-    coffee_dose = models.IntegerField(verbose_name='Kávé Adag', default=1)
-    sugar_dose =  models.IntegerField(verbose_name='Cukor Adag', default=1)
-    milk_dose =  models.IntegerField(verbose_name='Tej Adag', default=1)
-    flavour_dose =  models.IntegerField(verbose_name='Ízesítő Adag', default=1)
+    coffee_dose = models.IntegerField(verbose_name='Kávé [0,5-2] Adag', default=1)
+    sugar_dose =  models.IntegerField(verbose_name='Cukor [0,5-3] Adag [5 g]', default=1)
+    milk_dose =  models.IntegerField(verbose_name='Tej [0,5-4] Adag [50 ml]', default=1)
+    flavour_dose =  models.IntegerField(verbose_name='Ízesítő [0,5-2] Adag [5 g]', default=1)
     coffe_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=False, 

@@ -9,4 +9,5 @@ urlpatterns = [
     path('make/', views.coffee_make, name='coffee_make'),
     path('make/(<int:pkey>)', views.coffee_make_form, name='coffee_make_form'),
     path('order/', views.coffee_order, name='coffee_order'),
+    path('order/(<int:pkey>)', views.coffee_order_form, name='coffee_order_form'),
 ]

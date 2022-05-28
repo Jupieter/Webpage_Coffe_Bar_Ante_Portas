@@ -3,7 +3,7 @@ from django.utils import timezone
 import datetime
 from raw_material.models import ProductAcquisition
 from .models import CoffeeMake, CoffeeOrder
-from .forms import CoffeeMakerForm
+from .forms import CoffeeMakerForm, CoffeeOrderForm
 
 
 def coffee_home(request):
@@ -80,8 +80,22 @@ def coffee_order(request):
     # order_start = min(adat)
     # ordered = max(adat)
     coffees = coffees.order_by('c_make_date')
-    # ordered = CoffeeOrder.objects.filter(coffe_selected_in = adat)
+    # ordered = CoffeeOrder.objects.filter(coffee_selected_in = adat)
     ordered = CoffeeOrder.objects.all()
 
     return render(request, 'shop/coffee_order.html', 
         {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
+
+
+def coffee_order_form(request, pkey):
+    ware = get_object_or_404(CoffeeMake, pk=pkey)
+    if request.method == "POST":
+        form = CoffeeOrderForm(request.POST)
+        if form.is_valid():
+            ware = form.save(commit=False)
+           #  ware.pub_date = timezone.now()
+            # ware.save()
+            return redirect('shop/coffee_order.html')
+    else:
+        form = CoffeeOrderForm()
+    return render(request, 'shop/c_order_form.html', {'form': form, 'ware':ware})
