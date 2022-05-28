@@ -93,17 +93,22 @@ def coffee_order_remove(request, pk):
 
 def coffee_order_form(request, pkey):
     ware = get_object_or_404(CoffeeMake, pk=pkey)
+    dose = ware.c_make_dose
     if request.method == "POST":
         form = CoffeeOrderForm(request.POST)
         if form.is_valid():
-            ware = form.save(commit=False)
-            ware.id = pkey
-            ware.coffee_reg = timezone.now() 
+            coffee2 = form.save(commit=False)
+            coffee2.coffee_selected = ware
+            coffee2.coffe_user = request.user
+            coffee2.coffee_reg = timezone.now() 
+            coffee2.save()
+            ware.c_make_dose = dose-coffee2.coffee_dose
             ware.save()
             return redirect('shop:coffee_order')
     else:
         form = CoffeeOrderForm()
-        form.fields['coffee_selected'].initial = ware.id
-        form.fields['coffee_selected'].widget.attrs['readonly'] = True
+        # form.fields['coffee_selected'].initial = ware.id
+        # form.fields['coffee_selected'].widget.attrs['readonly'] = True
+        form.fields['coffee_dose'].widget.attrs['max'] = dose
         
-    return render(request, 'shop/c_order_form.html', {'form': form, 'ware':ware})
+    return render(request, 'shop/c_order_form.html', {'form': form, 'ware':ware, 'dose':dose})

@@ -48,12 +48,11 @@ class CoffeeMakerForm(forms.Form):
 class CoffeeOrderForm(forms.ModelForm):
     class Meta:
         model = CoffeeOrder
-        readonly_fields = ('coffe_user')
-        fields = ('coffee_selected','coffee_dose','sugar_dose', 'milk_dose','flavour_dose')        
+        fields = ('coffee_dose','sugar_dose', 'milk_dose','flavour_dose')        
         widgets = {
             'coffee_dose': forms.NumberInput(attrs={'min':'0', 'step':'0.5', 'max':'2'}),
             'sugar_dose': forms.NumberInput(attrs={'min':'0', 'step':'0.5', 'max':'3'}),
-            'sugar_dose': forms.NumberInput(attrs={'min':'0', 'step':'0.5', 'max':'4'}),
+            'milk_dose': forms.NumberInput(attrs={'min':'0', 'step':'0.5', 'max':'4'}),
             'flavour_dose': forms.NumberInput(attrs={'min':'0', 'step':'0.5', 'max':'2'}),
         }
     
