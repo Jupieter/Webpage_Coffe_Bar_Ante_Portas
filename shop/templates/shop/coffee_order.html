@@ -49,12 +49,11 @@
                     <th class="col-sm-1">{{coffee.id}}, {{coffee.c_make_ware.ware_type.ware_brand}}</th>
                     <th class="col-sm-1">{{coffee.c_make_ware.ware_type.ware_brand_name}}</th>
                     <th class="col-sm-1">{{coffee.c_make_date}}</th>
-                    <th class="col-sm-1">  Maradék [g]  </th>
-                    <th class="col-sm-1">  Azonosító   </th>
+                    <th class="col-sm-1">  Maradék [g]  </th>                    
                     <th class="col-sm-1">                        
                          {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
-                            <span class="fa fa-shopping-basket"> Lefoglalom </span></a>
+                            <span class="fa fa-shopping-basket"> Foglalok </span></a>
                         {% endif %}</th>
                     
                 </tr>
@@ -70,7 +69,6 @@
                     {% else %}
                     <td>{{coffee.stock}}g</td>
                     {% endif %}
-                    <td>{{coffee.id}}</td>
                     <td>
                         {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}">
