@@ -56,7 +56,7 @@
             <tbody>
                 {% for ware in wares %}
                 <tr> 
-                    <td>{{ware.ware_type.ware_brand}}</td>
+                    <td>{{ware.c_make_ware}}</td>
                     <td>{{ware.ware_type.ware_brand_name}} </td>
                     <td>{{ware.ware_type.ware_weight}}g</td>
                     {% if ware.stock <= stock_min %}
