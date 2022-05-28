@@ -66,3 +66,12 @@ def coffee_make_form(request, pkey):
         form.fields['c_make_date'].initial = dt
     return render(request, 'shop/coffee_make_form.html', 
     {'form': form, 'ware':ware,'dt':dt, 'alrt':alrt, 'stock_min':stock_min})
+
+
+def ccoffee_order(request):
+    coffe = CoffeeMake.objects.all()
+    
+    wares=[]
+    dt= datetime.datetime.now().date()
+
+    return render(request, 'shop/coffee_make.html', {'coffe':coffe,'wares':wares,'dt':dt, })
