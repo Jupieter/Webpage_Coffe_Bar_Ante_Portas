@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 import datetime
 from raw_material.models import ProductAcquisition
-from .models import CoffeeMake
+from .models import CoffeeMake, CoffeeOrder
 from .forms import CoffeeMakerForm
 
 
@@ -70,9 +70,17 @@ def coffee_make_form(request, pkey):
 
 def coffee_order(request):
     dt= datetime.datetime.now()
-    start = dt; end = dt + datetime.timedelta(days=1)
-    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(start, end))
-    coffees = coffees1.order_by('c_make_date')
-    
+    dt_start = dt
+    dt_end = dt + datetime.timedelta(days=1)
+    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
+    coffees = coffees1.order_by('id')
+    adat = []
+    for coffee in coffees:
+        adat.append(coffee.id)
+    order_start = min(adat)
+    ordered = max(adat)
+    coffees = coffees.order_by('c_make_date')
+    # ordered = CoffeeOrder.objects.filter(coffe_selected__range =(order_start, order_end))
 
-    return render(request, 'shop/coffee_order.html', {'coffees':coffees,'dt':dt, 'end':end})
+    return render(request, 'shop/coffee_order.html', 
+        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
