@@ -65,7 +65,7 @@
                     {% else %}
                     <td>{{coffee.stock}}g</td>
                     {% endif %}
-                    <th>{{coffee.id}}</th>
+                    <td>{{coffee.id}}</td>
                     <td>
                         {% if user.is_staff %}
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=coffee.pk %}"><span class="fa fa-shopping-basket"></span></a>

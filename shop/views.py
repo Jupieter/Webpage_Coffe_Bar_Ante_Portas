@@ -71,6 +71,8 @@ def coffee_make_form(request, pkey):
 def coffee_order(request):
     dt= datetime.datetime.now()
     start = dt; end = dt + datetime.timedelta(days=1)
-    coffees = CoffeeMake.objects.filter(c_make_date__range =(start, end))
+    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(start, end))
+    coffees = coffees1.order_by('c_make_date')
+    
 
     return render(request, 'shop/coffee_order.html', {'coffees':coffees,'dt':dt, 'end':end})
