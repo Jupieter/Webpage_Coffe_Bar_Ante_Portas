@@ -77,11 +77,8 @@ def coffee_order(request):
     adat = []
     for coffee in coffees:
         adat.append(coffee.id)
-    # order_start = min(adat)
-    # ordered = max(adat)
     coffees = coffees.order_by('c_make_date')
     ordered = CoffeeOrder.objects.filter(coffee_selected__in = adat)
-    # ordered = CoffeeOrder.objects.all()
 
     return render(request, 'shop/coffee_order.html', 
         {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
@@ -92,23 +89,25 @@ def coffee_order_remove(request, pk):
     return redirect('shop:coffee_order')
 
 def coffee_order_form(request, pkey):
-    ware = get_object_or_404(CoffeeMake, pk=pkey)
-    dose = ware.c_make_dose
+    coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
+    ware = ProductAcquisition.objects.filter(store_status=3)
+
+    dose = coffee_1.c_make_dose
     if request.method == "POST":
         form = CoffeeOrderForm(request.POST)
         if form.is_valid():
             coffee2 = form.save(commit=False)
-            coffee2.coffee_selected = ware
+            coffee2.coffee_selected = coffee_1
             coffee2.coffe_user = request.user
             coffee2.coffee_reg = timezone.now() 
             coffee2.save()
-            ware.c_make_dose = dose-coffee2.coffee_dose
-            ware.save()
+            coffee_1.c_make_dose = dose-coffee2.coffee_dose
+            coffee_1.save()
             return redirect('shop:coffee_order')
     else:
         form = CoffeeOrderForm()
-        # form.fields['coffee_selected'].initial = ware.id
+        # form.fields['coffee_selected'].initial = coffee_1.id
         # form.fields['coffee_selected'].widget.attrs['readonly'] = True
         form.fields['coffee_dose'].widget.attrs['max'] = dose
         
-    return render(request, 'shop/c_order_form.html', {'form': form, 'ware':ware, 'dose':dose})
+    return render(request, 'shop/c_order_form.html', {'form': form, 'coffee_1':coffee_1 ,'ware':ware, 'dose':dose})
