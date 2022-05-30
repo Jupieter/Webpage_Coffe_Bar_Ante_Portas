@@ -22,7 +22,7 @@ class CoffeeOrder(models.Model):
         max_digits=2, 
         decimal_places=1, 
         verbose_name='Kávé [0,5-2] Adag', 
-        default=1)
+        default=0)
     sugar_dose =  models.DecimalField(
         max_digits=2, 
         decimal_places=1, 

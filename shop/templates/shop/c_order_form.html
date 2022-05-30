@@ -29,21 +29,51 @@
         <h4>{{dose}}</h4>
         <h4>{{ware}}</h4>
         <h4>('coffee_dose','sugar_dose', 'milk_dose','flavour_dose')  </h4>
+
 </div>
 
 
 
-<div class="input-group mb-3">
-    <form method="POST" class="post-form">{% csrf_token %}
-        
+<div class="container pt-2">
+    {% csrf_token %}
+    <form id="usersForm" method="POST" class="post-form">    
         <h4></h4>
-        
-        <h4>{{form.coffee_dose.label}} {{form.coffee_dose}}</h4>
-        <h4>{{form.sugar_dose.label}}{{form.sugar_dose}}</h4>
-        <h4>{{form.milk_dose.label}}{{form.milk_dose}}</h4>
-        <h4>{{form.flavour_dose.label}}{{form.flavour_dose}}</h4>
-        
+        <div class="form-row border">
+            <div  class="col-sm-3 right border"> {{form.coffee_dose.label}}
+                Választás: <span id="coffeeLabel"></span>
+            </div>
+            <div class="col-sm-3 right border" oninput="re_fresh('coffeeRange','coffeeLabel')">
+                {{form.coffee_dose}}
+            </div>            
+        </div>
 
+        <div class="form-row border">
+            <div class="col-sm-3 right border" > {{form.sugar_dose.label}} 
+                Választás: <span id='sugarLabel'></span>
+            </div>
+            <div class="col-sm-3 right border" oninput="re_fresh('sugarRange','sugarLabel')">
+                {{form.sugar_dose}}
+            </div>
+        </div>
+
+        <div class="form-row border">
+            <div class="col-sm-3 right border"> {{form.milk_dose.label}}
+                Választás: <span id="milkLabel"></span>
+            </div> 
+            <div class="col-sm-3 right border" oninput="re_fresh('milkRange','milkLabel')">
+                {{form.milk_dose}}
+            </div>        
+        </div>
+        
+        <div class="form-row border">
+            <div class="col-sm-3 right border"> {{form.flavour_dose.label}}
+                Választás: <span id="flavourLabel"></span>
+            </div>
+            <div class="col-sm-3 right border" oninput="re_fresh('flavourRange','flavourLabel')">
+                {{form.flavour_dose}}
+            </div>           
+        </div>
+            
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
         {% if user.is_staff %}
             <button type="submit" class="save btn btn-primary">Save</button>
@@ -51,4 +81,6 @@
         
     </form>
 </div>
+
+<script src="/static/js/c_order_form.js"></script>
 {% endblock%}
