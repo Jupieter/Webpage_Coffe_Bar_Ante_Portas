@@ -24,23 +24,21 @@
 <div class="container pt-2">
 
         <h1> Foglalok a : {{coffee_1.c_make_date}}-i </h1>
-        <h2> {{coffee_1.id}} {{coffee_1.c_make_ware.ware_type.ware_brand}} 
+        <h2>{{coffee_1.c_make_ware.ware_type.ware_brand}} 
             {{coffee_1.c_make_ware.ware_type.ware_brand_name}} kávéra</h2>
-        <h4>{{dose}}</h4>
-        <h4>{{ware}}</h4>
-        <h4>('coffee_dose','sugar_dose', 'milk_dose','flavour_dose')  </h4>
+        <h4>Már csak {{dose}} adag kávé maradt</h4>
 
 </div>
 
 
 
 <div class="container pt-2">
-    {% csrf_token %}
-    <form id="usersForm" method="POST" class="post-form">    
+    
+    <form id="usersForm" method="POST" class="post-form"> {% csrf_token %}   
         <h4></h4>
         <div class="form-row border">
             <div  class="col-sm-3 right border"> {{form.coffee_dose.label}}
-                Választás: <span id="coffeeLabel"></span>
+                Választás: <span id="coffeeLabel">0</span>
             </div>
             <div class="col-sm-3 right border" oninput="re_fresh('coffeeRange','coffeeLabel')">
                 {{form.coffee_dose}}
@@ -49,7 +47,7 @@
 
         <div class="form-row border">
             <div class="col-sm-3 right border" > {{form.sugar_dose.label}} 
-                Választás: <span id='sugarLabel'></span>
+                Választás: <span id='sugarLabel'>0</span>
             </div>
             <div class="col-sm-3 right border" oninput="re_fresh('sugarRange','sugarLabel')">
                 {{form.sugar_dose}}
@@ -58,7 +56,7 @@
 
         <div class="form-row border">
             <div class="col-sm-3 right border"> {{form.milk_dose.label}}
-                Választás: <span id="milkLabel"></span>
+                Választás: <span id="milkLabel">0</span>
             </div> 
             <div class="col-sm-3 right border" oninput="re_fresh('milkRange','milkLabel')">
                 {{form.milk_dose}}
@@ -67,7 +65,7 @@
         
         <div class="form-row border">
             <div class="col-sm-3 right border"> {{form.flavour_dose.label}}
-                Választás: <span id="flavourLabel"></span>
+                Választás: <span id="flavourLabel">0</span>
             </div>
             <div class="col-sm-3 right border" oninput="re_fresh('flavourRange','flavourLabel')">
                 {{form.flavour_dose}}
@@ -80,6 +78,12 @@
         {% endif %}
         
     </form>
+    <br><br><br><br><br>
+    <p>
+        The main principle failed here. I wanted a pure django creation without jawascript. 
+        <br> But ... 
+        <br> 2022.05.31
+    </p>
 </div>
 
 <script src="/static/js/c_order_form.js"></script>
