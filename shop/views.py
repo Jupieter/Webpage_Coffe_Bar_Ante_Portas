@@ -100,9 +100,15 @@ def coffee_order_form(request, pkey):
             dt = (dt1,dt2)
             sugar.append(dt)
         elif ware.ware_type.ware_type.ware_types == 'Tej': 
-            milk.append(ware)
+            dt1 = ware.id
+            dt2 = ware
+            dt = (dt1,dt2)
+            milk.append(dt)
         elif ware.ware_type.ware_type.ware_types == 'Ízesítő': 
-            flavour.append(ware)
+            dt1 = ware.id
+            dt2 = ware
+            dt = (dt1,dt2)
+            flavour.append(dt)
     # sugar = wares.filter(ware_type='sugar')
     if request.method == "POST":
         form = CoffeeOrderForm(request.POST)
@@ -118,6 +124,11 @@ def coffee_order_form(request, pkey):
     else:
         form = CoffeeOrderForm()
         form.fields['sugar_choice'].choices  = sugar
+        form.fields['sugar_choice'].initial  = [1]
+        form.fields['milk_choice'].choices  = milk
+        form.fields['milk_choice'].initial  = [1]
+        form.fields['flavour_choice'].choices  = flavour
+        form.fields['flavour_choice'].initial  = [1]
         # form.fields['coffee_selected'].widget.attrs['readonly'] = True
         form.fields['coffee_dose'].widget.attrs['max'] = dose
         
