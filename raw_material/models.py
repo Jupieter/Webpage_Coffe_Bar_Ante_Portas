@@ -25,8 +25,8 @@ class WareData(models.Model):
     pub_date = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
     ware_name = [ware_type, ware_brand, ware_brand_name,]
     
-    def __type__(self):
-        return self.ware_name
+    def __str__(self):
+        return self.ware_type, self.ware_brand, self.ware_brand_name
        
     
 
