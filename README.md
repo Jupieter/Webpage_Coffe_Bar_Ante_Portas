@@ -28,6 +28,3 @@ virtualenv venv
 - (venv) ``` python manage.py createsuperuser ```
 - (venv) ``` python manage.py runserver ```
 
-# Example:
-
-<img src="https://i.imgur.com/Aro8aqW.png"/>
