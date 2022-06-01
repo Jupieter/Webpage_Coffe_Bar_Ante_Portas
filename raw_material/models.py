@@ -23,10 +23,13 @@ class WareData(models.Model):
     ware_weight= models.IntegerField(verbose_name='Csomag tömege [g]', default=0)
     ware_price = models.IntegerField(verbose_name='Csomag ára [Ft]',default=0)
     pub_date = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
-    ware_name = [ware_type, ware_brand, ware_brand_name,]
     
     def __str__(self):
-        return self.ware_type, self.ware_brand, self.ware_brand_name
+        w_name_1 = self.ware_type 
+        w_name_2 = self.ware_brand 
+        w_name_3 = self.ware_brand_name 
+        ware_name = str(w_name_2) + ', ' + str(w_name_3) + ', ' + str(w_name_1)
+        return ware_name
        
     
 
