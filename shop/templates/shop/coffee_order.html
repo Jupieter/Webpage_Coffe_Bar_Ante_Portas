@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Coffee Order
+{% endblock %}
+
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/coffee_bg_6.jpgg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        h2  {
+        text-align: middle;
+        color: rgb(51, 31, 1);
+        }
+    </style>
+{% endblock %}  
+
+{% block content %}
+
+<div class="container sm ">
+    <div class="row-sm-2">
+        <div class="col-sm-2 right">
+            <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_home' %}" {% endif %}>                
+                <img src ="{% static '/image/koffe.jpeg' %}" class="rounded" 
+                style="width:100px;height:100px; border:5px solid; "; alt="choice">                 
+            </a>
+        </div>
+        <div class="col-sm-6 right">
+            <h1> Következő Kávézás: </h1>
+        </div>    
+    </div>
+</div>
+
+<div class="container sm ">
+    {% for coffee in coffees %}
+    <div class="row-sm-6">
+        <table class="table table table-hover">
+            <thead class="table-dark">
+                <tr>  
+                    <th class="col-sm-2">{{coffee.id}}, 
+                        {{coffee.c_make_ware.ware_type.ware_brand}}, 
+                        {{coffee.c_make_ware.ware_type.ware_brand_name}}</th>                   
+                    <th class="col-sm-1">{{coffee.c_make_date}}</th>
+                    <th class="col-sm-1">  Kávé adag még:<br> {{coffee.c_make_dose}}</th>                    
+                    <th class="col-sm-1">  Cukor adag </th>                    
+                    <th class="col-sm-1">  Tej adag </th>                    
+                    <th class="col-sm-1">  Ízesítő adag </th>                    
+                    {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
+                    <th class="col-sm-1">                        
+                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_order_form' pkey=coffee.pk %}">
+                            <span class="fa fa-shopping-basket"> Foglalok </span></a>
+                        {% else %}
+                        <th>Betelt</th>
+                        {% endif %}</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in ordered %}
+                <tr> 
+                    {% if order.coffee_selected.id == coffee.id  %}
+                    
+                    <td>{{order.id}}., {{order.coffe_user}}</td>
+                    <td>{{order.coffee_reg}} </td>
+                    <td>{{order.coffee_dose}}</td>                    
+                    <td>{{order.sugar_dose}}</td>
+                    <td>{{order.milk_dose}}</td>
+                    <td>{{order.flavour_dose}}</td>
+                    <td>
+                        {% if user.is_staff %}
+                        <a class="btn btn-danger btn-sm" 
+                        href="{% url 'shop:coffee_order_remove' pk=order.pk %}"
+                        onclick="return confirm('Biztosan törölni akarja?')">
+                            <span class="fa fa-trash-o"></span></a>
+                        {% endif %}
+                    </td>
+                    {% endif %}       
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+<br><br><br><br><br>
+<p>
+    This was the last point when I can not use JawaScript 2022.05.30
+</p>
+     
+{% endblock%}

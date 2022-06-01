@@ -31,7 +31,7 @@
             </a>
         </div>
         <div class="col-sm-6 right border">
-            <h2> Kávé főzés {{dt}} </h2>
+            <h1> Kávé főzés {{dt}} </h1>
             <h4> Kibontott kávék</h4>
         </div>    
     </div>
@@ -63,10 +63,12 @@
                     {% else %}
                     <td>{{ware.stock}}g</td>
                     {% endif %}
-                    <th>{{ware.id}}</th>
+                    <td>{{ware.id}}</td>
                     <td>
                         {% if user.is_staff %}
-                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_make_form' pkey=ware.pk %}"><span class="fa fa-shopping-basket"></span></a>
+                        <a class="btn btn-primary btn-sm" 
+                        href="{% url 'shop:coffee_make_form' pkey=ware.pk %}">
+                        <span class="fa fa-shopping-basket"></span></a>
                         {% endif %}
                     </td>       
                 </tr>

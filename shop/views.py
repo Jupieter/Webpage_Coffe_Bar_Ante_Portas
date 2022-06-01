@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 import datetime
 from raw_material.models import ProductAcquisition
-from .models import CoffeeMake
-from .forms import CoffeeMakerForm
+from .models import CoffeeMake, CoffeeOrder
+from .forms import CoffeeMakerForm, CoffeeOrderForm
 
 
 def coffee_home(request):
@@ -66,3 +66,48 @@ def coffee_make_form(request, pkey):
         form.fields['c_make_date'].initial = dt
     return render(request, 'shop/coffee_make_form.html', 
     {'form': form, 'ware':ware,'dt':dt, 'alrt':alrt, 'stock_min':stock_min})
+
+
+def coffee_order(request):
+    dt= datetime.datetime.now()
+    dt_start = dt
+    dt_end = dt + datetime.timedelta(days=1)
+    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
+    coffees = coffees1.order_by('id')
+    adat = []
+    for coffee in coffees:
+        adat.append(coffee.id)
+    coffees = coffees.order_by('c_make_date')
+    ordered = CoffeeOrder.objects.filter(coffee_selected__in = adat)
+
+    return render(request, 'shop/coffee_order.html', 
+        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
+
+def coffee_order_remove(request, pk):
+    coffee1 = get_object_or_404(CoffeeOrder, pk=pk)
+    coffee1.delete()
+    return redirect('shop:coffee_order')
+
+def coffee_order_form(request, pkey):
+    coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
+    ware = ProductAcquisition.objects.filter(store_status=3)
+
+    dose = coffee_1.c_make_dose
+    if request.method == "POST":
+        form = CoffeeOrderForm(request.POST)
+        if form.is_valid():
+            coffee2 = form.save(commit=False)
+            coffee2.coffee_selected = coffee_1
+            coffee2.coffe_user = request.user
+            coffee2.coffee_reg = timezone.now() 
+            coffee2.save()
+            coffee_1.c_make_dose = dose-coffee2.coffee_dose
+            coffee_1.save()
+            return redirect('shop:coffee_order')
+    else:
+        form = CoffeeOrderForm()
+        # form.fields['coffee_selected'].initial = coffee_1.id
+        # form.fields['coffee_selected'].widget.attrs['readonly'] = True
+        form.fields['coffee_dose'].widget.attrs['max'] = dose
+        
+    return render(request, 'shop/c_order_form.html', {'form': form, 'coffee_1':coffee_1 ,'ware':ware, 'dose':dose})

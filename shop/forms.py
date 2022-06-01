@@ -1,6 +1,6 @@
 from email.policy import default
 from django import forms
-from .models import CoffeeMake
+from .models import CoffeeMake, CoffeeOrder
 from django.utils import timezone
 import datetime, time
 
@@ -45,8 +45,15 @@ class CoffeeMakerForm(forms.Form):
     class Meta:             
         fields = ('c_make_dose', 'c_make_date', 'c_make_time',)
 
-        
-
-    
+class CoffeeOrderForm(forms.ModelForm):
+    class Meta:
+        model = CoffeeOrder
+        fields = ('coffee_dose','sugar_dose', 'milk_dose','flavour_dose')        
+        widgets = {
+            'coffee_dose': forms.NumberInput(attrs={'id':'coffeeRange', 'type':'range', 'min':'0', 'step':'0.5', 'max':'2'}),
+            'sugar_dose': forms.NumberInput(attrs={'id':'sugarRange', 'type':'range', 'min':'0', 'step':'0.5', 'max':'3'}),
+            'milk_dose': forms.NumberInput(attrs={ 'id':'milkRange','type':'range', 'min':'0', 'step':'0.5', 'max':'4'}),
+            'flavour_dose': forms.NumberInput(attrs={ 'id':'flavourRange','type':'range', 'min':'0', 'step':'0.5', 'max':'2'}),
+        }
     
      

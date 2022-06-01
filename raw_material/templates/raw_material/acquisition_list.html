@@ -27,7 +27,7 @@
             <div class="col-sm-10">
                 <div class="row ">
                     <div class="col-sm-3">
-                        <h2 style="text-align:Left">Készletek</h2>
+                        <h1 style="text-align:Left">Készletek</h1>
                     </div>
                     
                     <div class="col-sm-7 ">
@@ -103,9 +103,12 @@
                             {{ ware.empty_date|time:"H:i" }}
                         {% endif %} 
                     </td>
-
-                    <td class="col-sm-2">{{ ware.ware_type.ware_weight }}  /  {{ ware.stock }}
-                    </td>
+                    {% if ware.stock <= 40 %}
+                    <td style="background-color:powderblue; color:red; bold">
+                    {{ ware.ware_type.ware_weight }}  /  {{ware.stock}}g</td>
+                    {% else %}
+                    <td class="col-sm-2">{{ ware.ware_type.ware_weight }}  /  {{ ware.stock }}</td>
+                    {% endif %}
                     <td class="col-sm-1">{{ ware.acquisition_price }}</td>
                     
                     <td class="col-sm-2">

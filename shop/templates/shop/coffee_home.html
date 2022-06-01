@@ -23,7 +23,7 @@
 
 <div class="container pt-2 middle border">
     <div class="col-sm-6 right border">
-        <h2> Kávé adatlaplap </h2>
+        <h1> Kávé adatlaplap </h1>
         <h4>{{wares}}</h4>
     </div>    
 </div>
@@ -37,7 +37,7 @@
             </a>
         </div>
         <div class="col-sm-3 right border">
-            <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_make' %}" {% endif %}>                
+            <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_order' %}" {% endif %}>                
                 <img src ="{% static '/image/koffe.jpeg' %}" class="rounded" 
                 style="width:200px;height:200px; border:5px solid; "; alt="choice">                 
             </a>
