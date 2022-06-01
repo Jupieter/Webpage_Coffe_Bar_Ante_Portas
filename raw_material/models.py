@@ -95,3 +95,7 @@ class ProductAcquisition(models.Model):
     empty_date = models.DateTimeField(
         verbose_name='Kifogyás dátuma', 
         null=True, blank=True,)
+    
+    def __str__(self):
+         p_acq_name = str(self.ware_type)
+         return p_acq_name
