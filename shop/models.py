@@ -16,6 +16,10 @@ class CoffeeMake(models.Model):
     c_make_date = models.DateTimeField('Elkészül:', null=True, blank=True)
     c_reg_time = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
 
+    def __str__(self):
+         c_make_name = str(self.c_make_ware)
+         return c_make_name
+
 class CoffeeOrder(models.Model):
     coffee_selected = models.ForeignKey(CoffeeMake, on_delete=models.CASCADE, verbose_name='Lefoglalt Kávé')
     coffee_dose = models.DecimalField(
