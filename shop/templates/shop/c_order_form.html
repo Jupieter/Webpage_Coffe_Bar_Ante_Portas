@@ -38,7 +38,7 @@
 
 <div class="container pt-2">
     
-    <form id="usersForm" method="POST" class="post-form"> {% csrf_token %}   
+    <form id="usersForm" method="POST" class="form-inline"> {% csrf_token %}   
         <h4></h4>
         <div class="form-row border">
             <div  class="col-sm-3 right border"> {{form.coffee_dose.label}}
@@ -55,6 +55,9 @@
             </div>
             <div class="col-sm-3 right border" oninput="re_fresh('sugarRange','sugarLabel')">
                 {{form.sugar_dose}}
+            </div>
+            <div class="col-sm-6 right border" >
+                {{form.sugar_choice}}
             </div>
         </div>
 

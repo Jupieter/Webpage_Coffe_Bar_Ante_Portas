@@ -48,7 +48,7 @@ class CoffeeMakerForm(forms.Form):
 class CoffeeOrderForm(forms.ModelForm):
     class Meta:
         model = CoffeeOrder
-        fields = ('coffee_dose','sugar_dose', 'milk_dose','flavour_dose')        
+        fields = ('coffee_dose','sugar_dose', 'sugar_choice', 'milk_dose','flavour_dose')        
         widgets = {
             'coffee_dose': forms.NumberInput(attrs={'id':'coffeeRange', 'type':'range', 'min':'0', 'step':'0.5', 'max':'2'}),
             'sugar_dose': forms.NumberInput(attrs={'id':'sugarRange', 'type':'range', 'min':'0', 'step':'0.5', 'max':'3'}),

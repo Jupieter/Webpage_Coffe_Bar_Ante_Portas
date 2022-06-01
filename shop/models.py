@@ -27,6 +27,7 @@ class CoffeeOrder(models.Model):
         decimal_places=1, 
         verbose_name='Kávé [0,5-2] Adag', 
         default=0)
+    sugar_choice =  models.ForeignKey(ProductAcquisition, on_delete=models.CASCADE, verbose_name='Lefoglalt Cukor')   
     sugar_dose =  models.DecimalField(
         max_digits=2, 
         decimal_places=1, 
