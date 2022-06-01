@@ -90,9 +90,17 @@ def coffee_order_remove(request, pk):
 
 def coffee_order_form(request, pkey):
     coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
-    ware = ProductAcquisition.objects.filter(store_status=3)
-
+    wares = ProductAcquisition.objects.filter(store_status=3)
     dose = coffee_1.c_make_dose
+    sugar = []; milk = []; flavour = []; adat = []
+    for ware in wares:
+        if ware.ware_type.ware_type.ware_types == 'Cukor':
+            sugar.append(ware)
+        elif ware.ware_type.ware_type.ware_types == 'Tej': 
+            milk.append(ware)
+        elif ware.ware_type.ware_type.ware_types == 'Ízesítő': 
+            flavour.append(ware)
+    # sugar = wares.filter(ware_type='sugar')
     if request.method == "POST":
         form = CoffeeOrderForm(request.POST)
         if form.is_valid():
@@ -110,4 +118,6 @@ def coffee_order_form(request, pkey):
         # form.fields['coffee_selected'].widget.attrs['readonly'] = True
         form.fields['coffee_dose'].widget.attrs['max'] = dose
         
-    return render(request, 'shop/c_order_form.html', {'form': form, 'coffee_1':coffee_1 ,'ware':ware, 'dose':dose})
+    return render(request, 'shop/c_order_form.html',
+        {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,
+         'sugar':sugar , 'milk':milk, 'falvour':flavour})
