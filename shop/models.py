@@ -17,7 +17,7 @@ class CoffeeMake(models.Model):
     c_reg_time = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
 
     def __str__(self):
-         c_make_name = str(self.c_make_ware)
+         c_make_name = str(self.c_make_ware) + ", " + str(self.id)
          return c_make_name
 
 class CoffeeOrder(models.Model):

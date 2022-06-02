@@ -97,5 +97,5 @@ class ProductAcquisition(models.Model):
         null=True, blank=True,)
     
     def __str__(self):
-         p_acq_name = str(self.ware_type)
+         p_acq_name = str(self.ware_type) + ", " + str(self.id)
          return p_acq_name
