@@ -129,7 +129,6 @@ def coffee_order_form(request, pkey):
         form.fields['milk_choice'].initial  = [1]
         form.fields['flavour_choice'].choices  = flavour
         form.fields['flavour_choice'].initial  = [1]
-        # form.fields['coffee_selected'].widget.attrs['readonly'] = True
         form.fields['coffee_dose'].widget.attrs['max'] = dose
         
     return render(request, 'shop/c_order_form.html',
