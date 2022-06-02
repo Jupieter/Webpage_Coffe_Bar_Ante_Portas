@@ -26,7 +26,7 @@ class CoffeeOrder(models.Model):
         max_digits=2, 
         decimal_places=1, 
         verbose_name='Kávé [0,5-2] Adag', 
-        default=0)
+        default=0.5)
     sugar_choice =  models.ForeignKey(
         ProductAcquisition,  
         on_delete=models.SET_NULL,
