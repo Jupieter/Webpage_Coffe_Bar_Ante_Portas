@@ -38,57 +38,63 @@
 
 <div class="container pt-2">
     
-    <form id="usersForm" method="POST" class="form-inline"> {% csrf_token %}   
+    <form id="usersForm" method="POST"> {% csrf_token %}   
         <h4></h4>
-        <div class="row border">
-            <div  class="col-sm-3 right border"> {{form.coffee_dose.label}}
-                Választás: <span id="coffeeLabel">0</span>
+        <div class="row border p-2">
+            <div  class="col-sm-4 right "> {{form.coffee_dose.label}}
+                Választás: <span id="coffeeLabel">0.5</span>
             </div>
-            <div class="col-sm-3 right border" oninput="re_fresh('coffeeRange','coffeeLabel')">
+            <div class="col-sm-2 right " oninput="re_fresh('coffeeRange','coffeeLabel')">
                 {{form.coffee_dose}}
             </div>            
         </div>
 
-        <div class="row border">
-            <div class="col-sm-3 right border" > {{form.sugar_dose.label}} 
+        <div class="row border p-2">
+            <div class="col-sm-4 right " > {{form.sugar_dose.label}} 
                 Választás: <span id='sugarLabel'>0</span>
             </div>
-            <div class="col-sm-3 right border" oninput="re_fresh('sugarRange','sugarLabel')">
+            <div class="col-sm-2 right " oninput="re_fresh('sugarRange','sugarLabel')">
                 {{form.sugar_dose}}
             </div>
-            <div class="col-sm-6 right border" >
+            <div class="col-sm-6 right " >
                 {{form.sugar_choice}}
             </div>
         </div>
 
-        <div class="row border">
-            <div class="col-sm-3 right border"> {{form.milk_dose.label}}
+        <div class="row border p-2">
+            <div class="col-sm-4 right "> {{form.milk_dose.label}}
                 Választás: <span id="milkLabel">0</span>
             </div> 
-            <div class="col-sm-3 right border" oninput="re_fresh('milkRange','milkLabel')">
+            <div class="col-sm-2 right " oninput="re_fresh('milkRange','milkLabel')">
                 {{form.milk_dose}}
             </div>        
-            <div class="col-sm-6 right border" >
+            <div class="col-sm-6 right " >
                 {{form.milk_choice}}
             </div>
         </div>
         
-        <div class="row border">
-            <div class="col-sm-3 right border"> {{form.flavour_dose.label}}
+        <div class="row border p-2">
+            <div class="col-sm-4 right "> {{form.flavour_dose.label}}
                 Választás: <span id="flavourLabel">0</span>
             </div>
-            <div class="col-sm-3 right border" oninput="re_fresh('flavourRange','flavourLabel')">
+            <div class="col-sm-2 right " oninput="re_fresh('flavourRange','flavourLabel')">
                 {{form.flavour_dose}}
             </div>
-            <div class="col-sm-6 right border" >
+            <div class="col-sm-6 right " >
                 {{form.flavour_choice}}
             </div>           
         </div>
-            
-        <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
-        {% if user.is_authenticated %}
-            <button type="submit" class="save btn btn-primary">Save</button>
-        {% endif %}
+        <div class="row  p-2">
+            <div class="col-sm-3 right "></div>
+            <div class="col-sm-2 right ">
+                <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
+            </div>
+            <div class="col-sm-1 right ">
+                {% if user.is_authenticated %}
+                    <button type="submit" class="save btn btn-primary">Save</button>
+                {% endif %}
+            </div>
+        </div>    
         
     </form>
     <br><br><br><br><br>
