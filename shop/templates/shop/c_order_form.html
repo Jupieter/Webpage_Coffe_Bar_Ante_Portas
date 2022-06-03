@@ -27,10 +27,11 @@
         <h2>{{coffee_1.c_make_ware.ware_type.ware_brand}} 
             {{coffee_1.c_make_ware.ware_type.ware_brand_name}} kávéra</h2>
         <h4>Már csak {{dose}} adag kávé maradt</h4>
-        <p>ware_type_list: {{wares}}</p>
-        <p>sugar: {{sugar}}</p>
-        <p>milk: {{milk}}</p>
-        <p>falvour: {{falvour}}</p>
+        <p>sugar: {{sugar}}{{sugar_s.ware_type}}</p>
+        <p>milk: {{milk_s}}</p>
+        <p>falvour: {{falvour_s}}</p>
+        <p>cf2 {{coffee2.sugar_dose}}</p>
+        <p>proba{{proba}}</p>
 
 </div>
 
@@ -46,7 +47,10 @@
             </div>
             <div class="col-sm-2 right " oninput="re_fresh('coffeeRange','coffeeLabel')">
                 {{form.coffee_dose}}
-            </div>            
+            </div>
+            <div class="col-sm-6 right " >
+                A megkezdett termékekből választhat:
+            </div>           
         </div>
 
         <div class="row border p-2">

@@ -49,7 +49,7 @@ def coffee_make_form(request, pkey):
             ware.stock = wght - dose_weight * cm['c_make_dose']
             ware.save()
             
-            field_names = [f.name for f in CoffeeMake._meta.get_fields()]
+            # field_names = [f.name for f in CoffeeMake._meta.get_fields()]
 
             return redirect('shop:coffee_home')
             '''return render(request, 'shop/coffee_make_form.html', 
@@ -89,6 +89,7 @@ def coffee_order_remove(request, pk):
     return redirect('shop:coffee_order')
 
 def coffee_order_form(request, pkey):
+    proba = ''
     coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
     wares = ProductAcquisition.objects.filter(store_status=3)
     dose = coffee_1.c_make_dose
@@ -109,7 +110,7 @@ def coffee_order_form(request, pkey):
             dt2 = ware
             dt = (dt1,dt2)
             flavour.append(dt)
-    # sugar = wares.filter(ware_type='sugar')
+
     if request.method == "POST":
         form = CoffeeOrderForm(request.POST)
         if form.is_valid():
@@ -117,10 +118,34 @@ def coffee_order_form(request, pkey):
             coffee2.coffee_selected = coffee_1
             coffee2.coffe_user = request.user
             coffee2.coffee_reg = timezone.now() 
-            coffee2.save()
+            sugar_s = ProductAcquisition.objects.filter(pk=coffee2.sugar_choice.pk)
+            milk_s = ProductAcquisition.objects.filter(pk=coffee2.milk_choice.pk)
+            falvour_s = ProductAcquisition.objects.filter(pk=coffee2.flavour_choice.pk)
+            proba = ' üres '
+            # coffee2.save()
             coffee_1.c_make_dose = dose-coffee2.coffee_dose
-            coffee_1.save()
-            return redirect('shop:coffee_order')
+            # coffee_1.save()
+            # return redirect('shop:coffee_order')
+            return  render(request, 'shop/c_order_form_copy.html',
+                {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1, 'coffee2':coffee2,
+                'sugas_s':sugar_s, 'milk_s':milk_s, 'falvour_s':falvour_s, 'proba':proba})
+        else:
+            coffee2 = form.save(commit=False)
+            coffee2.coffee_selected = coffee_1
+            coffee2.coffe_user = request.user
+            coffee2.coffee_reg = timezone.now() 
+            coffee_1.c_make_dose = dose-coffee2.coffee_dose
+            sugar_s = ' az'
+            milk_s = ' amaz '
+            falvour_s = "else"
+            proba = ProductAcquisition.objects.filter(pk=coffee2.milk_choice.pk)
+            # coffee2.save()
+            # coffee_1.save()
+            # return redirect('shop:coffee_order')
+            return  render(request, 'shop/c_order_form_copy.html',
+                {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1, 'coffee2':coffee2,
+                'sugas_s':sugar_s, 'milk_s':milk_s, 'falvour_s':falvour_s, 'proba':proba})
+
     else:
         form = CoffeeOrderForm()
         form.fields['sugar_choice'].choices  = sugar
@@ -130,7 +155,8 @@ def coffee_order_form(request, pkey):
         form.fields['flavour_choice'].choices  = flavour
         form.fields['flavour_choice'].initial  = [1]
         form.fields['coffee_dose'].widget.attrs['max'] = dose
+        proba = ProductAcquisition.objects.filter(pk=28)
         
     return render(request, 'shop/c_order_form.html',
         {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,
-         'sugar':sugar , 'milk':milk, 'falvour':flavour})
+        'sugar':sugar , 'milk':milk, 'falvour':flavour, 'proba':proba})

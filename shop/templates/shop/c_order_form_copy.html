@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}    
+    Storing    
+{% endblock %}
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/cup.jpg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        h2  {
+        text-align: left;
+        color: rgb(247, 155, 17);
+        }
+    </style>
+{% endblock %} 
+
+{% block content %}
+
+<div class="container pt-2">
+
+        <h1> Foglalok a : {{coffee_1.c_make_date}}-i </h1>
+        <h2>{{coffee_1.c_make_ware.ware_type.ware_brand}} 
+            {{coffee_1.c_make_ware.ware_type.ware_brand_name}} kávéra</h2>
+        <h4>Már csak {{dose}} adag kávé maradt</h4>
+        <p>sugar : {{sugar}}{{sugar_s}}</p>
+        <p>milk : {{milk_s}}</p>
+        <p>falvour : {{falvour_s}}</p>
+        <p>coffee2.sugar_dose : {{coffee2.sugar_dose}}</p>
+        <p>coffee2.sugar_choice.pk : {{coffee2.sugar_choice.pk}}</p>
+        <p>proba{{proba}}</p>
+
+</div>
+
+
+
+
+{% endblock%}
