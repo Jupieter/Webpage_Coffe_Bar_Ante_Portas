@@ -128,7 +128,7 @@ def coffee_order_form(request, pkey):
             # return redirect('shop:coffee_order')
             return  render(request, 'shop/c_order_form_copy.html',
                 {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1, 'coffee2':coffee2,
-                'sugas_s':sugar_s, 'milk_s':milk_s, 'falvour_s':falvour_s, 'proba':proba})
+                'sugar_s':sugar_s, 'milk_s':milk_s, 'falvour_s':falvour_s, 'proba':proba})
         else:
             coffee2 = form.save(commit=False)
             coffee2.coffee_selected = coffee_1
@@ -138,7 +138,7 @@ def coffee_order_form(request, pkey):
             sugar_s = ' az'
             milk_s = ' amaz '
             falvour_s = "else"
-            proba = ProductAcquisition.objects.filter(pk=coffee2.milk_choice.pk)
+            proba = 'ez az else'
             # coffee2.save()
             # coffee_1.save()
             # return redirect('shop:coffee_order')

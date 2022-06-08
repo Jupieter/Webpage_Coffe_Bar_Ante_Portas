@@ -84,7 +84,7 @@ class ProductAcquisition(models.Model):
         related_name = 'Kibontotta',
         verbose_name ='Kibontotta' )
     open_date = models.DateTimeField(
-        verbose_name='Kifogyás dátuma', 
+        verbose_name='Kibontás dátuma', 
         null=True, blank=True,)
     
     empty_user = models.ForeignKey(

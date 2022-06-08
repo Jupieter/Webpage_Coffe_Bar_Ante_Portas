@@ -55,5 +55,6 @@ class CoffeeOrderForm(forms.ModelForm):
             'milk_dose': forms.NumberInput(attrs={ 'id':'milkRange','type':'range', 'min':'0', 'step':'0.5', 'max':'4'}),
             'flavour_dose': forms.NumberInput(attrs={ 'id':'flavourRange','type':'range', 'min':'0', 'step':'0.5', 'max':'2'}),
         }
+        # exclude = ['sugar_choice', 'milk_choice', 'flavour_choice']
     
      
