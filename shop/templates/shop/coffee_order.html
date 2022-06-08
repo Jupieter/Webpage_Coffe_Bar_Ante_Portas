@@ -47,9 +47,9 @@
                         {{coffee.c_make_ware.ware_type.ware_brand_name}}</th>                   
                     <th class="col-sm-1">{{coffee.c_make_date}}</th>
                     <th class="col-sm-1">  Kávé adag még:<br> {{coffee.c_make_dose}}</th>                    
-                    <th class="col-sm-1">  Cukor adag </th>                    
-                    <th class="col-sm-1">  Tej adag </th>                    
-                    <th class="col-sm-1">  Ízesítő adag </th>                    
+                    <th class="col-sm-1">  Cukor választás / adag </th>                    
+                    <th class="col-sm-1">  Tej választás / adag </th>                    
+                    <th class="col-sm-1">  Ízesítő választás / adag </th>                    
                     {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
                     <th class="col-sm-1">                        
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_order_form' pkey=coffee.pk %}">
@@ -68,9 +68,9 @@
                     <td>{{order.id}}., {{order.coffe_user}}</td>
                     <td>{{order.coffee_reg}} </td>
                     <td>{{order.coffee_dose}}</td>                    
-                    <td>{{order.sugar_dose}}</td>
-                    <td>{{order.milk_dose}}</td>
-                    <td>{{order.flavour_dose}}</td>
+                    <td>{{order.sugar_choice}} <br>{{order.sugar_dose}}</td>
+                    <td>{{order.milk_choice}} <br>{{order.milk_dose}}</td>
+                    <td>{{order.flavour_choice}} <br>{{order.flavour_dose}}</td>
                     <td>
                         {% if user.is_staff %}
                         <a class="btn btn-danger btn-sm" 

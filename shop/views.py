@@ -71,7 +71,7 @@ def coffee_make_form(request, pkey):
 def coffee_order(request):
     dt= datetime.datetime.now()
     dt_start = dt
-    dt_end = dt + datetime.timedelta(days=1)
+    dt_end = dt + datetime.timedelta(hours=36)
     coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
     coffees = coffees1.order_by('id')
     adat = []
@@ -118,22 +118,7 @@ def coffee_order_form(request, pkey):
             coffee2.coffee_selected = coffee_1
             coffee2.coffe_user = request.user
             coffee2.coffee_reg = timezone.now() 
-
             sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
-            sugar_ss = get_object_or_404(WareTypes, ware_types='Cukor').ware_wght
-            sugar_s.stock -= sugar_ss * coffee2.sugar_dose
-            sugar_s.save()
-
-            milk_s = get_object_or_404(ProductAcquisition, pk=coffee2.milk_choice.pk)
-            milk_ss = get_object_or_404(WareTypes, ware_types='Tej').ware_wght
-            milk_s.stock -= milk_ss * coffee2.milk_dose
-            milk_s.save()
-
-            flavour_s = get_object_or_404(ProductAcquisition, pk=coffee2.flavour_choice.pk)
-            flavour_ss = get_object_or_404(WareTypes, ware_types='Ízesítő').ware_wght
-            flavour_s.stock -= flavour_ss * coffee2.flavour_dose
-            flavour_s.save()
-
             coffee2.save()
             coffee_1.c_make_dose = dose-coffee2.coffee_dose
             
@@ -158,3 +143,19 @@ def coffee_order_form(request, pkey):
     return render(request, 'shop/c_order_form.html',
         {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,
         'sugar':sugar , 'milk':milk, 'falvour':flavour, 'proba':proba})
+
+def coffee_order_booking():
+            sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
+            sugar_ss = get_object_or_404(WareTypes, ware_types='Cukor').ware_wght
+            sugar_s.stock -= sugar_ss * coffee2.sugar_dose
+            sugar_s.save()
+
+            milk_s = get_object_or_404(ProductAcquisition, pk=coffee2.milk_choice.pk)
+            milk_ss = get_object_or_404(WareTypes, ware_types='Tej').ware_wght
+            milk_s.stock -= milk_ss * coffee2.milk_dose
+            milk_s.save()
+
+            flavour_s = get_object_or_404(ProductAcquisition, pk=coffee2.flavour_choice.pk)
+            flavour_ss = get_object_or_404(WareTypes, ware_types='Ízesítő').ware_wght
+            flavour_s.stock -= flavour_ss * coffee2.flavour_dose
+            flavour_s.save()
