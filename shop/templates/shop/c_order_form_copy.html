@@ -27,9 +27,18 @@
         <h2>{{coffee_1.c_make_ware.ware_type.ware_brand}} 
             {{coffee_1.c_make_ware.ware_type.ware_brand_name}} kávéra</h2>
         <h4>Már csak {{dose}} adag kávé maradt</h4>
-        <p>sugar : {{sugar}}{{sugar_s}}</p>
+        <p>sugar : {{sugar_s}}</p>
+        <p>sugar : {{sugar_s.stock}}</p>
+        <p>sugar : {{sugar_min}}</p>
+        
         <p>milk : {{milk_s}}</p>
-        <p>falvour : {{falvour_s}}</p>
+        <p>milk : {{milk_s.stock}}</p>
+        <p>milk : {{milk_min}}</p>
+
+        <p>falvour : {{flavour_s}}</p>
+        <p>falvour : {{flavour_s.stock}}</p>
+        <p>falvour : {{flavour_min}}</p>
+
         <p>coffee2.sugar_dose : {{coffee2.sugar_dose}}</p>
         <p>coffee2.sugar_choice.pk : {{coffee2.sugar_choice.pk}}</p>
         <p>coffee2.milk_dose : {{coffee2.milk_dose}}</p>
@@ -37,6 +46,10 @@
         <p>coffee2.flavour_dose : {{coffee2.flavour_dose}}</p>
         <p>coffee2.flavour_choice.pk : {{coffee2.flavour_choice.pk}}</p>
         <p>proba{{proba}}</p>
+
+        
+         
+
 
 </div>
 

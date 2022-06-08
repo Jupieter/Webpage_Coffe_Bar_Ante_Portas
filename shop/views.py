@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 import datetime
-from raw_material.models import ProductAcquisition
+from raw_material.models import ProductAcquisition, WareTypes
 from .models import CoffeeMake, CoffeeOrder
 from .forms import CoffeeMakerForm, CoffeeOrderForm
 
@@ -91,8 +91,8 @@ def coffee_order_remove(request, pk):
 def coffee_order_form(request, pkey):
     proba = ''
     coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
-    wares = ProductAcquisition.objects.filter(store_status=3)
     dose = coffee_1.c_make_dose
+    wares = ProductAcquisition.objects.filter(store_status=3)
     sugar = []; milk = []; flavour = []; adat = []
     for ware in wares:
         if ware.ware_type.ware_type.ware_types == 'Cukor':
@@ -118,33 +118,31 @@ def coffee_order_form(request, pkey):
             coffee2.coffee_selected = coffee_1
             coffee2.coffe_user = request.user
             coffee2.coffee_reg = timezone.now() 
-            sugar_s = ProductAcquisition.objects.filter(pk=coffee2.sugar_choice.pk)
-            milk_s = ProductAcquisition.objects.filter(pk=coffee2.milk_choice.pk)
-            falvour_s = ProductAcquisition.objects.filter(pk=coffee2.flavour_choice.pk)
-            proba = ' üres '
-            # coffee2.save()
+
+            sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
+            sugar_ss = get_object_or_404(WareTypes, ware_types='Cukor').ware_wght
+            sugar_s.stock -= sugar_ss * coffee2.sugar_dose
+            sugar_s.save()
+
+            milk_s = get_object_or_404(ProductAcquisition, pk=coffee2.milk_choice.pk)
+            milk_ss = get_object_or_404(WareTypes, ware_types='Tej').ware_wght
+            milk_s.stock -= milk_ss * coffee2.milk_dose
+            milk_s.save()
+
+            flavour_s = get_object_or_404(ProductAcquisition, pk=coffee2.flavour_choice.pk)
+            flavour_ss = get_object_or_404(WareTypes, ware_types='Ízesítő').ware_wght
+            flavour_s.stock -= flavour_ss * coffee2.flavour_dose
+            flavour_s.save()
+
+            coffee2.save()
             coffee_1.c_make_dose = dose-coffee2.coffee_dose
-            # coffee_1.save()
-            # return redirect('shop:coffee_order')
-            return  render(request, 'shop/c_order_form_copy.html',
+            
+            coffee_1.save()
+            return redirect('shop:coffee_order')
+            ''' return  render(request, 'shop/c_order_form_copy.html',
                 {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1, 'coffee2':coffee2,
-                'sugar_s':sugar_s, 'milk_s':milk_s, 'falvour_s':falvour_s, 'proba':proba})
-        else:
-            coffee2 = form.save(commit=False)
-            coffee2.coffee_selected = coffee_1
-            coffee2.coffe_user = request.user
-            coffee2.coffee_reg = timezone.now() 
-            coffee_1.c_make_dose = dose-coffee2.coffee_dose
-            sugar_s = ' az'
-            milk_s = ' amaz '
-            falvour_s = "else"
-            proba = 'ez az else'
-            # coffee2.save()
-            # coffee_1.save()
-            # return redirect('shop:coffee_order')
-            return  render(request, 'shop/c_order_form_copy.html',
-                {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1, 'coffee2':coffee2,
-                'sugas_s':sugar_s, 'milk_s':milk_s, 'falvour_s':falvour_s, 'proba':proba})
+                'sugar_s':sugar_s, 'milk_s':milk_s, 'flavour_s':flavour_s, 'proba':proba, 
+                'sugar_min':sugar_min, 'milk_min':milk_min, 'flavour_min':flavour_min})'''
 
     else:
         form = CoffeeOrderForm()
