@@ -118,27 +118,35 @@ def coffee_order_form(request, pkey):
             coffee2.coffee_selected = coffee_1
             coffee2.coffe_user = request.user
             coffee2.coffee_reg = timezone.now() 
-            sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
             coffee2.save()
             coffee_1.c_make_dose = dose-coffee2.coffee_dose
-            
             coffee_1.save()
             return redirect('shop:coffee_order')
             ''' return  render(request, 'shop/c_order_form_copy.html',
                 {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1, 'coffee2':coffee2,
                 'sugar_s':sugar_s, 'milk_s':milk_s, 'flavour_s':flavour_s, 'proba':proba, 
                 'sugar_min':sugar_min, 'milk_min':milk_min, 'flavour_min':flavour_min})'''
-
+        else:
+            proba = form.errors.as_data() # here you print errors to terminal
+            ''' coffee2 = form.save()
+            coffee2.coffee_selected = coffee_1
+            coffee2.coffe_user = request.user
+            coffee2.coffee_reg = timezone.now() 
+            sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
+            milk_s = get_object_or_404(ProductAcquisition, pk=coffee2.milk_choice.pk)
+            flavour_s = get_object_or_404(ProductAcquisition, pk=coffee2.flavour_choice.pk)'''
+            return  render(request, 'shop/c_order_form_copy.html',
+                {'form': form, 'wares':wares,  'proba':proba})
     else:
         form = CoffeeOrderForm()
         form.fields['sugar_choice'].choices  = sugar
-        form.fields['sugar_choice'].initial  = [1]
+        # form.fields['sugar_choice'].initial  = [1]
         form.fields['milk_choice'].choices  = milk
         form.fields['milk_choice'].initial  = [1]
         form.fields['flavour_choice'].choices  = flavour
         form.fields['flavour_choice'].initial  = [1]
         form.fields['coffee_dose'].widget.attrs['max'] = dose
-        proba = ProductAcquisition.objects.filter(pk=28)
+        proba = "Betölt else ág"
         
     return render(request, 'shop/c_order_form.html',
         {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,

@@ -48,8 +48,8 @@
         </div>
       </li>
 
-      <li class="nav-item {% if request.path == contact_url %}active{% endif %}">
-        <a class="nav-link" href="{% url 'raw_material:ware_choice' %}">Contact us</a>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'contact_page' %}">Contact us</a>
       </li>
      {% if request.user.is_authenticated %}
      <li class="nav-item dropdown">
