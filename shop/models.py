@@ -15,6 +15,10 @@ class CoffeeMake(models.Model):
         default=User)
     c_make_date = models.DateTimeField('Elkészül:', null=True, blank=True)
     c_reg_time = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
+    c_book = models.DateTimeField(
+        'Könyvelés dátuma', 
+        blank=True,
+        null=True,)
 
     def __str__(self):
          c_make_name = str(self.c_make_ware) + ", " + str(self.id)
@@ -70,11 +74,7 @@ class CoffeeOrder(models.Model):
         verbose_name = 'Lefoglalta',
         default=User)
     coffee_reg = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
-    coffee_book = models.DateTimeField(
-        'Könyvelés dátuma', 
-        default=timezone.now,
-        blank=True,
-        null=True,)
+
 
     class Meta:
         unique_together = (("sugar_choice", "milk_choice"),)
