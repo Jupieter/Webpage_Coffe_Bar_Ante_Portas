@@ -1,8 +1,5 @@
-from asyncio.windows_events import NULL
 from django.shortcuts import render
-# from .forms import ContactForm
-from django.http import JsonResponse, HttpResponse
-from shop.models import CoffeeOrder, CoffeeMake
+from shop.models import CoffeeMake
 import datetime
 
 
