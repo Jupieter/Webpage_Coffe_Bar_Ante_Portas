@@ -70,6 +70,11 @@ class CoffeeOrder(models.Model):
         verbose_name = 'Lefoglalta',
         default=User)
     coffee_reg = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
+    coffee_book = models.DateTimeField(
+        'Könyvelés dátuma', 
+        default=timezone.now,
+        blank=True,
+        null=True,)
 
     class Meta:
         unique_together = (("sugar_choice", "milk_choice"),)
