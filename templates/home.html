@@ -13,6 +13,9 @@
           background-attachment: fixed;
           background-size: 100% 100%;
         }
+        .bg-brown {
+            background-color: rgb(80, 45, 45);
+        }
     </style>
 {% endblock %}
 {% block content %}
@@ -22,5 +25,35 @@
 
 <h6> staff login:    the.boss@staff.com</h6>
 <h6>password:    Enter1</h6>
+
+<div class="row border">
+    <div class="col-md-4 border centered">
+        <center>
+            <h4> Next Coffee:</h4>
+             <a href="{% url 'shop:coffee_order' %}">
+            <img src='/static/image/coffe_draw.webp' 
+            style="width: 150px; height:150px; 
+            padding: px; background-color:white;">
+            </a>
+            <p>If you want to book a few servings of coffee, click on the cup picture.</p>
+        </center>
+    </div>
+</div>
+
+{% for coffee in coffees %}
+    <div class="row border">
+        <div class="col-md-4 border centered">
+            <div class="card bg-brown text-white">
+                <h3 class="card-title text-center">
+                <div class="d-flex flex-wrap justify-content-center mt-2">
+                    <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
+                </div>
+                </h3>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+
 
 {% endblock %}

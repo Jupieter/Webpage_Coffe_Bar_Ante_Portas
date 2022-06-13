@@ -1,11 +1,19 @@
 from django.shortcuts import render
 # from .forms import ContactForm
 from django.http import JsonResponse, HttpResponse
+from shop.models import CoffeeOrder, CoffeeMake
+import datetime
 
 
 def home_page(request):
     sub_site_logo = "src=static/image/coffe_bean_heart.png"
-    return render(request, "home.html", {'sub_site_logo':sub_site_logo})
+    dt= datetime.datetime.now()
+    dt_start = dt
+    dt_end = dt + datetime.timedelta(hours=36)
+    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
+    coffees = coffees1.order_by('c_make_date')
+    return render(request, "home.html", {'sub_site_logo':sub_site_logo, 
+        'coffees':coffees,'dt':dt, 'dt_end':dt_end,})
 
 def contact_page(request):
     sub_site_logo = "src=static/image/coffe_bean_heart.png"
