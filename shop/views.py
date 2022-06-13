@@ -152,7 +152,22 @@ def coffee_order_form(request, pkey):
         {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,
         'sugar':sugar , 'milk':milk, 'falvour':flavour, 'proba':proba})
 
-def coffee_order_booking():
+def coffee_booking(request):
+    dt= datetime.datetime.now()
+    dt_start = dt
+    dt_end = dt + datetime.timedelta(hours=36)
+    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
+    coffees = coffees1.order_by('id')
+    adat = []
+    for coffee in coffees:
+        adat.append(coffee.id)
+    coffees = coffees.order_by('c_make_date')
+    ordered = CoffeeOrder.objects.filter(coffee_selected__in = adat)
+
+    return render(request, 'shop/coffee_booking.html', 
+        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
+
+def coffee_booking_pk(request, pkey):
             sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
             sugar_ss = get_object_or_404(WareTypes, ware_types='Cukor').ware_wght
             sugar_s.stock -= sugar_ss * coffee2.sugar_dose

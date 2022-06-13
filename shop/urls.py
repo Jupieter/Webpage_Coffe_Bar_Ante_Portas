@@ -11,4 +11,5 @@ urlpatterns = [
     path('order/', views.coffee_order, name='coffee_order'),
     path('order/(<int:pkey>)', views.coffee_order_form, name='coffee_order_form'),
     path('order/delete/(<int:pk>)', views.coffee_order_remove, name='coffee_order_remove'),
+    path('booking/', views.coffee_booking, name='coffee_booking'),
 ]

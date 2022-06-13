@@ -31,15 +31,21 @@
 <div class="container sm-8 pt-2 ">
     <div class="row">
         <div class="col-sm-3 right border">
+            <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_order' %}" {% endif %}>                
+                <img src ="{% static '/image/koffe.jpeg' %}" class="rounded" 
+                style="width:200px;height:200px; border:5px solid; "; alt="choice">                 
+            </a>
+        </div>
+        <div class="col-sm-3 right border">
             <a  {% if user.is_staff %} href="{% url 'shop:coffee_make' %}" {% endif %}>                
                 <img src ="{% static '/image/coffee_machine_1.jfif' %}" class="rounded" 
                 style="width:200px;height:200px; border:5px solid; padding: 5px;background-color:white;"; alt="choice">                 
             </a>
         </div>
         <div class="col-sm-3 right border">
-            <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_order' %}" {% endif %}>                
-                <img src ="{% static '/image/koffe.jpeg' %}" class="rounded" 
-                style="width:200px;height:200px; border:5px solid; "; alt="choice">                 
+            <a  {% if user.is_staff %} href="{% url 'shop:coffee_booking' %}" {% endif %}>                
+                <img src ="{% static '/image/coffe_book_1.png' %}" class="rounded" 
+                style="width:200px;height:200px; border:5px solid; padding: 5px;background-color:white;"; alt="choice">                 
             </a>
         </div>
     </div>
