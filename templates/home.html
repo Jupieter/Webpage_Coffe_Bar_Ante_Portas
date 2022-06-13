@@ -26,59 +26,75 @@
 <h6> staff login:    the.boss@staff.com</h6>
 <h6>password:    Enter1</h6>
 
-<div class="row ">
-    <div class="col-md-4 centered">
-        <center>
-            <h4> Next Coffee:</h4>
-            <a href="{% url 'shop:coffee_order' %}">
-                <img src='/static/image/koffe.jpeg'
-            style="width: 150px; height:150px; 
-            padding: 1px; background-color:white;">
-            </a>
-        </center>
-    </div>
-</div>
-
-{% for coffee in coffees %}
-<div class="row ">
-    <div class="col-md-4 centered p-1">
-        <div class="card bg-brown text-white">
-            <h3 class="card-title text-center">
-                <div class="d-flex flex-wrap justify-content-center mt-2">
-                    <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
-                </div>
-            </h3>
+<div class="container">
+    <div class="row ">
+        <div class="col-md-4 centered">
+            <center>
+                <h4> Next Coffee:</h4>
+                <a href="{% url 'shop:coffee_order' %}">
+                    <img src='/static/image/koffe.jpeg'
+                style="width: 150px; height:150px; 
+                padding: 1px; background-color:white;">
+                </a>
+            </center>
         </div>
     </div>
+    
+    {% for coffee in coffees %}
+    <div class="row p-2 ">
+        <div class="col-md-4 centered p-1">
+            <div class="card bg-brown text-white">
+                <h3 class="card-title text-center">
+                    <div class="d-flex flex-wrap justify-content-center mt-2">
+                        <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
+                    </div>
+                </h3>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <p>If you want to book a few servings of coffee, click on the cup picture.</p>
 </div>
-{% endfor %}
-<p>If you want to book a few servings of coffee, click on the cup picture.</p>
 
 {% if user.is_authenticated %}
-<div class="row border">
-    <div class="col-md-4 centered">
-        <center>
-            <h4> Make Coffee:</h4>
-            <a href="{% url 'shop:coffee_make' %}">
-                <img src='/static/image/coffee_machine_1.jfif'
-                style="width: 150px; height:150px; 
-            padding: px; background-color:white;">
-            </a>
-            <p></p>
-        </center>
+<div class="container">
+
+    <div class="row  p-2 ">
+        <div class="col-md-4 centered">
+            <center>
+                <h4> Make Coffee:</h4>
+                <a href="{% url 'shop:coffee_make' %}">
+                    <img src='/static/image/coffee_machine_1.jfif'
+                    style="width: 150px; height:150px; 
+                padding: px; background-color:white;">
+                </a>
+            </center>
+        </div>
+        <div class="col-md-4 centered">
+            {% if coffees %}
+                <h4> Főzésre váró kávék száma: {{coffees|length}}</h4>
+            {% else %}
+                <h2 style="color:red" > Nincs főzésre váró kávé </h4>
+            {% endif %}
+        </div>
     </div>
-</div>
-<div class="row border">
-    <div class="col-md-4 centered">
-        <center>
-            <h4> Make Booking:</h4>
-            <a href="{% url 'shop:coffee_make' %}">
-                <img src='/static/image/coffe_book_1.png'
-                style="width: 150px; height:150px; 
-            padding: px; background-color:white;">
-            </a>
-            <p></p>
-        </center>
+
+    <div class="row  p-2 ">
+        <div class="col-md-4 centered">
+            <center>
+                <h4> Make Booking:</h4>
+                <a href="{% url 'shop:coffee_make' %}">
+                    <img src='/static/image/coffe_book_1.png'
+                    style="width: 150px; height:150px; 
+                padding: px; background-color:white;">
+                </a>
+            </center>   
+        </div>
+        <div class="col-md-4 centered">
+            {% for coffee2 in coffees2 %}
+                <li>{{coffee2}}</li>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endif %}
