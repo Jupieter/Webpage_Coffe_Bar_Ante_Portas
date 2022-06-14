@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load django_template_maths %}
 
 {% block title %}    
     Acquisition list    
@@ -104,14 +105,16 @@
                         {% endif %} 
                     </td>
 
-                    {% if ware.stock <= 40 %}
+                    {% if ware.stock|div:ware.ware_type.ware_weight  <= 0.08 %}
                         <td style="background-color:powderblue; color:red; bold">
                         {{ ware.ware_type.ware_weight }}  /  {{ware.stock}}g</td>
                     {% else %}
-                    <td class="col-sm-2">{{ ware.ware_type.ware_weight }}  /  {{ ware.stock }}</td>
+                        <td class="col-sm-2">{{ ware.ware_type.ware_weight }}  /  {{ ware.stock }}</td>
                     {% endif %}
                     
-                    <td>{% widthratio ware.stock ware.ware_type.ware_weight 100 %}</td>
+                    <td>
+                        {% widthratio ware.stock ware.ware_type.ware_weight 100 %}
+                    </td>
 
                     <td class="col-sm-1">{{ ware.acquisition_price }}</td>
                     
