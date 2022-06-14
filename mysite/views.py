@@ -9,10 +9,14 @@ def home_page(request):
     dt= datetime.datetime.now()
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=36)
+    wares = []
     coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
     coffees2 = CoffeeMake.objects.filter(c_book__isnull=True)
     coffees = coffees1.order_by('c_make_date')
-    wares = ProductAcquisition.objects.filter(store_status=3)
+    wares1 = ProductAcquisition.objects.filter(store_status=3)
+    for ware in wares1:
+        if ware.stock / ware.ware_type.ware_weight < 0.08:
+            wares.append(ware)
     return render(request, "home.html", {'sub_site_logo':sub_site_logo, 
         'coffees':coffees,'coffees2':coffees2, 'wares':wares})
 

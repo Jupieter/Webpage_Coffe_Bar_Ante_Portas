@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load django_template_maths %}
 
 {% block title %}
     Homepage
@@ -78,7 +79,7 @@
             <h2 style="color:red" > Nincs főzésre váró kávé </h4>
             {% endif %}
                 {% for ware in wares %}
-                    <li>{{ware}}</li>
+                    <li style="color:red; bold">Kifogyóban: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
                 {% endfor %}
         </div>
     </div>
