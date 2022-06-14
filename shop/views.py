@@ -156,7 +156,8 @@ def coffee_booking(request):
     dt= datetime.datetime.now()
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=36)
-    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
+    coffees1 = CoffeeMake.objects.filter(c_book__isnull=True)
+    # coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
     coffees = coffees1.order_by('id')
     adat = []
     for coffee in coffees:
