@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from shop.models import CoffeeMake
+from raw_material.models import ProductAcquisition, WareTypes
 import datetime
 
 
@@ -11,8 +12,9 @@ def home_page(request):
     coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
     coffees2 = CoffeeMake.objects.filter(c_book__isnull=True)
     coffees = coffees1.order_by('c_make_date')
+    wares = ProductAcquisition.objects.filter(store_status=3)
     return render(request, "home.html", {'sub_site_logo':sub_site_logo, 
-        'coffees':coffees,'coffees2':coffees2,})
+        'coffees':coffees,'coffees2':coffees2, 'wares':wares})
 
 def contact_page(request):
     sub_site_logo = "src=static/image/coffe_bean_heart.png"

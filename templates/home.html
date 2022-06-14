@@ -27,8 +27,8 @@
 <h6>password:    Enter1</h6>
 
 <div class="container">
-    <div class="row ">
-        <div class="col-md-4 centered">
+    <div class="row p-2 ">
+        <div class="col-md-3 centered">
             <center>
                 <h4> Next Coffee:</h4>
                 <a href="{% url 'shop:coffee_order' %}">
@@ -38,29 +38,30 @@
                 </a>
             </center>
         </div>
-    </div>
     
-    {% for coffee in coffees %}
-    <div class="row p-2 ">
+    
         <div class="col-md-4 centered p-1">
-            <div class="card bg-brown text-white">
-                <h3 class="card-title text-center">
-                    <div class="d-flex flex-wrap justify-content-center mt-2">
-                        <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
-                    </div>
-                </h3>
+            {% for coffee in coffees %}
+            <div class="row p-2 ">
+                <div class="card bg-brown text-white">
+                    <h3 class="card-title text-center">
+                        <div class="d-flex flex-wrap justify-content-center mt-2">
+                            <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
+                        </div>
+                    </h3>
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
     <p>If you want to book a few servings of coffee, click on the cup picture.</p>
-</div>
+
 
 {% if user.is_authenticated %}
 <div class="container">
 
     <div class="row  p-2 ">
-        <div class="col-md-4 centered">
+        <div class="col-md-3 centered">
             <center>
                 <h4> Make Coffee:</h4>
                 <a href="{% url 'shop:coffee_make' %}">
@@ -72,15 +73,18 @@
         </div>
         <div class="col-md-4 centered">
             {% if coffees %}
-                <h4> Főzésre váró kávék száma: {{coffees|length}}</h4>
+            <h4> Főzésre váró kávék száma: {{coffees|length}}</h4>
             {% else %}
-                <h2 style="color:red" > Nincs főzésre váró kávé </h4>
+            <h2 style="color:red" > Nincs főzésre váró kávé </h4>
             {% endif %}
+                {% for ware in wares %}
+                    <li>{{ware}}</li>
+                {% endfor %}
         </div>
     </div>
 
     <div class="row  p-2 ">
-        <div class="col-md-4 centered">
+        <div class="col-md-3 centered">
             <center>
                 <h4> Make Booking:</h4>
                 <a href="{% url 'shop:coffee_make' %}">

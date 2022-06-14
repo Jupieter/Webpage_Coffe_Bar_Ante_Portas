@@ -58,9 +58,9 @@
                     <th class="col-sm-2">Ügyintéző<br> </th>
                     <th class="col-sm-2">Iktatási Dátum <br> </th>
                     <th class="col-sm-2">Kiszerelés<br>Raktáron [g]</th>
+                    <th>%</th>
                     <th class="col-sm-1">Ára [Ft] </th>
                     <th class="col-sm-2">Szerkeszt</th>
-                    
                 </tr>
                 <i class="glyphicon glyphicon-plus"></i>
             </thead>
@@ -103,50 +103,60 @@
                             {{ ware.empty_date|time:"H:i" }}
                         {% endif %} 
                     </td>
+
                     {% if ware.stock <= 40 %}
-                    <td style="background-color:powderblue; color:red; bold">
-                    {{ ware.ware_type.ware_weight }}  /  {{ware.stock}}g</td>
+                        <td style="background-color:powderblue; color:red; bold">
+                        {{ ware.ware_type.ware_weight }}  /  {{ware.stock}}g</td>
                     {% else %}
                     <td class="col-sm-2">{{ ware.ware_type.ware_weight }}  /  {{ ware.stock }}</td>
                     {% endif %}
+                    
+                    <td>{% widthratio ware.stock ware.ware_type.ware_weight 100 %}</td>
+
                     <td class="col-sm-1">{{ ware.acquisition_price }}</td>
                     
                     <td class="col-sm-2">
-                    {% if user.is_staff %}
-                        {% if ware.store_status == 1 %}
-                        <a class="btn btn-primary btn-sm" 
-                            href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}" >
-                            <span class="fa fa-pencil"></span></a>
-                            <a class="btn btn-primary btn-sm" 
+                        {% if user.is_staff %}
+
+                            {% if ware.store_status == 1 %}
+                                <a class="btn btn-primary btn-sm" 
+                                href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}" >
+                                <span class="fa fa-pencil"></span></a>
+                                <a class="btn btn-primary btn-sm" 
                                 href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}"
                                 onclick="return confirm('Az árut bevételezi?')">
                                 <span class="fa fa-cube"></span></a>
-                        {% endif %}
-                        {% if ware.store_status == 2 %}
-                            <a class="btn btn-primary btn-sm" 
+                            {% endif %}
+
+                            {% if ware.store_status == 2 %}
+                                <a class="btn btn-primary btn-sm" 
                                 href="{% url 'raw_material:box_open' pkey=ware.pk %}" 
                                 onclick="return confirm('A csomag meg lett kezdve?')">
                                 <span class="fa fa-dropbox"></span></a>
-                        {% endif %}
-                        {% if ware.store_status == 3 %}
-                            <a class="btn btn-primary btn-sm" 
+                            {% endif %}
+
+                            {% if ware.store_status == 3 %}
+                                <a class="btn btn-primary btn-sm" 
                                 href="{% url 'raw_material:box_empty' pkey=ware.pk %}" 
                                 onclick="return confirm('A csomag kiürült?')">
                                 <span class="fa fa-share-square-o"></span></a>
+                            {% endif %}
+
+                            {% if ware.store_status == 1 or ware.store_status == 2 %}
+                                <a class="btn btn-danger btn-sm" 
+                                    href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}" 
+                                    onclick="return confirm('Biztosan törölni akarja?')">
+                                    <span class="fa fa-trash-o"></span></a>
+                            {% endif %}
+
                         {% endif %}
-                        {% if ware.store_status == 1 or ware.store_status == 2 %}
-                        <a class="btn btn-danger btn-sm" 
-                            href="{% url 'raw_material:acquisition_remove' pkey=ware.pk %}" 
-                            onclick="return confirm('Biztosan törölni akarja?')">
-                            <span class="fa fa-trash-o"></span></a>
-                        {% endif %}
-                    {% endif %}
-                    </td>
-                {% endif %}                
+                    </td>      
+                             
                 </tr>
+                {% endif %}
             {% endfor %}    
         </table>
     </div>
 {% endfor %} 
-
+            
 {% endblock %}
