@@ -68,6 +68,10 @@ def coffee_make_form(request, pkey):
     return render(request, 'shop/coffee_make_form.html', 
     {'form': form, 'ware':ware,'dt':dt, 'alrt':alrt, 'stock_min':stock_min})
 
+def coffee_make_remove(pk):
+    coffee4 = get_object_or_404(CoffeeMake, pk=pk)
+    coffee4.delete()
+    return redirect('shop:coffee_order')
 
 def coffee_order(request):
     dt= datetime.datetime.now()

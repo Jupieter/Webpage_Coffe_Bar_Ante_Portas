@@ -50,13 +50,19 @@
                     <th class="col-sm-1">  Cukor választás / adag </th>                    
                     <th class="col-sm-1">  Tej választás / adag </th>                    
                     <th class="col-sm-1">  Ízesítő választás / adag </th>                    
-                    {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
                     <th class="col-sm-1">                        
+                        {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
                         <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_order_form' pkey=coffee.pk %}">
                             <span class="fa fa-shopping-basket"> Foglalok </span></a>
                         {% else %}
-                        <th>Betelt</th>
-                        {% endif %}</th>
+                            <th>Betelt</th>
+                        {% endif %}
+
+                        {% if user.is_staff %}
+                            <a class="btn btn-danger btn-sm" href="{% url 'shop:coffee_make_remove' pk=coffee.pk %}">
+                                <span class="fa fa-trash"></span></a>
+                        {% endif %}
+                    </th>
                     
                 </tr>
             </thead>
