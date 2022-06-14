@@ -196,7 +196,7 @@ def coffee_booking_pk(request, pkey):
         adat.append([sugar_s, milk_s, flavour_s])   
     coffees3.c_book = timezone.now()
     coffees3.save()
-
-    return render(request, 'shop/booking_pk.html', 
-    {'pkey':pkey, 'coffees3':coffees3, 'orders3':orders3, 'adat':adat, 'alap':alap})
+    return redirect('shop/coffee_booking.html')
+    ''' return render(request, 'shop/booking_pk.html', 
+    {'pkey':pkey, 'coffees3':coffees3, 'orders3':orders3, 'adat':adat, 'alap':alap})'''
 
