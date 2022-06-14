@@ -17,6 +17,7 @@
         text-align: middle;
         color: rgb(51, 31, 1);
         }
+        td { font-size: 10px;}
     </style>
 {% endblock %}  
 
@@ -50,10 +51,10 @@
                     <th class="col-sm-1">  Cukor választás / adag </th>                    
                     <th class="col-sm-1">  Tej választás / adag </th>                    
                     <th class="col-sm-1">  Ízesítő választás / adag </th>                    
-                    {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
+                    {% if user.is_authenticated %}
                     <th class="col-sm-1">                        
-                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_order_form' pkey=coffee.pk %}">
-                            <span class="fa fa-shopping-basket"> Foglalok </span></a>
+                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_booking_pk' pkey=coffee.pk %}">
+                            <span class="fa fa-book"> Könyvelem </span></a>
                         {% else %}
                         <th>Betelt</th>
                         {% endif %}</th>
@@ -72,12 +73,12 @@
                     <td>{{order.milk_choice}} <br>{{order.milk_dose}}</td>
                     <td>{{order.flavour_choice}} <br>{{order.flavour_dose}}</td>
                     <td>
-                        {% if user.is_staff %}
+                        <{% if user.is_staff %}
                         <a class="btn btn-danger btn-sm" 
                         href="{% url 'shop:coffee_order_remove' pk=order.pk %}"
                         onclick="return confirm('Biztosan törölni akarja?')">
                             <span class="fa fa-trash-o"></span></a>
-                        {% endif %}
+                        {% endif %}>
                     </td>
                     {% endif %}       
                 </tr>
@@ -87,9 +88,5 @@
     </div>
     {% endfor %}
 </div>
-<br><br><br><br><br>
-<p>
-    This was the last point when I can not use JawaScript 2022.05.30
-</p>
-     
+
 {% endblock%}

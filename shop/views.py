@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 import datetime
@@ -169,17 +170,33 @@ def coffee_booking(request):
         {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
 
 def coffee_booking_pk(request, pkey):
-            sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
-            sugar_ss = get_object_or_404(WareTypes, ware_types='Cukor').ware_wght
-            sugar_s.stock -= sugar_ss * coffee2.sugar_dose
+    coffees3 = get_object_or_404(CoffeeMake, pk=pkey)
+    orders3 = CoffeeOrder.objects.filter(coffee_selected = pkey)
+    sugar_ss = get_object_or_404(WareTypes, id=1).ware_wght
+    milk_ss = get_object_or_404(WareTypes, id=3).ware_wght
+    flavour_ss = get_object_or_404(WareTypes, id=4).ware_wght
+    alap = [1234 ,sugar_ss, milk_ss, flavour_ss]
+    adat = []
+    
+    for order3 in orders3:
+        milk_s = 0
+        flavour_s = 0
+        if order3.sugar_choice != None:
+            sugar_s =  get_object_or_404(ProductAcquisition, pk=order3.sugar_choice.pk)
+            sugar_s.stock -= sugar_ss * order3.sugar_dose
             sugar_s.save()
-
-            milk_s = get_object_or_404(ProductAcquisition, pk=coffee2.milk_choice.pk)
-            milk_ss = get_object_or_404(WareTypes, ware_types='Tej').ware_wght
-            milk_s.stock -= milk_ss * coffee2.milk_dose
+        if order3.milk_choice != None:
+            milk_s = get_object_or_404(ProductAcquisition, pk=order3.milk_choice.pk)
+            milk_s.stock -= milk_ss * order3.milk_dose
             milk_s.save()
-
-            flavour_s = get_object_or_404(ProductAcquisition, pk=coffee2.flavour_choice.pk)
-            flavour_ss = get_object_or_404(WareTypes, ware_types='Ízesítő').ware_wght
-            flavour_s.stock -= flavour_ss * coffee2.flavour_dose
+        if order3.flavour_choice != None:
+            flavour_s = get_object_or_404(ProductAcquisition, pk=order3.flavour_choice.pk)
+            flavour_s.stock -= flavour_ss * order3.flavour_dose
             flavour_s.save()
+        adat.append([sugar_s, milk_s, flavour_s])   
+    coffees3.c_book = timezone.now()
+    coffees3.save()
+
+    return render(request, 'shop/booking_pk.html', 
+    {'pkey':pkey, 'coffees3':coffees3, 'orders3':orders3, 'adat':adat, 'alap':alap})
+

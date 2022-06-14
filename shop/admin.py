@@ -4,7 +4,7 @@ from .models import CoffeeMake, CoffeeOrder
 # Register your models here.
 @admin.register(CoffeeMake)
 class CoffeeMakeAdmin(admin.ModelAdmin):
-  list_display = ('id', 'c_make_ware', 'c_make_dose', 'c_make_date')
+  list_display = ('id', 'c_make_ware', 'c_make_dose', 'c_make_date', 'c_book')
 
 @admin.register(CoffeeOrder)
 class CoffeeOrderAdmin(admin.ModelAdmin):
