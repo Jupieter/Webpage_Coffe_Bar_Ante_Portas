@@ -6,7 +6,6 @@ import datetime, time
 
 
 class CoffeeMakerForm(forms.Form):
-
     c_make_dose = forms.IntegerField(
         label='Lefőzött kávé adag:',
         max_value = 8,
@@ -20,10 +19,8 @@ class CoffeeMakerForm(forms.Form):
             )
     )
     c_make_date = forms.DateTimeField(
-        label='Főzés napja:',
-        # initial=datetime.datetime.today(),        
+        label='Főzés napja:', 
         widget = forms.DateTimeInput(
-            # format=('%Y.%m.%D'),
             attrs={
                 "class": "form-control",               
                 "type":"date"
@@ -32,18 +29,37 @@ class CoffeeMakerForm(forms.Form):
     )
     c_make_time = forms.TimeField(
         label='Elkészül:',
-        # initial = datetime.datetime.now(),   #.isoformat(timespec='minutes'),
         widget=forms.TimeInput(
-            # format=('%H:%M'),
             attrs={
                 "class": "form-control",               
                 "type":"time"
                 }
             ),
-    )
- 
+    ) 
     class Meta:             
         fields = ('c_make_dose', 'c_make_date', 'c_make_time',)
+
+class CoffeeTimeForm(forms.Form):
+    c_make_date = forms.DateTimeField(
+    label='Főzés napja:', 
+    widget = forms.DateTimeInput(
+        attrs={
+            "class": "form-control",               
+            "type":"date"
+            }
+        )
+    )
+    c_make_time = forms.TimeField(
+        label='Elkészül:',
+        widget=forms.TimeInput(
+            attrs={
+                "class": "form-control",               
+                "type":"time"
+                }
+            ),
+    ) 
+    class Meta:             
+        fields = ('c_make_date', 'c_make_time',)
 
 class CoffeeOrderForm(forms.ModelForm):
     class Meta:

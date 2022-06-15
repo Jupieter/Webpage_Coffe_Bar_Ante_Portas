@@ -1,14 +1,17 @@
+import json
 from asyncio.windows_events import NULL
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.utils import timezone
 import datetime
 from raw_material.models import ProductAcquisition, WareTypes
 from .models import CoffeeMake, CoffeeOrder
-from .forms import CoffeeMakerForm, CoffeeOrderForm
+from .forms import CoffeeMakerForm, CoffeeOrderForm, CoffeeTimeForm
 
 
 def coffee_home(request):
     return render(request, 'shop/coffee_home.html', {})
+
 
 def coffee_make(request):
     wares1 = ProductAcquisition.objects.filter(store_status=3)
@@ -21,23 +24,28 @@ def coffee_make(request):
     return render(request, 'shop/coffee_make.html', {'wares':wares,'dt':dt, 'stock_min':stock_min})
 
 
+def date_time_add(cm):
+        dtd = cm['c_make_date'];  dtt = cm['c_make_time']
+        dt_h = dtt.hour;  dt_m = dtt.minute
+        dt_change = datetime.timedelta(hours=dt_h, minutes=dt_m)
+        dtf = dtd + dt_change
+        return dtf
+
+
 def coffee_make_form(request, pkey):
     ware = get_object_or_404(ProductAcquisition, pk=pkey)
     dose_weight = ware.ware_type.ware_type.ware_wght
     stock_min = 40
     alrt ='';    cm = None
-    if  ware.stock < stock_min:
+    if  ware.stock < dose_weight*0.08:
         alrt = "Nagyon kevés a kibontott anyag készlet. Kérem ellenőrizze!"
     dt= datetime.datetime.now()  
     if request.method == "POST":
         form = CoffeeMakerForm(request.POST)
         if form.is_valid():
             cm = form.cleaned_data
-            dtd = cm['c_make_date'];  dtt = cm['c_make_time']
-            dt_h = dtt.hour;  dt_m = dtt.minute
-            dt_change = datetime.timedelta(hours=dt_h, minutes=dt_m)
-            dtf = dtd + dt_change
-            dt=[dtd, dtt, dtf]
+            dtf = date_time_add(cm)
+            # dt=[dtd, dtt, dtf]
             coffe_new = CoffeeMake(
                 c_make_ware = ware,
                 c_make_dose = cm['c_make_dose'],
@@ -49,9 +57,6 @@ def coffee_make_form(request, pkey):
             wght = ware.stock
             ware.stock = wght - dose_weight * cm['c_make_dose']
             ware.save()
-            
-            # field_names = [f.name for f in CoffeeMake._meta.get_fields()]
-
             return redirect('shop:coffee_home')
             '''return render(request, 'shop/coffee_make_form.html', 
             {'form': form, 'ware':ware,'dt':dt, 'alrt':alrt,
@@ -68,10 +73,32 @@ def coffee_make_form(request, pkey):
     return render(request, 'shop/coffee_make_form.html', 
     {'form': form, 'ware':ware,'dt':dt, 'alrt':alrt, 'stock_min':stock_min})
 
+
 def coffee_make_remove(pk):
     coffee4 = get_object_or_404(CoffeeMake, pk=pk)
     coffee4.delete()
     return redirect('shop:coffee_order')
+
+
+def coffee_make_time(request, pk):
+    coffee4 = get_object_or_404(CoffeeMake, pk=pk)
+    if request.method == "POST":
+        form = CoffeeTimeForm(request.POST)
+        if form.is_valid():
+            cm = form.save()
+            dtf = date_time_add(cm)
+            coffe_new = CoffeeMake(
+                c_make_user = request.user,
+                c_make_date = dtf,
+                c_reg_time = timezone.now(),
+                )
+            coffe_new.save()
+            return redirect('shop:coffee_order')
+    else:
+        form = CoffeeTimeForm()
+        # form.fields['c_make_date'].initial = dt
+    return render(request,'shop/c_time_form.html', 
+    {'form': form, 'coffee4':coffee4,})
 
 def coffee_order(request):
     dt= datetime.datetime.now()
@@ -152,10 +179,9 @@ def coffee_order_form(request, pkey):
         form.fields['flavour_choice'].initial  = [1]
         form.fields['coffee_dose'].widget.attrs['max'] = dose
         proba = "Betölt else ág"
-        
-    return render(request, 'shop/c_order_form.html',
-        {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,
-        'sugar':sugar , 'milk':milk, 'falvour':flavour, 'proba':proba})
+        context = {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,
+        'sugar':sugar , 'milk':milk, 'falvour':flavour, 'proba':proba}
+    return render(request, 'shop/c_order_form.html', context )
 
 def coffee_booking(request):
     dt= datetime.datetime.now()
@@ -169,9 +195,8 @@ def coffee_booking(request):
         adat.append(coffee.id)
     coffees = coffees.order_by('c_make_date')
     ordered = CoffeeOrder.objects.filter(coffee_selected__in = adat)
-
-    return render(request, 'shop/coffee_booking.html', 
-        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
+    context = {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered}
+    return render(request, 'shop/coffee_booking.html', context)
 
 def coffee_booking_pk(request, pkey):
     coffees3 = get_object_or_404(CoffeeMake, pk=pkey)

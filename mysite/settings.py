@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
 
         # our apps
+    'widget_tweaks',
     'livereload',
     'mysite',
     'accounts',
