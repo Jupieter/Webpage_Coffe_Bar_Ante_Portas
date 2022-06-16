@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}    
+    Storing    
+{% endblock %}
+{% block style %}    
+    <style>
+        body {
+          background-image: url(/static/image/cup.jpg);
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: 100% 100%;
+        }
+        h2  {
+        text-align: left;
+        color: rgb(247, 155, 17);
+        }
+    </style>
+{% endblock %} 
+
+{% block content %}
+
+<div class="container pt-2">
+
+        <h1> Page of error (else print) </h1>
+        <h2> {{coffee4}} </h2>
+        <h4> {{adat}}</h4>
+        <br>
+
+{% endblock%}

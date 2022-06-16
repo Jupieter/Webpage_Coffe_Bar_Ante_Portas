@@ -25,6 +25,7 @@ def coffee_make(request):
 
 
 def date_time_add(cm):
+        ''' Date picker and Tim picker values add to dateTime'''
         dtd = cm['c_make_date'];  dtt = cm['c_make_time']
         dt_h = dtt.hour;  dt_m = dtt.minute
         dt_change = datetime.timedelta(hours=dt_h, minutes=dt_m)
@@ -74,11 +75,10 @@ def coffee_make_form(request, pkey):
     {'form': form, 'ware':ware,'dt':dt, 'alrt':alrt, 'stock_min':stock_min})
 
 
-def coffee_make_remove(pk):
-    coffee4 = get_object_or_404(CoffeeMake, pk=pk)
+def coffee_make_remove(request, pkey):
+    coffee4 = get_object_or_404(CoffeeMake, pk=pkey)
     coffee4.delete()
     return redirect('shop:coffee_order')
-
 
 def coffee_make_time(request, pk):
     coffee4 = get_object_or_404(CoffeeMake, pk=pk)
@@ -94,6 +94,10 @@ def coffee_make_time(request, pk):
                 )
             coffe_new.save()
             return redirect('shop:coffee_order')
+        else:
+            context = {'coffee4':coffee4, 'adat':pkey}
+            return render(request, 'shop/c_error.html', context)
+
     else:
         form = CoffeeTimeForm()
         # form.fields['c_make_date'].initial = dt
