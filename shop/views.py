@@ -120,16 +120,22 @@ def coffee_order(request):
         {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
 
 def coffee_order_remove(request, pk):
-    coffee1 = get_object_or_404(CoffeeOrder, pk=pk)
-    coffee1.delete()
+    coffee2 = get_object_or_404(CoffeeOrder, pk=pk)
+    coffee1 = get_object_or_404(CoffeeMake, pk=coffee2.coffee_selected.id)
+    dose = coffee1.c_make_dose
+    coffee1.c_make_dose = dose + coffee2.coffee_dose
+    coffee1.save()
+    coffee2.delete()
     return redirect('shop:coffee_order')
+    ''' context = {'coffees':coffee1, 'adat':dose,'adat2':coffee2.coffee_dose,  'adat3':coffee1.c_make_dose }
+    return  render(request, 'shop/c_error.html', context ) '''
 
 def coffee_order_form(request, pkey):
     proba = ''
     coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
     dose = coffee_1.c_make_dose
     wares = ProductAcquisition.objects.filter(store_status=3)
-    sugar = []; milk = []; flavour = []; adat = []
+    sugar = [(None,None),]; milk = [(None,None),]; flavour = [(None,None),]; adat = []
     for ware in wares:
         if ware.ware_type.ware_type.ware_types == 'Cukor':
             dt1 = ware.id
@@ -172,13 +178,12 @@ def coffee_order_form(request, pkey):
             sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
             milk_s = get_object_or_404(ProductAcquisition, pk=coffee2.milk_choice.pk)
             flavour_s = get_object_or_404(ProductAcquisition, pk=coffee2.flavour_choice.pk)'''
-
-            return  render(request, 'shop/c_error.html',
-                {'form': form, 'wares':wares,  'proba':proba})
+            context = {'form': form, 'wares':wares,  'proba':proba}
+            return  render(request, 'shop/c_error.html', context )
     else:
         form = CoffeeOrderForm()
         form.fields['sugar_choice'].choices  = sugar
-        # form.fields['sugar_choice'].initial  = [1]
+        form.fields['sugar_choice'].initial  = None
         form.fields['milk_choice'].choices  = milk
         # form.fields['milk_choice'].initial  = [1]
         form.fields['flavour_choice'].choices  = flavour
