@@ -93,9 +93,11 @@ def coffee_make_time(request, pk):
                 c_reg_time = timezone.now(),
                 )
             coffe_new.save()
-            return redirect('shop:coffee_order')
+            # return redirect('shop:coffee_order')
+            context = {'adat':coffee4, 'adat2':pk}
+            return render(request, 'shop/c_error.html', context)
         else:
-            context = {'coffee4':coffee4, 'adat':pkey}
+            context = {'adat':coffee4, 'adat2':pk}
             return render(request, 'shop/c_error.html', context)
 
     else:
