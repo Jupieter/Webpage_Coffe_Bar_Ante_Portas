@@ -150,6 +150,7 @@ def coffee_order_form(request, pkey):
     if request.method == "POST":
         form = CoffeeOrderForm(request.POST)
         if form.is_valid():
+            coffee2 = form.cleaned_data
             coffee2 = form.save(commit=False)
             coffee2.coffee_selected = coffee_1
             coffee2.coffe_user = request.user
@@ -171,16 +172,17 @@ def coffee_order_form(request, pkey):
             sugar_s =  get_object_or_404(ProductAcquisition, pk=coffee2.sugar_choice.pk)
             milk_s = get_object_or_404(ProductAcquisition, pk=coffee2.milk_choice.pk)
             flavour_s = get_object_or_404(ProductAcquisition, pk=coffee2.flavour_choice.pk)'''
-            return  render(request, 'shop/c_order_form_copy.html',
+
+            return  render(request, 'shop/c_error.html',
                 {'form': form, 'wares':wares,  'proba':proba})
     else:
         form = CoffeeOrderForm()
         form.fields['sugar_choice'].choices  = sugar
         # form.fields['sugar_choice'].initial  = [1]
         form.fields['milk_choice'].choices  = milk
-        form.fields['milk_choice'].initial  = [1]
+        # form.fields['milk_choice'].initial  = [1]
         form.fields['flavour_choice'].choices  = flavour
-        form.fields['flavour_choice'].initial  = [1]
+        # form.fields['flavour_choice'].initial  = [1]
         form.fields['coffee_dose'].widget.attrs['max'] = dose
         proba = "Betölt else ág"
         context = {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,

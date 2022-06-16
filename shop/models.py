@@ -36,8 +36,7 @@ class CoffeeOrder(models.Model):
         on_delete=models.SET_NULL,
         related_name = 'strict_sugar',   
         verbose_name='Lefoglalt Cukor',
-        blank=True,
-        null=True,)   
+        blank=True, null=True, unique=False,)   
     sugar_dose =  models.DecimalField(
         max_digits=2, 
         decimal_places=1, 
@@ -48,8 +47,7 @@ class CoffeeOrder(models.Model):
         on_delete=models.SET_NULL,
         related_name = 'strict_milk',
         verbose_name='Lefoglalt Tej',
-        blank=True,
-        null=True,)   
+        blank=True, null=True, unique=False,)   
     milk_dose =  models.DecimalField(
         max_digits=2, 
         decimal_places=1, 
@@ -60,15 +58,14 @@ class CoffeeOrder(models.Model):
         on_delete=models.SET_NULL,
         related_name = 'strict_flavour',   
         verbose_name='Lefoglalt Ízesítő',
-        blank=True,
-        null=True,)  
+        blank=True, null=True, unique=False,)  
     flavour_dose =  models.DecimalField(
         max_digits=2, 
         decimal_places=1, 
         verbose_name='Ízesítő [0,5-2] Adag [5 g]', 
         default=0)
     coffe_user = models.ForeignKey(
-        User, on_delete=models.SET_NULL, 
+        User, on_delete = models.SET_NULL, 
         null=True, blank=False, 
         related_name ='Lefoglalta', 
         verbose_name = 'Lefoglalta',
@@ -76,6 +73,5 @@ class CoffeeOrder(models.Model):
     coffee_reg = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
 
 
-    class Meta:
-        unique_together = (("sugar_choice", "milk_choice"),)
+    # class Meta: unique_together = (("sugar_choice", "milk_choice"),)
     
