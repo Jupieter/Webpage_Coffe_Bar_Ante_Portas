@@ -183,7 +183,7 @@ def coffee_order_form(request, pkey):
     else:
         form = CoffeeOrderForm()
         form.fields['sugar_choice'].choices  = sugar
-        form.fields['sugar_choice'].initial  = None
+        # form.fields['sugar_choice'].initial  = None
         form.fields['milk_choice'].choices  = milk
         # form.fields['milk_choice'].initial  = [1]
         form.fields['flavour_choice'].choices  = flavour
