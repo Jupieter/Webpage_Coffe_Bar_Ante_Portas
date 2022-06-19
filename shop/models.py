@@ -72,6 +72,4 @@ class CoffeeOrder(models.Model):
         default=User)
     coffee_reg = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
 
-
-    # class Meta: unique_together = (("sugar_choice", "milk_choice"),)
     

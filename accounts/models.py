@@ -106,11 +106,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.superuser
 
 
-
-class GuestEmail(models.Model):
-    email = models.EmailField()
-    active = models.BooleanField(default=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
     

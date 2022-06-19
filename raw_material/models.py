@@ -31,15 +31,6 @@ class WareData(models.Model):
         ware_name = str(w_name_2) + ', ' + str(w_name_3) + ', ' + str(w_name_1)
         return ware_name
        
-    
-
-
-class ProductIngredient(models.Model):
-    product_name = models.CharField(max_length=50)
-    material1 = models.IntegerField(default=0)
-    material2 = models.IntegerField(default=0)
-    material3 = models.IntegerField(default=0)
-    pub_date = models.DateTimeField('date published')
 
 class StatusChoise(models.IntegerChoices):
     MINDEGYIK = 0

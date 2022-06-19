@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, redirect 
 from django.contrib.auth import get_user_model, authenticate, login
-from .forms import RegisterForm, LoginForm, GuestForm
+from .forms import RegisterForm, LoginForm
 from .models import User
 # from django.utils.http import is_safe_url
 from django.contrib import messages

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import GuestEmail, User
+from .models import User
 from .forms import UserAdminCreationForm, UserAdminChangeForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
@@ -32,7 +32,4 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
-
-
-admin.site.register(GuestEmail)
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import WareTypes, WareData, ProductIngredient, ProductAcquisition
+from .models import WareTypes, WareData, ProductAcquisition
 
 
 @admin.register(WareTypes)
@@ -16,6 +16,3 @@ class ProductAcquisitionAdmin(admin.ModelAdmin):
   list_display = ('id', 'ware_type', 'store_status', 
     'acquisition_price', 'acquisiton_user', 'acquisition_date', 'stock')
 
-
-admin.site.register(ProductIngredient)
-# admin.site.register(ProductAcquisition)

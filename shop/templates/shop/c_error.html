@@ -16,17 +16,17 @@
 {% block content %}
 
 <div class="modal-content">
-
-    <h1> Page of error (else print) </h1>
-    <h2>coffes: {{coffees}} </h2>
-    <br>
-    
-    <h4>wares: {{wares}}</h4>
-    <h4>proba: {{proba}}</h4>
-    <h4>adat: {{adat}}</h4>
-    <h4>adat2: {{adat2}}</h4>
-    <h4>adat3: {{adat3}}</h4>
-    <br>
+    <div class="modal-header">
+        <h1> Page of error (else print) </h1>
+        <h2>coffes: {{coffees}} </h2>
+    </div>
+    <div class="modal-body">
+        <h4>wares: {{wares}}</h4>
+        <h4>proba: {{proba}}</h4>
+        <h4>adat: {{adat}}</h4>
+        <h4>adat2: {{adat2}}</h4>
+        <h4>adat3: {{adat3}}</h4>
+    </div>
 
     <h4>form:{{form.as_p}}</h4>
 </div>

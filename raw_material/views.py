@@ -1,7 +1,7 @@
 # from asyncio.windows_events import NULL
 from django.shortcuts import render, get_object_or_404, redirect 
 from django.utils import timezone
-from .models import WareTypes, WareData, ProductIngredient, ProductAcquisition
+from .models import WareTypes, WareData, ProductAcquisition
 from .forms import WareDataForm, AquisitionForm, AquisitionStockedForm, WareListChoice
 
 

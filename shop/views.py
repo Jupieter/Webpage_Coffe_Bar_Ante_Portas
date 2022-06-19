@@ -23,6 +23,10 @@ def coffee_make(request):
             wares.append(ware)
     return render(request, 'shop/coffee_make.html', {'wares':wares,'dt':dt, 'stock_min':stock_min})
 
+def coffee_make_remove(request, pkey):
+    coffee4 = get_object_or_404(CoffeeMake, pk=pkey)
+    coffee4.delete()
+    return redirect('shop:coffee_order')
 
 def date_time_add(cm):
         ''' Date picker and Tim picker values add to dateTime'''
@@ -75,10 +79,6 @@ def coffee_make_form(request, pkey):
     {'form': form, 'ware':ware,'dt':dt, 'alrt':alrt, 'stock_min':stock_min})
 
 
-def coffee_make_remove(request, pkey):
-    coffee4 = get_object_or_404(CoffeeMake, pk=pkey)
-    coffee4.delete()
-    return redirect('shop:coffee_order')
 
 def coffee_make_time(request, pk):
     coffee4 = get_object_or_404(CoffeeMake, pk=pk)
@@ -91,10 +91,10 @@ def coffee_make_time(request, pk):
             coffee4.c_make_date = dtf,
             coffee4.c_reg_time = timezone.now() 
             coffee4.save()
-            # return redirect('shop:coffee_order')
-            context = {'adat':cm, 'adat2':dtf, 'adat3':coffee4}
+            return redirect('shop:coffee_order')
+            # context = {'adat':cm, 'adat2':coffee4.c_make_date, 'adat3':coffee4.c_book}
             # return render(request, 'shop/coffee_order.html', context)
-            return render(request, 'shop/c_error.html', context)
+            # return render(request, 'shop/c_error.html', context)
         else:
             context = {'adat':coffee4, 'adat2':pk, 'adat3':coffee4}
             return render(request, 'shop/c_error.html', context)
@@ -103,7 +103,7 @@ def coffee_make_time(request, pk):
         form = CoffeeTimeForm()
         # form.fields['c_make_date'].initial = dt
     return render(request,'shop/c_time_form.html', 
-    {'form': form, 'coffee4':coffee4, 'adat2':pk, })
+    {'form': form, 'coffee4':coffee4, 'adat':pk, 'adat2':coffee4.c_make_dose, 'adat3':coffee4.c_make_date })
 
 def coffee_order(request):
     dt= datetime.datetime.now()
