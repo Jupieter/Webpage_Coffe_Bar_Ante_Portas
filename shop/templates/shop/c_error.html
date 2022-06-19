@@ -6,33 +6,28 @@
 {% endblock %}
 {% block style %}    
     <style>
-        body {
-          background-image: url(/static/image/cup.jpg);
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-size: 100% 100%;
-        }
-        h2  {
-        text-align: left;
-        color: rgb(247, 155, 17);
+        body {background-color: white;}
+        h1, h2, h4 {
+        text-align: middle;
+        color: rgb(253, 179, 69);
         }
     </style>
 {% endblock %} 
-
 {% block content %}
 
-<div class="container pt-2">
+<div class="modal-content">
 
-        <h1> Page of error (else print) </h1>
-        <h2>coffes: {{coffees}} </h2>
-        <br>
-        
-        <h4>wares: {{wares}}</h4>
-        <h4>proba: {{proba}}</h4>
-        <h4>adat: {{adat}}</h4>
-        <h4>adat2: {{adat2}}</h4>
-        <h4>adat3: {{adat3}}</h4>
-        <br>
+    <h1> Page of error (else print) </h1>
+    <h2>coffes: {{coffees}} </h2>
+    <br>
+    
+    <h4>wares: {{wares}}</h4>
+    <h4>proba: {{proba}}</h4>
+    <h4>adat: {{adat}}</h4>
+    <h4>adat2: {{adat2}}</h4>
+    <h4>adat3: {{adat3}}</h4>
+    <br>
 
-        <h4>form:{{form.as_p}}</h4>
-        {% endblock%}
+    <h4>form:{{form.as_p}}</h4>
+</div>
+{% endblock%}

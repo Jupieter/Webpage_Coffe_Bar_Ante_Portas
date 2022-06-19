@@ -21,7 +21,7 @@ class CoffeeMake(models.Model):
         null=True,)
 
     def __str__(self):
-         c_make_name = str(self.c_make_ware) + ", " + str(self.id)
+         c_make_name = str(self.c_make_ware) + " / " + str(self.id)
          return c_make_name
 
 class CoffeeOrder(models.Model):

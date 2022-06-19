@@ -7,3 +7,7 @@ function re_fresh(Rng, Lbl) {
     output.innerHTML = this.value;
   };
 }
+
+function refreshPage(){
+  window.location.reload();
+} 

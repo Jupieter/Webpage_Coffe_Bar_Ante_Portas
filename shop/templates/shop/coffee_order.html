@@ -7,12 +7,7 @@
 
 {% block style %}    
     <style>
-        body {
-          background-image: url(/static/image/coffee_bg_6.jpgg);
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-size: 100% 100%;
-        }
+        body {background-color: white;}
         h2  {
         text-align: middle;
         color: rgb(51, 31, 1);
@@ -40,16 +35,16 @@
     {% for coffee in coffees %}
     <div class="row-sm-6">
         <table class="table table table-hover">
-            <thead class="table-dark">
+            <thead class="table-light">
                 <tr>  
                     <th class="col-sm-2">{{coffee.id}}, 
                         {{coffee.c_make_ware.ware_type.ware_brand}}, 
                         {{coffee.c_make_ware.ware_type.ware_brand_name}}</th>                   
                     <th class="col-sm-1">{{coffee.c_make_date}}</th>
                     <th class="col-sm-1">  Kávé adag még:<br> {{coffee.c_make_dose}}</th>                    
-                    <th class="col-sm-1">  Cukor választás / adag </th>                    
-                    <th class="col-sm-1">  Tej választás / adag </th>                    
-                    <th class="col-sm-1">  Ízesítő választás / adag </th>                    
+                    <th class="col-sm-2">  Cukor választás / adag </th>                    
+                    <th class="col-sm-2">  Tej választás / adag </th>                    
+                    <th class="col-sm-2">  Ízesítő választás / adag </th>                    
                     <th class="col-sm-1">   
                         {% if user.is_staff %}
                             <a class="btn btn-danger btn-sm m-1" href="{% url 'shop:coffee_make_remove' pkey=coffee.pk %}">
@@ -76,20 +71,20 @@
                 <tr> 
                     {% if order.coffee_selected.id == coffee.id  %}
                     
-                    <td>{{order.id}}., {{order.coffe_user}}</td>
-                    <td>{{order.coffee_reg}} </td>
-                    <td>{{order.coffee_dose}}</td>                    
-                    <td>{{order.sugar_choice}} <br>{{order.sugar_dose}}</td>
-                    <td>{{order.milk_choice}} <br>{{order.milk_dose}}</td>
-                    <td>{{order.flavour_choice}} <br>{{order.flavour_dose}}</td>
-                    <td>
+                    <td class="col-sm-2">{{order.id}}., {{order.coffe_user}}</td>
+                    <td class="col-sm-1">{{order.coffee_reg}} </td>
+                    <td class="col-sm-1">{{order.coffee_dose}}</td>                    
+                    <td class="col-sm-2">{{order.sugar_choice}} <br>{{order.sugar_dose}}</td>
+                    <td class="col-sm-2">{{order.milk_choice}} <br>{{order.milk_dose}}</td>
+                    <td class="col-sm-2">{{order.flavour_choice}} <br>{{order.flavour_dose}}</td>
+                    <td class="col-sm-1">
                         {% if user.is_staff %}
                         <a class="btn btn-danger btn-sm" 
                         href="{% url 'shop:coffee_order_remove' pk=order.pk %}"
                         onclick="return confirm('Biztosan törölni akarja?')">
                             <span class="fa fa-trash-o"></span></a>
                         {% endif %}
-                    </td>
+                    </td class="col-sm-1">
                     {% endif %}       
                 </tr>
                 {% endfor %}

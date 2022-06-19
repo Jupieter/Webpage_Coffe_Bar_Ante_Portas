@@ -85,26 +85,25 @@ def coffee_make_time(request, pk):
     if request.method == "POST":
         form = CoffeeTimeForm(request.POST)
         if form.is_valid():
-            cm = form.save()
+            cm = form.cleaned_data
             dtf = date_time_add(cm)
-            coffe_new = CoffeeMake(
-                c_make_user = request.user,
-                c_make_date = dtf,
-                c_reg_time = timezone.now(),
-                )
-            coffe_new.save()
+            coffee4.c_make_user = request.user
+            coffee4.c_make_date = dtf,
+            coffee4.c_reg_time = timezone.now() 
+            coffee4.save()
             # return redirect('shop:coffee_order')
-            context = {'adat':coffee4, 'adat2':pk}
+            context = {'adat':cm, 'adat2':dtf, 'adat3':coffee4}
+            # return render(request, 'shop/coffee_order.html', context)
             return render(request, 'shop/c_error.html', context)
         else:
-            context = {'adat':coffee4, 'adat2':pk}
+            context = {'adat':coffee4, 'adat2':pk, 'adat3':coffee4}
             return render(request, 'shop/c_error.html', context)
 
     else:
         form = CoffeeTimeForm()
         # form.fields['c_make_date'].initial = dt
     return render(request,'shop/c_time_form.html', 
-    {'form': form, 'coffee4':coffee4,})
+    {'form': form, 'coffee4':coffee4, 'adat2':pk, })
 
 def coffee_order(request):
     dt= datetime.datetime.now()
@@ -137,7 +136,7 @@ def coffee_order_form(request, pkey):
     coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
     dose = coffee_1.c_make_dose
     wares = ProductAcquisition.objects.filter(store_status=3)
-    sugar = [(None,None),]; milk = [(None,None),]; flavour = [(None,None),]; adat = []
+    sugar = []; milk = []; flavour = []; adat = []
     for ware in wares:
         if ware.ware_type.ware_type.ware_types == 'Cukor':
             dt1 = ware.id
@@ -162,7 +161,13 @@ def coffee_order_form(request, pkey):
             coffee2 = form.save(commit=False)
             coffee2.coffee_selected = coffee_1
             coffee2.coffe_user = request.user
-            coffee2.coffee_reg = timezone.now() 
+            coffee2.coffee_reg = timezone.now()
+            if coffee2.sugar_dose == 0:
+                coffee2.sugar_choice = None
+            if coffee2.milk_dose == 0:
+                coffee2.milk_choice = None
+            if coffee2.flavour_dose == 0:
+                coffee2.flavour_choice = None
             coffee2.save()
             coffee_1.c_make_dose = dose-coffee2.coffee_dose
             coffee_1.save()

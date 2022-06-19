@@ -45,23 +45,23 @@
             <div  class="col-sm-4 right "> {{form.coffee_dose.label}}
                 Választás: <span id="coffeeLabel">0.5</span>
             </div>
+            <div class="col-sm-3 right " >
+                A megkezdett termékekből választhat:
+            </div>           
             <div class="col-sm-2 right " oninput="re_fresh('coffeeRange','coffeeLabel')">
                 {{form.coffee_dose}}
             </div>
-            <div class="col-sm-6 right " >
-                A megkezdett termékekből választhat:
-            </div>           
         </div>
 
         <div class="row border p-2">
             <div class="col-sm-4 right " > {{form.sugar_dose.label}} 
                 Választás: <span id='sugarLabel'>0</span>
             </div>
-            <div class="col-sm-2 right " oninput="re_fresh('sugarRange','sugarLabel')">
-                {{form.sugar_dose}}
-            </div>
-            <div class="col-sm-6 right " >
+            <div class="col-sm-3 right " onchange="refreshPage()" >
                 {{form.sugar_choice}}
+            </div>
+            <div class="col-sm-2 right " oninput="re_fresh('sugarRange','sugarLabel')">
+                 {{form.sugar_dose}}
             </div>
         </div>
 
@@ -69,24 +69,24 @@
             <div class="col-sm-4 right "> {{form.milk_dose.label}}
                 Választás: <span id="milkLabel">0</span>
             </div> 
+            <div class="col-sm-3 right " >
+                {{form.milk_choice}}
+            </div>
             <div class="col-sm-2 right " oninput="re_fresh('milkRange','milkLabel')">
                 {{form.milk_dose}}
             </div>        
-            <div class="col-sm-6 right " >
-                {{form.milk_choice}}
-            </div>
         </div>
         
         <div class="row border p-2">
             <div class="col-sm-4 right "> {{form.flavour_dose.label}}
                 Választás: <span id="flavourLabel">0</span>
             </div>
+            <div class="col-sm-3 right " >
+                {{form.flavour_choice}}
+            </div>           
             <div class="col-sm-2 right " oninput="re_fresh('flavourRange','flavourLabel')">
                 {{form.flavour_dose}}
             </div>
-            <div class="col-sm-6 right " >
-                {{form.flavour_choice}}
-            </div>           
         </div>
         <div class="row  p-2">
             <div class="col-sm-3 right "></div>
