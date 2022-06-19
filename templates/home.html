@@ -59,7 +59,7 @@
     <p>If you want to book a few servings of coffee, click on the cup picture.</p>
 
 
-{% if user.is_authenticated %}
+{% if user.is_staff %}
 <div class="container">
 
     <div class="row  p-2 ">
@@ -77,10 +77,10 @@
             {% if coffees %}
             <h4> Főzésre váró kávék száma: {{coffees|length}}</h4>
             {% else %}
-            <h2 style="color:red" > Nincs főzésre váró kávé </h4>
+            <h2 style="color:red; font-style:bold" > Nincs főzésre váró kávé </h4>
             {% endif %}
                 {% for ware in wares %}
-                    <li style="color:red; bold">Kifogyóban: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
+                    <li style="color:red;font-style:bold">Kifogyóban: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
                 {% endfor %}
         </div>
     </div>

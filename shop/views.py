@@ -87,14 +87,14 @@ def coffee_make_time(request, pk):
         if form.is_valid():
             cm = form.cleaned_data
             dtf = date_time_add(cm)
-            coffee4.c_make_user = request.user
-            coffee4.c_make_date = dtf,
+            coffee4.c_make_user = request.user 
+            coffee4.c_make_date = dtf
             coffee4.c_reg_time = timezone.now() 
             coffee4.save()
-            return redirect('shop:coffee_order')
-            # context = {'adat':cm, 'adat2':coffee4.c_make_date, 'adat3':coffee4.c_book}
+            # return redirect('shop:coffee_order')
+            context = {'adat':cm, 'adat2':coffee4.c_make_date, 'adat3':dtf}
             # return render(request, 'shop/coffee_order.html', context)
-            # return render(request, 'shop/c_error.html', context)
+            return render(request, 'shop/c_error.html', context)
         else:
             context = {'adat':coffee4, 'adat2':pk, 'adat3':coffee4}
             return render(request, 'shop/c_error.html', context)
