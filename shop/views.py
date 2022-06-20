@@ -106,7 +106,8 @@ def coffee_make_time(request, pk):
         form = CoffeeTimeForm()
         # form.fields['c_make_date'].initial = dt
     return render(request,'shop/c_time_form.html', 
-    {'form': form, 'coffee4':coffee4, 'adat':pk, 'adat2':coffee4.c_make_dose, 'adat3':coffee4.c_make_date })
+    {'form': form, 'coffee4':coffee4, 'adat':pk, 'adat2':coffee4.c_make_dose, 'adat3':coffee4.c_make_date }) 
+    #TypeError: fromisoformat: argument must be str => just one comma behind dtf 22.06.19!
 
 def coffee_order(request):
     dt= datetime.datetime.now()
