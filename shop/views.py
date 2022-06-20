@@ -25,8 +25,11 @@ def coffee_make(request):
 
 def coffee_make_remove(request, pkey):
     coffee4 = get_object_or_404(CoffeeMake, pk=pkey)
-    coffee4.delete()
-    return redirect('shop:coffee_order')
+    ware = get_object_or_404(CoffeeMake, pk=coffee4.c_make_ware.id)
+    # coffee4.delete()
+    #return redirect('shop:coffee_order')
+    context = {'adat':coffee4, 'adat2':ware, 'adat3':ware}
+    return render(request, 'shop/c_error.html', context)
 
 def date_time_add(cm):
         ''' Date picker and Tim picker values add to dateTime'''
