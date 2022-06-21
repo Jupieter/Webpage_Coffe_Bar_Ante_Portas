@@ -26,88 +26,17 @@
             </a>
         </div>
         <div class="col-sm-6 right">
-            <h1> Következő Kávézás: </h1>
+            <h1> Következő Kávézás: {{choice}}</h1>
         </div>    
     </div>
 </div>
 
-<div class="container sm ">
-    {% for coffee in coffees %}
-    <div class="row-sm-6">
-        <table class="table table table-hover">
-            <thead class="table-light">
-                <tr>  
-                    <th class="col-sm-2">{{coffee.id}}, 
-                        {{coffee.c_make_ware.ware_type.ware_brand}}, 
-                        {{coffee.c_make_ware.ware_type.ware_brand_name}}</th>                   
-                    <th class="col-sm-1">{{coffee.c_make_date}}</th>
-                    <th class="col-sm-1">  Coffee portion also: {{coffee.c_make_dose}}</th>                    
-                    <th class="col-sm-2">  Sugar selection / portion </th>                    
-                    <th class="col-sm-2">  Milk selection / portion </th>                    
-                    <th class="col-sm-2">  Flavor selection / portion </th>  
-                    <th class="col-sm-2">   
-                        {% if user.is_staff %}
-                        {% for order in ordered %}
-                            {% if order.coffee_selected.id != coffee.id  %}
-                            <a class="btn btn-danger btn-sm m-1" 
-                                href="{% url 'shop:coffee_make_remove' pkey=coffee.pk %}"
-                                onclick="return confirm('Are you sure you want to delete?')">
-                                <span class="fa fa-trash-o"></span>
-                            </a>
-                            {% else %}
-                            <a class="btn btn-outline-danger btn-sm m-1" 
-                                onclick="return alert('Cancel reservations first!')">
-                            <span class="fa fa-trash-o"></span>
-                        </a>
-                            {% endif %}
-                        {% endfor %}    
-                            <a class="btn btn-primary btn-sm m-1" 
-                                hx-get="{% url 'shop:coffee_make_time' pk=coffee.pk %}"
-                                hx-target="#dialog" >
-                                <span class="fa fa-clock-o"></span>
-                            </a>
-                        {% endif %}
-
-                        {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
-                        <a class="btn btn-primary btn-sm m-1" href="{% url 'shop:coffee_order_form' pkey=coffee.pk %}">
-                            <span class="fa fa-shopping-basket">I'm booking</span></a>
-                        {% else %}
-                            <p style="color:red; font-size: 24px;">It's full</p>
-                        {% endif %}
-
-                    </th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                {% for order in ordered %}
-                <tr> 
-                    {% if order.coffee_selected.id == coffee.id  %}
-                    
-                    <td class="col-sm-2">{{order.id}}., {{order.coffe_user}}</td>
-                    <td class="col-sm-1">{{order.coffee_reg}} </td>
-                    <td class="col-sm-1">{{order.coffee_dose}}</td>                    
-                    <td class="col-sm-2">{{order.sugar_choice}} <br>{{order.sugar_dose}}</td>
-                    <td class="col-sm-2">{{order.milk_choice}} <br>{{order.milk_dose}}</td>
-                    <td class="col-sm-2">{{order.flavour_choice}} <br>{{order.flavour_dose}}</td>
-                    <td class="col-sm-2">
-                        {% if user.is_staff %}
-                        <a class="btn btn-danger btn-sm" 
-                        href="{% url 'shop:coffee_order_remove' pk=order.pk %}"
-                        onclick="return confirm('Biztosan törölni akarja?')">
-                            <span class="fa fa-trash-o"></span></a>
-                        {% endif %}
-                    </td class="col-sm-1">
-                    {% endif %}       
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% endfor %}
+<div class="container sm "
+    hx-trigger="load, coffeeTableChanged from:body" 
+    hx-get="{% url 'shop:coffee_order_table' %}" 
+    hx-target="this">
 </div>
 
-<!-- The Modal -->
 
 <br><br><br><br><br>
 

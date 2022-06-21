@@ -94,22 +94,34 @@ def coffee_make_time(request, pk):
             coffee4.c_make_date = dtf
             coffee4.c_reg_time = timezone.now() 
             coffee4.save()
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "coffeeTableChanged": None,
+                        "showMessage": f"{coffee4.c_make_date} updated."
+                    })
+                }
+            )
             # return redirect('shop:coffee_order')
-            context = {'adat':cm, 'adat2':coffee4.c_make_date, 'adat3':dtf}
-            # return render(request, 'shop/coffee_order.html', context)
-            return render(request, 'shop/c_error.html', context)
+            # context = {'adat':cm, 'adat2':coffee4.c_make_date, 'adat3':dtf}
+            # return render(request, 'shop/c_time_back.html', context)
         else:
-            context = {'adat':coffee4, 'adat2':pk, 'adat3':coffee4}
+            proba = form.errors.as_data() # here you print errors to terminal
+            context = {'adat':coffee4, 'adat2':pk, 'adat3':proba}
             return render(request, 'shop/c_error.html', context)
 
     else:
         form = CoffeeTimeForm()
         # form.fields['c_make_date'].initial = dt
-    return render(request,'shop/c_time_form.html', 
-    {'form': form, 'coffee4':coffee4, 'adat':pk, 'adat2':coffee4.c_make_dose, 'adat3':coffee4.c_make_date }) 
+    context = {'form': form, 'coffee4':coffee4, 'adat':pk, 'adat2':coffee4.c_make_dose, 'adat3':coffee4.c_make_date }
+    return render(request,'shop/c_time_form.html', context) 
     #TypeError: fromisoformat: argument must be str => just one comma behind dtf 22.06.19!
 
 def coffee_order(request):
+    return render(request, 'shop/coffee_order.html')
+
+def coffee_order_table(request):
     dt= datetime.datetime.now()
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=36)
@@ -120,9 +132,10 @@ def coffee_order(request):
         adat.append(coffee.id)
     coffees = coffees.order_by('c_make_date')
     ordered = CoffeeOrder.objects.filter(coffee_selected__in = adat)
+    choice = 0
+    return render(request, 'shop/coffee_order_table.html', 
+        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered, 'choice':choice})
 
-    return render(request, 'shop/coffee_order.html', 
-        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered})
 
 def coffee_order_remove(request, pk):
     coffee2 = get_object_or_404(CoffeeOrder, pk=pk)
@@ -200,9 +213,9 @@ def coffee_order_form(request, pkey):
         form.fields['flavour_choice'].choices  = flavour
         # form.fields['flavour_choice'].initial  = [1]
         form.fields['coffee_dose'].widget.attrs['max'] = dose
-        proba = "Betölt else ág"
-        context = {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,
-        'sugar':sugar , 'milk':milk, 'falvour':flavour, 'proba':proba}
+        # proba = "Betölt else ág"
+        # context = {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1,'sugar':sugar, 'milk':milk, 'falvour':flavour, 'proba':proba}
+        context = {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1}
     return render(request, 'shop/c_order_form.html', context )
 
 def coffee_booking(request):

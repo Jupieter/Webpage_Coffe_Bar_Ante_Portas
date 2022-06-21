@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}    
+    Storing    
+{% endblock %}
+{% block style %}    
+    <style>
+        body {background-color: white;}
+        h1, h2, h4 {
+        text-align: middle;
+        color: rgb(253, 179, 69);
+        }
+    </style>
+{% endblock %} 
+{% block content %}
+
+<div class="modal-content modal-lg">
+    <div class="modal-header">
+        <h1> Page of error (else print) </h1>
+        <h2>coffes: {{coffees}} </h2>
+    </div>
+    <div class="modal-body">
+        <h4>proba: {{proba}}</h4>
+        <h4>adat: {{adat}}</h4>
+        <h4>adat2: {{adat2}}</h4>
+        <h4>adat3: {{adat3}}</h4>
+    </div>
+    <div class="modal-footer">
+        <button type="button" hx-get="{% url 'shop:coffee_order' %}" class="btn btn-secondary" data-bs-dismiss="modal">
+            Okey
+        </button>
+</div>
+{% endblock%}

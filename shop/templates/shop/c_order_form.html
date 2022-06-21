@@ -23,15 +23,11 @@
 
 <div class="container pt-2">
 
-        <h1> Foglalok a :{{coffee_1.c_make_date}}-i </h1>
+        <h1> I'll book for the next: {{coffee_1.c_make_date}} </h1>
         <h2>{{coffee_1.c_make_ware.ware_type.ware_brand}}
-            {{coffee_1.c_make_ware.ware_type.ware_brand_name}} kávéra  ({{coffee_1.id}}) </h2>
-        <h4>Már csak {{dose}} adag kávé maradt</h4>
-        <br>
-        <p>sugar: {{sugar}} {{sugar_s}}</p>
-        <p>milk: {{milk}} {{milk_s}}</p>
-        <p>falvour: {{falvour}} {{falvour_s}}</p>
-        <p>proba{{proba}}</p>
+            {{coffee_1.c_make_ware.ware_type.ware_brand_name}} coffee  ({{coffee_1.id}}) </h2>
+        <h4>There are only {{dose}} servings of coffee left.</h4>
+        <p>{{sugar}} {{sugar_s}} {{milk}} {{milk_s}} {{falvour}} {{falvour_s}} {{proba}}</p>
 
 </div>
 
@@ -41,21 +37,21 @@
     
     <form id="usersForm" method="POST"> {% csrf_token %}   
         <h4></h4>
-        <div class="row border p-2">
-            <div  class="col-sm-4 right "> {{form.coffee_dose.label}}
-                Választás: <span id="coffeeLabel">0.5</span>
+        <div class="row p-2">
+            <div  class="col-sm-3 right "> {{form.coffee_dose.label}}
+                Selection:: <span id="coffeeLabel">0.5</span>
             </div>
             <div class="col-sm-3 right " >
-                A megkezdett termékekből választhat:
+                You can choose from the products you have started:
             </div>           
             <div class="col-sm-2 right " oninput="re_fresh('coffeeRange','coffeeLabel')">
                 {{form.coffee_dose}}
             </div>
         </div>
 
-        <div class="row border p-2">
-            <div class="col-sm-4 right " > {{form.sugar_dose.label}} 
-                Választás: <span id='sugarLabel'>0</span>
+        <div class="row p-2">
+            <div class="col-sm-3 right " > {{form.sugar_dose.label}} 
+                Selection: <span id='sugarLabel'>0</span>
             </div>
             <div class="col-sm-3 right " onchange="refreshPage()" >
                 {{form.sugar_choice}}
@@ -65,9 +61,9 @@
             </div>
         </div>
 
-        <div class="row border p-2">
-            <div class="col-sm-4 right "> {{form.milk_dose.label}}
-                Választás: <span id="milkLabel">0</span>
+        <div class="row p-2">
+            <div class="col-sm-3 right "> {{form.milk_dose.label}}
+                Selection: <span id="milkLabel">0</span>
             </div> 
             <div class="col-sm-3 right " >
                 {{form.milk_choice}}
@@ -77,9 +73,9 @@
             </div>        
         </div>
         
-        <div class="row border p-2">
-            <div class="col-sm-4 right "> {{form.flavour_dose.label}}
-                Választás: <span id="flavourLabel">0</span>
+        <div class="row p-2">
+            <div class="col-sm-3 right "> {{form.flavour_dose.label}}
+                Selection: <span id="flavourLabel">0</span>
             </div>
             <div class="col-sm-3 right " >
                 {{form.flavour_choice}}
@@ -88,9 +84,9 @@
                 {{form.flavour_dose}}
             </div>
         </div>
-        <div class="row  p-2">
-            <div class="col-sm-3 right "></div>
-            <div class="col-sm-2 right ">
+        <div class="row  p-3">
+            <div class="col-sm-5 right "></div>
+            <div class="col-sm-1 right ">
                 <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
             </div>
             <div class="col-sm-1 right ">
