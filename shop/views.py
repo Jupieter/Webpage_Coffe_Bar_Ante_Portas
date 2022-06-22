@@ -25,11 +25,10 @@ def coffee_make(request):
 
 def coffee_make_remove(request, pkey):
     coffee4 = get_object_or_404(CoffeeMake, pk=pkey)
-    ware = get_object_or_404(CoffeeMake, pk=coffee4.c_make_ware.id)
-    # coffee4.delete()
-    #return redirect('shop:coffee_order')
-    context = {'adat':coffee4, 'adat2':ware, 'adat3':ware}
-    return render(request, 'shop/c_error.html', context)
+    coffee4.delete()
+    return redirect('shop:coffee_order')
+    # context = {'adat':coffee4}
+    # return render(request, 'shop/c_error.html', context)
 
 def date_time_add(cm):
         ''' Date picker and Tim picker values add to dateTime'''
@@ -94,7 +93,7 @@ def coffee_make_time(request, pk):
             coffee4.c_make_date = dtf
             coffee4.c_reg_time = timezone.now() 
             coffee4.save()
-            adat = coffee4.c_make_date
+            adat = "jel"
             return HttpResponse(
                 status=204,
                 headers={
@@ -150,15 +149,7 @@ def coffee_order_remove(request, pk):
     coffee1.c_make_dose = dose + coffee2.coffee_dose
     coffee1.save()
     coffee2.delete()
-    return HttpResponse(
-        status=204,
-        headers={
-            'HX-Trigger': json.dumps({
-                "movieListChanged": None,
-                "showMessage": f"{coffee1} deleted."
-            })
-        })
-    # return redirect('shop:coffee_order')
+    return redirect('shop:coffee_order')
     ''' context = {'coffees':coffee1, 'adat':dose,'adat2':coffee2.coffee_dose,  'adat3':coffee1.c_make_dose }
     return  render(request, 'shop/c_error.html', context ) '''
 
