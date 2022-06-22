@@ -5,18 +5,19 @@ from raw_material.models import WareData, ProductAcquisition
 # Create your models here.
 
 class CoffeeMake(models.Model):
-    c_make_ware = models.ForeignKey(ProductAcquisition, on_delete=models.CASCADE, verbose_name='Kávé fajta')
-    c_make_dose = models.DecimalField(max_digits=2, decimal_places=1, verbose_name='Adag', default=4)
+    c_make_ware = models.ForeignKey(ProductAcquisition, on_delete=models.CASCADE, verbose_name='Kind of coffee')
+    c_make_dose = models.DecimalField(max_digits=2, decimal_places=1, verbose_name='Dose', default=4)
     c_make_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=False, 
-        related_name ='Lefőzte', 
-        verbose_name = 'Lefőzte',
+        related_name ='Cooked', 
+        verbose_name = 'Cooked',
         default=User)
-    c_make_date = models.DateTimeField('Elkészül:', null=True, blank=True)
-    c_reg_time = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
+    c_make_date = models.DateTimeField("It's done:", null=True, blank=True)
+    c_reg_time = models.DateTimeField('Date recorded', default=timezone.now)
+    c_order_yes =models.BooleanField('Have Order', default=False)
     c_book = models.DateTimeField(
-        'Könyvelés dátuma', 
+        'Accounting Date', 
         blank=True,
         null=True,)
 

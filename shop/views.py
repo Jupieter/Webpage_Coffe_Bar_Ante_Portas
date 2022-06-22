@@ -1,9 +1,9 @@
 import json
+import datetime
 from asyncio.windows_events import NULL
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import timezone
-import datetime
 from raw_material.models import ProductAcquisition, WareTypes
 from .models import CoffeeMake, CoffeeOrder
 from .forms import CoffeeMakerForm, CoffeeOrderForm, CoffeeTimeForm
@@ -94,12 +94,13 @@ def coffee_make_time(request, pk):
             coffee4.c_make_date = dtf
             coffee4.c_reg_time = timezone.now() 
             coffee4.save()
+            adat = "jel"
             return HttpResponse(
                 status=204,
                 headers={
                     'HX-Trigger': json.dumps({
                         "coffeeTableChanged": None,
-                        "showMessage": f"{coffee4.c_make_date} updated."
+                        "showMessage": f"{adat} updated."
                     })
                 }
             )
@@ -130,11 +131,16 @@ def coffee_order_table(request):
     adat = []
     for coffee in coffees:
         adat.append(coffee.id)
-    coffees = coffees.order_by('c_make_date')
     ordered = CoffeeOrder.objects.filter(coffee_selected__in = adat)
-    choice = 0
+    for coffee in coffees:
+        coffee.c_order_yes = False
+        for order in ordered:
+            if order.coffee_selected.id == coffee.id:
+                coffee.c_order_yes = True
+        coffee.save()        
+    coffees = coffees.order_by('c_make_date')
     return render(request, 'shop/coffee_order_table.html', 
-        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered, 'choice':choice})
+        {'coffees':coffees,'dt':dt, 'dt_end':dt_end, 'adat':adat, 'ordered':ordered,})
 
 
 def coffee_order_remove(request, pk):
@@ -144,7 +150,15 @@ def coffee_order_remove(request, pk):
     coffee1.c_make_dose = dose + coffee2.coffee_dose
     coffee1.save()
     coffee2.delete()
-    return redirect('shop:coffee_order')
+    return HttpResponse(
+        status=204,
+        headers={
+            'HX-Trigger': json.dumps({
+                "movieListChanged": None,
+                "showMessage": f"{coffee1} deleted."
+            })
+        })
+    # return redirect('shop:coffee_order')
     ''' context = {'coffees':coffee1, 'adat':dose,'adat2':coffee2.coffee_dose,  'adat3':coffee1.c_make_dose }
     return  render(request, 'shop/c_error.html', context ) '''
 

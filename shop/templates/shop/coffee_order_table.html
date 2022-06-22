@@ -2,8 +2,10 @@
     <div class="row-sm-12">
         <table class="table table table-hover">
             <thead class="table-light">
-                <tr>  
-                    <th class="col-sm-2">{{coffee.id}}, 
+                <div id="demo"></div>
+                <div id="coffee{{coffee.id}}"></div>
+                <tr>
+                    <th class="col-sm-2">{{coffee.id}} , 
                         {{coffee.c_make_ware.ware_type.ware_brand}}, 
                         {{coffee.c_make_ware.ware_type.ware_brand_name}}
                         <br>
@@ -13,25 +15,19 @@
                     <th class="col-sm-2">  Sugar selection / portion </th>                    
                     <th class="col-sm-2">  Milk selection / portion </th>                    
                     <th class="col-sm-2">  Flavor selection / portion </th>  
-                    <th class="col-sm-2">   
-                        {% if user.is_staff %}
-                            {{choice.value|default:0 }}
-                            {% for order in ordered %}
-                                {% if order.coffee_selected.id == coffee.id  %}
-                                    {{choice.value|add:1 }}
-                                {% endif %}
-                            {% endfor %}   
-                            {% if choice == 'Yes'  %}
-                            <a class="btn btn-danger btn-sm m-1" 
-                                href="{% url 'shop:coffee_make_remove' pkey=coffee.pk %}"
-                                onclick="return confirm('Are you sure you want to delete?')">
-                                <span class="fa fa-trash-o">{{choice}}</span>
-                            </a>
+                    <th class="col-sm-2" >   
+                        {% if user.is_staff %} 
+                            {% if coffee.c_order_yes %}
+                                <a class="btn btn-outline-danger btn-sm m-1" 
+                                    onclick=alertVisible({{coffee.id}})>
+                                <span class="fa fa-trash-o"></span>
+                                </a>
                             {% else %}
-                            <a class="btn btn-outline-danger btn-sm m-1" 
-                                onclick="return alert('Cancel reservations first!')">
-                            <span class="fa fa-trash-o">{{choice.value}}</span>
-                            </a>
+                                <a class="btn btn-danger btn-sm m-1" 
+                                    href="{% url 'shop:coffee_make_remove' pkey=coffee.pk %}"
+                                    onclick="return confirm('Are you sure you want to delete?')">
+                                    <span class="fa fa-trash-o"></span>
+                                </a>
                             {% endif %}
 
                             <a class="btn btn-primary btn-sm m-1" 
@@ -54,9 +50,8 @@
             </thead>
             <tbody>
                 {% for order in ordered %}
+                {% if order.coffee_selected.id == coffee.id  %}
                 <tr> 
-                    {% if order.coffee_selected.id == coffee.id  %}
-                    
                     <td class="col-sm-2">{{order.id}}., {{order.coffe_user}}
                         <br> {{order.coffee_reg}}
                     </td>
@@ -72,10 +67,27 @@
                             <span class="fa fa-trash-o"></span></a>
                         {% endif %}
                     </td class="col-sm-1">
-                    {% endif %}       
                 </tr>
+                {% endif %}       
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
+    
+      
+
 {% endfor %}
+<script>
+    function alertVisible(elemID) {
+        // var elemID = 0
+        var posit = 'coffee'+ elemID.toString()
+        var divA ='<div class="alert alert-danger" id="alertBox" style="display:none;"><strong>Warning! '+ posit +'</strong> Cancel orders first!!</div>'
+        document.getElementById(posit).innerHTML = divA
+        
+        $('#alertBox').fadeIn(500);
+        setTimeout(function() { $('#alertBox').fadeOut(800); document.getElementById(posit).innerHTML = ''}, 2000);
+        
+    }
+</script>
+
