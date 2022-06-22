@@ -94,7 +94,7 @@ def coffee_make_time(request, pk):
             coffee4.c_make_date = dtf
             coffee4.c_reg_time = timezone.now() 
             coffee4.save()
-            adat = "jel"
+            adat = coffee4.c_make_date
             return HttpResponse(
                 status=204,
                 headers={

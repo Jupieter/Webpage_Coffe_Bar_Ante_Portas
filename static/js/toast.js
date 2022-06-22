@@ -8,3 +8,6 @@
     toast.show()
   })
 })()
+
+
+// https://blog.benoitblanchon.fr/django-htmx-toasts/

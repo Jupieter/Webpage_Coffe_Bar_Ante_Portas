@@ -21,3 +21,5 @@
     document.getElementById("dialog").innerHTML = ""
   })
 })()
+
+// https://blog.benoitblanchon.fr/django-htmx-modal-form/
