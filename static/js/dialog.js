@@ -1,5 +1,20 @@
+function closeModal() {
+  var container = document.getElementById("modals-here")
+  var backdrop = document.getElementById("modal-backdrop")
+  var modal = document.getElementById("modalMessenger")
+
+  modal.classList.remove("show")
+  backdrop.classList.remove("show")
+
+
+  setTimeout(function() {
+    container.removeChild(modal)
+    container.removeChild(backdrop)
+  }, 200)
+}
+
 ;(function () {
-  const modal = new bootstrap.Modal(document.getElementById("modal"))
+  const modal = new bootstrap.Modal(document.getElementById("modalForm"))
 
   htmx.on("htmx:afterSwap", (e) => {
     // Response targeting #dialog => show the modal
@@ -23,3 +38,4 @@
 })()
 
 // https://blog.benoitblanchon.fr/django-htmx-modal-form/
+

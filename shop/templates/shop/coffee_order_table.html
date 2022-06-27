@@ -29,12 +29,31 @@
                                     <span class="fa fa-trash-o"></span>
                                 </a>
                             {% endif %}
-
+                            
                             <a class="btn btn-primary btn-sm m-1" 
-                                hx-get="{% url 'shop:coffee_make_time' pk=coffee.pk %}"
-                                hx-target="#dialog">
-                                <span class="fa fa-clock-o"></span>
-                            </a>
+                            hx-get="{% url 'shop:coffee_make_time' pk=coffee.pk %}"
+                            hx-target="#dialog">
+                            <span class="fa fa-clock-o"></span>
+                        </a>
+
+                        <a class="btn btn-danger btn-sm m-1" 
+                            hx-get="{% url 'view_modal_mess' %}"
+                            hx-vals='{"headx": "WARNING", "txtx":"Ooops Somthing is bad","background":"red"}'
+                            hx-target="#modals-here" 
+                            hx-trigger="click"
+                            class="btn btn-primary"
+	                        _="on htmx:afterOnLoad wait 10ms then add .show to #modalMessenger then add .show to #modal-backdrop">
+                            <span class="fa fa-.fa-cog"> Test</span>
+                        </a>
+                        <a class="btn btn-success btn-sm m-1" 
+                            hx-get="{% url 'view_modal_mess' %}"
+                            hx-vals='{"headx": "SUCCESS", "txtx":"Oh yeah It is cool","background":"green"}'
+                            hx-target="#modals-here" 
+                            hx-trigger="click"
+                            class="btn btn-primary"
+	                        _="on htmx:afterOnLoad wait 10ms then add .show to #modalMessenger then add .show to #modal-backdrop">
+                            <span class="fa fa-.fa-cog"> Test</span>
+                        </a>
                         {% endif %}
 
                         {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
@@ -82,7 +101,7 @@
     function alertVisible(elemID) {
         // var elemID = 0
         var posit = 'coffee'+ elemID.toString()
-        var divA ='<div class="alert alert-danger" id="alertBox" style="display:none;"><strong>Warning! '+ posit +'</strong> Cancel orders first!!</div>'
+        var divA ='<div class="alert alert-danger" id="alertBox" style="display:none;"><strong>Warning! </strong> Cancel orders first!! '+ posit +'</div>'
         document.getElementById(posit).innerHTML = divA
         
         $('#alertBox').fadeIn(500);

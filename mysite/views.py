@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from shop.models import CoffeeMake
 from raw_material.models import ProductAcquisition, WareTypes
 import datetime
+import json
 
 
 def home_page(request):
@@ -23,3 +24,10 @@ def home_page(request):
 def contact_page(request):
     sub_site_logo = "src=static/image/coffe_bean_heart.png"
     return render(request, "contact.html", {'sub_site_logo':sub_site_logo})
+
+def view_modal_mess(request):
+    headx = request.GET.get('headx', 'Empty')
+    txtx = request.GET.get('txtx', 'Empty')
+    backg = request.GET.get('background', 'Empty')
+    stylex = 'style=background:' + str(backg) 
+    return render(request, "modal_mess.html", {'headx':headx, 'txtx':txtx, 'stylex':stylex})

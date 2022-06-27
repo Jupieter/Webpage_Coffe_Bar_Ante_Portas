@@ -4,4 +4,5 @@ Pillow~=9.0.1
 pytz~=2019.3
 sqlparse
 django-template-maths
+django-htmx
 django-widget-tweaks
