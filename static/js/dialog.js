@@ -1,3 +1,8 @@
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerList) {
+  return new bootstrap.Popover(popoverTriggerList)
+})
+
 function closeModal() {
   var container = document.getElementById("modals-here")
   var backdrop = document.getElementById("modal-backdrop")

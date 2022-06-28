@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     {% include "base/css.html" %}
+
+       
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block style%}{% endblock %}
 
@@ -31,7 +33,7 @@
             <br>
         </div>
         <div class="row"></div>
-    
+        
             
         {% block content %}{% endblock %}
     </div>

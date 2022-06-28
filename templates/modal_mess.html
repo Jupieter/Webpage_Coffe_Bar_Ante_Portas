@@ -8,8 +8,9 @@
 		<div class="modal-body">
 			<textarea class="form-control" rows="2"> {{txtx}} </textarea>
 		</div>
-		<div class="modal-footer">
-		  <button type="button" 
+		<div class="modal-footer" id="closeButton">
+		  <button 
+		  type="button"  
           class="btn btn-secondary" 
           onclick="closeModal()" 
           >Close</button>
@@ -17,3 +18,9 @@
 	  </div>
 	</div>
   </div>
+
+  <script>
+	window.document.getElementById("closeButton").addEventListener("htmx:load", function() {
+		setTimeout(function(){window.document.getElementById("modal-body").innerHTML = "", 200})
+	})
+  </script>

@@ -31,3 +31,6 @@ def view_modal_mess(request):
     backg = request.GET.get('background', 'Empty')
     stylex = 'style=background:' + str(backg) 
     return render(request, "modal_mess.html", {'headx':headx, 'txtx':txtx, 'stylex':stylex})
+
+def proba(request):
+    return render(request, "proba.html")

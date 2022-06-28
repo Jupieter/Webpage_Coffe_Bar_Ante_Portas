@@ -2,13 +2,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import home_page, contact_page, view_modal_mess
+from .views import home_page, contact_page, view_modal_mess, proba
 
 
 
 app_name = 'mysite'
 
 urlpatterns = [
+    path('proba', proba, name="proba"),
     path('admin/', admin.site.urls),
     path('', home_page, name="home_url"),
     path('shop/', include('shop.urls', namespace='shop')),
