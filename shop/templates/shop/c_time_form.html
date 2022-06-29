@@ -1,32 +1,35 @@
 {% load widget_tweaks %}
 <!-- The Modal -->
-<form id="usersForm" 
+<div class="modal-sm">
+
+    <form id="usersForm" 
     method="POST" 
     hx-post={{request.path}} 
     hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' 
     class="modal-content">  
-
+    
     <!-- Modal Header -->
-<div class="modal-header">
-    <h4 class="modal-title">{{adat}} - {{coffee4.c_make_ware}}</h4>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">×</button>
-</div>
-
-<!-- Modal body -->
-<div class="modal-body">
-    <h4>Dose: {{adat2}}</h4>
-    <h4>Old Time: {{adat3}}</h4>
-    <p>Time Changing:</p>
-    <p> {{form.as_p}}</p>
-</div>
+    <div class="modal-header">
+        <h4 class="modal-title">{{adat}} - {{coffee4.c_make_ware}}</h4>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">×</button>
+    </div>
+    
+    <!-- Modal body -->
+    <div class="modal-body">
+        <h4>Dose: {{adat2}}</h4>
+        <h4>Old Time: <br> {{adat3}}</h4>
+        <p>Time Changing:</p>
+        <p> {{form.as_p}}</p>
+    </div>
     
     <!-- Modal footer -->
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cancel
-          </button>
-          <button type="submit" class="save btn btn-primary">Save</button>
-        </div>
+        </button>
+        <button type="submit" class="save btn btn-primary">Save</button>
     </div>
+</div>
 
 </form>
+</div>

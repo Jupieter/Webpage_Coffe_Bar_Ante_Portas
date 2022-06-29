@@ -1,109 +1,85 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}    
-    Storing    
-{% endblock %}
-{% block style %}    
-    <style>
-        body {
-          background-image: url(/static/image/cup.jpg);
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-size: 100% 100%;
-        }
-        h2  {
-        text-align: left;
-        color: rgb(247, 155, 17);
-        }
-    </style>
-{% endblock %} 
-
-{% block content %}
-
-<div class="container pt-2">
-
-        <h1> I'll book for the next: {{coffee_1.c_make_date}} </h1>
-        <h2>{{coffee_1.c_make_ware.ware_type.ware_brand}}
-            {{coffee_1.c_make_ware.ware_type.ware_brand_name}} coffee  ({{coffee_1.id}}) </h2>
-        <h4>There are only {{dose}} servings of coffee left.</h4>
-        <p>{{sugar}} {{sugar_s}} {{milk}} {{milk_s}} {{falvour}} {{falvour_s}} {{proba}}</p>
-
-</div>
-
-
-
-<div class="container pt-2">
-    
-    <form id="usersForm" method="POST"> {% csrf_token %}   
-        <h4></h4>
-        <div class="row p-2">
-            <div  class="col-sm-3 right "> {{form.coffee_dose.label}}
-                Selection:: <span id="coffeeLabel">0.5</span>
-            </div>
-            <div class="col-sm-3 right " >
-                You can choose from the products you have started:
-            </div>           
-            <div class="col-sm-2 right " oninput="re_fresh('coffeeRange','coffeeLabel')">
-                {{form.coffee_dose}}
-            </div>
-        </div>
-
-        <div class="row p-2">
-            <div class="col-sm-3 right " > {{form.sugar_dose.label}} 
-                Selection: <span id='sugarLabel'>0</span>
-            </div>
-            <div class="col-sm-3 right " onchange="refreshPage()" >
-                {{form.sugar_choice}}
-            </div>
-            <div class="col-sm-2 right " oninput="re_fresh('sugarRange','sugarLabel')">
-                 {{form.sugar_dose}}
-            </div>
-        </div>
-
-        <div class="row p-2">
-            <div class="col-sm-3 right "> {{form.milk_dose.label}}
-                Selection: <span id="milkLabel">0</span>
-            </div> 
-            <div class="col-sm-3 right " >
-                {{form.milk_choice}}
-            </div>
-            <div class="col-sm-2 right " oninput="re_fresh('milkRange','milkLabel')">
-                {{form.milk_dose}}
-            </div>        
-        </div>
-        
-        <div class="row p-2">
-            <div class="col-sm-3 right "> {{form.flavour_dose.label}}
-                Selection: <span id="flavourLabel">0</span>
-            </div>
-            <div class="col-sm-3 right " >
-                {{form.flavour_choice}}
-            </div>           
-            <div class="col-sm-2 right " oninput="re_fresh('flavourRange','flavourLabel')">
-                {{form.flavour_dose}}
-            </div>
-        </div>
-        <div class="row  p-3">
-            <div class="col-sm-5 right "></div>
-            <div class="col-sm-1 right ">
-                <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
-            </div>
-            <div class="col-sm-1 right ">
-                {% if user.is_authenticated %}
-                    <button type="submit" class="save btn btn-primary">Save</button>
-                {% endif %}
-            </div>
-        </div>    
-        
-    </form>
-    <br><br><br><br><br>
-    <p>
-        The main principle failed here. I wanted a pure django creation without jawascript. 
-        <br> But ... 
-        <br> 2022.05.31
-    </p>
-</div>
-
+{% load widget_tweaks %}
 <script src="/static/js/c_order_form.js"></script>
-{% endblock%}
+<!-- The Modal -->
+<div class="modal-lg">
+
+    <form id="usersForm" 
+    method="POST" 
+    hx-post={{request.path}} 
+    hx-headers='{"X-CSRFToken":"{{ csrf_token }}"}' 
+    class="modal-content">  
+    
+        <!-- Modal Header -->
+        <div class="modal-header  border"> 
+            <div class="row border">
+                <h4> I'll book for the next:
+                </h4>
+                <h4>{{coffee_1.c_make_date}} </h4>
+                <h6>{{coffee_1.c_make_ware.ware_type.ware_brand}}, {{coffee_1.c_make_ware.ware_type.ware_brand_name}} coffee  ({{coffee_1.id}})   </h6>  
+                <h6>There are only {{dose}} servings of coffee left.</h6>
+            </div>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body  border">
+            <div class="container border">
+                <div class="row border "> {{form.coffee_dose.label}}
+                    Selection:: <span id="coffeeLabel">0.5</span>
+                </div>
+                <div class="row border "> You can choose from the products you have started: </div>          
+                <div class="row border" oninput="re_fresh('coffeeRange','coffeeLabel')">
+                        {{form.coffee_dose}}
+                </div>
+            </div>
+                
+            <div class="container border">
+                <div class="row border "> {{form.sugar_dose.label}} 
+                    Selection: <span id='sugarLabel'>0</span>
+                </div>
+                <div class="row border " onchange="refreshPage()" >
+                    {{form.sugar_choice}}
+                </div>
+                <div class="row border " oninput="re_fresh('sugarRange','sugarLabel')">
+                    {{form.sugar_dose}}
+                </div>
+            </div>
+                
+            <div class="container border">
+                <div class="row border "> {{form.milk_dose.label}}
+                    Selection: <span id="milkLabel">0</span>
+                </div> 
+                <div class="row border " onchange="refreshPage()" >
+                    {{form.milk_choice}}
+                </div>
+                <div class="row border" oninput="re_fresh('milkRange','milkLabel')">
+                    {{form.milk_dose}}
+                </div>        
+            </div>
+                    
+            <div class="container border">
+                <div class="row border "> {{form.flavour_dose.label}}
+                    Selection: <span id="flavourLabel">0</span>
+                </div>
+                <div class="row border " onchange="refreshPage()" >
+                    {{form.flavour_choice}}
+                </div>           
+                <div class="row border " oninput="re_fresh('flavourRange','flavourLabel')">
+                    {{form.flavour_dose}}
+                </div>
+            </div>   
+        </div>
+    
+            
+        <!-- Modal footer -->
+        <div class="modal-footer  border">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            {% if user.is_authenticated %}
+            <button type="submit" class="save btn btn-primary">Save</button>
+            {% endif %}
+        </div>
+    
+    </form>
+</div>
+
+<!-- The main principle failed here. I wanted a pure django creation without jawascript. 
+<br> But ... 
+<br> 2022.05.31 -->

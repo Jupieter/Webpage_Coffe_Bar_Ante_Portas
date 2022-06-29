@@ -1,15 +1,6 @@
-{% load static %}
-<style>
-.table-scroll {
-    position: absolute;
-    overflow-y: scroll;
-    height: 250px;
-}
-</style>
 {% for coffee in coffees %}
     <div class="row-sm-12">
-    <div class="scrollme">
-        <table id="example" class="table table-scroll table-hover">
+        <table class="table table table-hover">
             <thead class="table-light">
                 <div id="demo"></div>
                 <div id="coffee{{coffee.id}}"></div>
@@ -50,12 +41,11 @@
                         <a class="btn btn-secondary btn-sm m-1"
                         href="#" 
                         title="Popover Header"
-                        data-bs-trigger="hover"
                         data-bs-toggle="popover"
-                        data-bs-placement="top"
+                        data-bs-trigger="hover"
                         data-bs-content="Some content inside the popover"
                         data-placement="top">
-                        <span class="fa fa-cog">Test Popover</span>
+                            <span class="fa fa-cog">Test Popover</span>
                         </a>
 
                         <a class="btn btn-danger btn-sm m-1" 
@@ -80,7 +70,8 @@
 
                         {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
                         <a class="btn btn-primary btn-sm m-1" 
-                        href="{% url 'shop:coffee_order_form' pkey=coffee.pk %}"
+                        hx-get="{% url 'shop:coffee_order_form' pkey=coffee.pk %}"
+                        hx-target="#dialog"
                         title="Order a Coffe!">
                             <span class="fa fa-shopping-basket"> I'm booking</span></a>
                         {% else %}
@@ -117,20 +108,12 @@
             </tbody>
         </table>
     </div>
-    </div>
 
     
       
 
 {% endfor %}
-<script src="{% static 'js/dialog.js' %}"></script>
 <script>
-    $(document).ready(function() {
-        $('#example').dataTable( {
-            "scrollY": true
-        } );
-    } );
-
     function alertVisible(elemID) {
         // var elemID = 0
         var posit = 'coffee'+ elemID.toString()

@@ -193,7 +193,16 @@ def coffee_order_form(request, pkey):
             coffee2.save()
             coffee_1.c_make_dose = dose-coffee2.coffee_dose
             coffee_1.save()
-            return redirect('shop:coffee_order')
+            return HttpResponse(
+                status=204,
+                headers={
+                    'HX-Trigger': json.dumps({
+                        "coffeeTableChanged": None,
+                        "showMessage": f"{adat} updated."
+                    })
+                }
+            )
+            # return redirect('shop:coffee_order')
             ''' return  render(request, 'shop/c_order_form_copy.html',
                 {'form': form, 'wares':wares, 'dose':dose, 'coffee_1':coffee_1, 'coffee2':coffee2,
                 'sugar_s':sugar_s, 'milk_s':milk_s, 'flavour_s':flavour_s, 'proba':proba, 
