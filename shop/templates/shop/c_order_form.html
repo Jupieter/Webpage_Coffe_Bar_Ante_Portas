@@ -10,59 +10,70 @@
     class="modal-content">  
     
         <!-- Modal Header -->
-        <div class="modal-header  border"> 
-            <div class="row border">
-                <h4> I'll book for the next:
-                </h4>
-                <h4>{{coffee_1.c_make_date}} </h4>
-                <h6>{{coffee_1.c_make_ware.ware_type.ware_brand}}, {{coffee_1.c_make_ware.ware_type.ware_brand_name}} coffee  ({{coffee_1.id}})   </h6>  
-                <h6>There are only {{dose}} servings of coffee left.</h6>
+        <div class="modal-header  "> 
+            <div class="container-fluid">
+                <div class="row ">
+                    <div class="col-11">
+                        <h4> I'll book for the next:
+                        </h4>
+                        <h4>{{coffee_1.c_make_date}} </h4>
+                        <h6>{{coffee_1.c_make_ware.ware_type.ware_brand}}, {{coffee_1.c_make_ware.ware_type.ware_brand_name}} coffee  ({{coffee_1.id}})   </h6>  
+                        <h6>There are only {{dose}} servings of coffee left.</h6>
+                    </div>
+                    <div class="col-1 right">
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">×</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Modal Body -->
-        <div class="modal-body  border">
-            <div class="container border">
-                <div class="row border "> {{form.coffee_dose.label}}
-                    Selection:: <span id="coffeeLabel">0.5</span>
+        <div class="modal-body  ">
+            <div class="container   pb-2">
+                <div class="row  pb-2"> 
+                    <div class="col-9">{{form.coffee_dose.label}} Selection: </div> 
+                    <div class="col-1" id="coffeeLabel">0.5</div> 
                 </div>
-                <div class="row border "> You can choose from the products you have started: </div>          
-                <div class="row border" oninput="re_fresh('coffeeRange','coffeeLabel')">
+                <div class="row  pb-2"> You can choose from the products you have started: </div>          
+                <div class="row pb-3" oninput="re_fresh('coffeeRange','coffeeLabel')">
                         {{form.coffee_dose}}
                 </div>
             </div>
                 
-            <div class="container border">
-                <div class="row border "> {{form.sugar_dose.label}} 
-                    Selection: <span id='sugarLabel'>0</span>
+            <div class="container  ">
+                <div class="row pb-2 "> 
+                    <div class="col-9"> {{form.sugar_dose.label}} Selection: </div>
+                    <div class="col-1" id='sugarLabel'>0</div>
                 </div>
-                <div class="row border " onchange="refreshPage()" >
+                <div class="row pb-2" onchange="refreshPage()" >
                     {{form.sugar_choice}}
                 </div>
-                <div class="row border " oninput="re_fresh('sugarRange','sugarLabel')">
+                <div class="row pb-3" oninput="re_fresh('sugarRange','sugarLabel')">
                     {{form.sugar_dose}}
                 </div>
             </div>
                 
-            <div class="container border">
-                <div class="row border "> {{form.milk_dose.label}}
-                    Selection: <span id="milkLabel">0</span>
+            <div class="container  ">
+                <div class="row pb-2"> 
+                    <div class="col-9">{{form.milk_dose.label}} Selection: </div>
+                    <div class="col-1" id="milkLabel">0</div>
                 </div> 
-                <div class="row border " onchange="refreshPage()" >
+                <div class="row pb-2" onchange="refreshPage()" >
                     {{form.milk_choice}}
                 </div>
-                <div class="row border" oninput="re_fresh('milkRange','milkLabel')">
+                <div class="row pb-3" oninput="re_fresh('milkRange','milkLabel')">
                     {{form.milk_dose}}
                 </div>        
             </div>
                     
-            <div class="container border">
-                <div class="row border "> {{form.flavour_dose.label}}
-                    Selection: <span id="flavourLabel">0</span>
+            <div class="container   ">
+                <div class="row pb-2"> 
+                    <div class="col-9">{{form.flavour_dose.label}} Selection: </div>
+                    <div class="col-1" id="flavourLabel">0</div>
                 </div>
-                <div class="row border " onchange="refreshPage()" >
+                <div class="row pb-2" onchange="refreshPage()" >
                     {{form.flavour_choice}}
                 </div>           
-                <div class="row border " oninput="re_fresh('flavourRange','flavourLabel')">
+                <div class="row pb-3" oninput="re_fresh('flavourRange','flavourLabel')">
                     {{form.flavour_dose}}
                 </div>
             </div>   
@@ -70,7 +81,7 @@
     
             
         <!-- Modal footer -->
-        <div class="modal-footer  border">
+        <div class="modal-footer  ">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             {% if user.is_authenticated %}
             <button type="submit" class="save btn btn-primary">Save</button>
