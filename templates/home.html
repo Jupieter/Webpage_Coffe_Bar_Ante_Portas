@@ -29,20 +29,26 @@
 <h6>password:    Enter1</h6>
 
 <div class="container">
-    <div class="row p-2 ">
-        <div class="col-md-3 centered">
+    <div class="row p-4 ">
+        <div class="col-sm-3 centered">
             <center>
                 <h4> Next Coffee:</h4>
-                <a href="{% url 'shop:coffee_order' %}">
+                <a href="{% url 'shop:coffee_order' %}"
+                title="To the Coffee Ordering Page"               
+                data-bs-toggle="popover" 
+                data-bs-trigger="hover" 
+                data-bs-content="There you can book some dose Coffe. From half a dose to two doses.
+                With milk, sugar, and flavoring.">
                     <img src='/static/image/koffe.jpeg'
                     class="img-thumbnail" 
                     style="width:150px;height:150px;">
                 </a>
+                <p>If you want to book a few servings of coffee, click on the cup picture.</p>
             </center>
         </div>
     
     
-        <div class="col-md-4 centered p-1">
+        <div class="col-sm-5 centered p-3">
             {% for coffee in coffees %}
             <div class="row p-2 ">
                 <div class="card bg-brown text-white">
@@ -56,56 +62,74 @@
             {% endfor %}
         </div>
     </div>
-    <p>If you want to book a few servings of coffee, click on the cup picture.</p>
 
 
 {% if user.is_staff %}
 <div class="container">
 
-    <div class="row  p-2 ">
-        <div class="col-md-3 centered">
+    <div class="row  p-4 ">
+        <div class="col-sm-3 centered">
             <center>
-                <h4> Make Coffee:</h4>
-                <a href="{% url 'shop:coffee_make' %}">
-                    <img src='/static/image/coffee_machine_1.jfif'
-                    class="img-thumbnail" 
-                    style="width:150px;height:150px;">
-                </a>
+                <button type="button" 
+                class="btn btn-secondary position-relative"
+                style="padding:0px">
+                    <a href="{% url 'shop:coffee_make' %}"
+                    title="To the Coffee Making Page"               
+                    data-bs-toggle="popover" 
+                    data-bs-trigger="hover" 
+                    data-bs-content="There you can indicate when the next coffee portions will be ready. 
+                    Only for STAFF "> 
+                        <img src='/static/image/coffee_machine_1.jfif'
+                        
+                        style="width:150px;height:150px;">
+                        {% if coffees %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                            <h4>Have {{coffees|length}}</h4>
+                        </span>
+                        {% else %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <h4>Make Coffe</h4>
+                        </span>
+                        {% endif %}
+                    </a>
+                </button>
             </center>
         </div>
-        <div class="col-md-4 centered">
-            {% if coffees %}
-            <h4> Number of coffees waiting to be brewed: {{coffees|length}}</h4>
-            {% else %}
-            <h2 style="color:red; font-style:bold" > Nincs főzésre váró kávé </h4>
-            {% endif %}
+        <div class="col-sm-5 centered">
                 {% for ware in wares %}
-                    <li style="color:red;font-style:bold">Kifogyóban: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
+                    <li style="color:red;font-style:bold">Out of stock: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
                 {% endfor %}
         </div>
     </div>
 
-    <div class="row  p-2 ">
-        <div class="col-md-3 centered">
+    <div class="row  p-4 ">
+        <div class="col-sm-3 centered">
             <center>
-                <h4> Make Booking:</h4>
-                <a href="{% url 'shop:coffee_make' %}">
-                    <img src='/static/image/coffe_book_1.png'
-                    class="img-thumbnail" 
-                    style="width:150px;height:150px;">
-                </a>
+                <button type="button" 
+                class="btn btn-secondary position-relative"
+                style="padding:0px">
+                    <a href="{% url 'shop:coffee_make' %}"
+                    title="To the Coffee Booking Page"               
+                    data-bs-toggle="popover" 
+                    data-bs-trigger="hover" 
+                    data-bs-content="On this page you can record the depletion of finished 
+                    and consumed raw materials. Only for STAFF ">  
+                        <img src='/static/image/coffe_book_1.png'
+                        class="img-thumbnail" 
+                        style="width:150px;height:150px;">
+                        {% if coffees2 %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <h4>Open {{coffees2|length}}</h4>
+                        </span>
+                        {% else %}
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                            <h4>Arranged</h4>
+                        </span>
+                        {% endif %}
+                    </a>
+                </button>
             </center>   
         </div>
-        <div class="col-md-4 centered">
-            {% if coffees2 %}
-                <strong>Coffee brewed but not booked:</strong>
-            {% for coffee2 in coffees2 %}
-                <li>{{coffee2}}</li>
-            {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-</div>
 {% endif %}
 
 

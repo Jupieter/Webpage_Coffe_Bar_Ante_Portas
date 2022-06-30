@@ -30,8 +30,7 @@
 
 <div class="container sm-8 pt-2 ">
     <div class="row p-3">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-3 ">
+        <div class="col-sm-3">
             <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_order' %}" {% endif %}
             title="To the Coffee Ordering Page"               
             data-bs-toggle="popover" 
@@ -39,13 +38,12 @@
             data-bs-content="There you can book some dose Coffe. From half a dose to two doses.
             With milk, sugar, and flavoring.">              
             <img src ="{% static '/image/koffe.jpeg' %}" class="img-thumbnail" 
-            style="width:200px;height:200px;"; alt="choice">                 
+            style="width:200px;height:200px;" alt="choice">                 
         </a>
     </div>
     </div>
     
     <div class="row p-3">
-        <div class="col-sm-1"></div>
         <div class="col-sm-3">
             <a  {% if user.is_staff %} href="{% url 'shop:coffee_make' %}" {% endif %}
             title="To the Coffee Making Page"               
@@ -56,11 +54,21 @@
             <img src ="{% static '/image/coffee_machine_1.jfif' %}"  class="img-thumbnail" 
             style="width:200px;height:200px;"; alt="choice">               
         </a>
+        </div>
+        <div class="col-sm-4">
+            {% if coffees %}
+            <h4> Number of coffees waiting to be brewed: {{coffees|length}}</h4>
+            {% else %}
+            <h2 style="color:red; font-style:bold" > There is no coffee waiting to be brewed </h4>
+            {% endif %}
+                {% for ware in wares %}
+                    <li style="color:red;font-style:bold">Out of stock: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
+                {% endfor %}
+        </div>
     </div>
-</div>
-<div class="row p-3">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-3 right ">
+
+    <div class="row p-3">
+        <div class="col-sm-3">
             <a  {% if user.is_staff %} href="{% url 'shop:coffee_booking' %}" {% endif %}
             title="To the Coffee Booking Page"               
             data-bs-toggle="popover" 
@@ -70,6 +78,14 @@
                 <img src ="{% static '/image/coffe_book_1.png' %}"  class="img-thumbnail" 
                 style="width:200px;height:200px;"; alt="choice">                
             </a>
+        </div>
+        <div class="col-sm-4">
+            {% if coffees2 %}
+                <strong>Coffee brewed but not booked:</strong>
+            {% for coffee2 in coffees2 %}
+                <li>{{coffee2}}</li>
+            {% endfor %}
+            {% endif %}
         </div>
     </div>
 

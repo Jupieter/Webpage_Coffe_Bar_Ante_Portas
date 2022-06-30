@@ -10,7 +10,21 @@ from .forms import CoffeeMakerForm, CoffeeOrderForm, CoffeeTimeForm
 
 
 def coffee_home(request):
-    return render(request, 'shop/coffee_home.html', {})
+    sub_site_logo = "src=static/image/coffe_bean_heart.png"
+    dt= datetime.datetime.now()
+    dt_start = dt
+    dt_end = dt + datetime.timedelta(hours=36)
+    wares = []
+    coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
+    coffees2 = CoffeeMake.objects.filter(c_book__isnull=True)
+    coffees = coffees1.order_by('c_make_date')
+    wares1 = ProductAcquisition.objects.filter(store_status=3)
+    for ware in wares1:
+        if ware.stock / ware.ware_type.ware_weight < 0.08:
+            wares.append(ware)
+    return render(request, "shop/coffee_home.html", {'sub_site_logo':sub_site_logo, 
+        'coffees':coffees,'coffees2':coffees2, 'wares':wares})
+
 
 
 def coffee_make(request):
