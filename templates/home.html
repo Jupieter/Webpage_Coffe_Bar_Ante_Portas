@@ -21,9 +21,9 @@
 {% endblock %}
 
 {% block content %}
-<h1>Főoldal</h1>
+<h1>I-Me Porta Coffee Bar</h1>
 <h2> THIS SITE UNDER CONSTRUCTION</h2>
-<h4> THIS SITE IS A DJANGO TUTORIAL (and GIT :-)</h4>
+<h6> THIS SITE IS A DJANGO TUTORIAL (and GIT :-)</h6>
 
 <h6> staff login:    the.boss@staff.com</h6>
 <h6>password:    Enter1</h6>
@@ -35,8 +35,8 @@
                 <h4> Next Coffee:</h4>
                 <a href="{% url 'shop:coffee_order' %}">
                     <img src='/static/image/koffe.jpeg'
-                style="width: 150px; height:150px; 
-                padding: 1px; background-color:white;">
+                    class="img-thumbnail" 
+                    style="width:150px;height:150px;">
                 </a>
             </center>
         </div>
@@ -68,14 +68,14 @@
                 <h4> Make Coffee:</h4>
                 <a href="{% url 'shop:coffee_make' %}">
                     <img src='/static/image/coffee_machine_1.jfif'
-                    style="width: 150px; height:150px; 
-                padding: px; background-color:white;">
+                    class="img-thumbnail" 
+                    style="width:150px;height:150px;">
                 </a>
             </center>
         </div>
         <div class="col-md-4 centered">
             {% if coffees %}
-            <h4> Főzésre váró kávék száma: {{coffees|length}}</h4>
+            <h4> Number of coffees waiting to be brewed: {{coffees|length}}</h4>
             {% else %}
             <h2 style="color:red; font-style:bold" > Nincs főzésre váró kávé </h4>
             {% endif %}
@@ -91,15 +91,18 @@
                 <h4> Make Booking:</h4>
                 <a href="{% url 'shop:coffee_make' %}">
                     <img src='/static/image/coffe_book_1.png'
-                    style="width: 150px; height:150px; 
-                padding: px; background-color:white;">
+                    class="img-thumbnail" 
+                    style="width:150px;height:150px;">
                 </a>
             </center>   
         </div>
         <div class="col-md-4 centered">
+            {% if coffees2 %}
+                <strong>Coffee brewed but not booked:</strong>
             {% for coffee2 in coffees2 %}
                 <li>{{coffee2}}</li>
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
