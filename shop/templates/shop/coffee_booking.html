@@ -73,7 +73,7 @@
                     <td>{{order.milk_choice}} <br>{{order.milk_dose}}</td>
                     <td>{{order.flavour_choice}} <br>{{order.flavour_dose}}</td>
                     <td>
-                        <{% if user.is_staff %}
+                        {% if user.is_staff %}
                         <a class="btn btn-danger btn-sm" 
                         href="{% url 'shop:coffee_order_remove' pk=order.pk %}"
                         onclick="return confirm('Biztosan törölni akarja?')">

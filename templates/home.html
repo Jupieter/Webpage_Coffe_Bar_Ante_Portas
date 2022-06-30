@@ -33,16 +33,20 @@
         <div class="col-sm-3 centered">
             <center>
                 <h4> Next Coffee:</h4>
-                <a href="{% url 'shop:coffee_order' %}"
-                title="To the Coffee Ordering Page"               
-                data-bs-toggle="popover" 
-                data-bs-trigger="hover" 
-                data-bs-content="There you can book some dose Coffe. From half a dose to two doses.
-                With milk, sugar, and flavoring.">
-                    <img src='/static/image/koffe.jpeg'
-                    class="img-thumbnail" 
-                    style="width:150px;height:150px;">
-                </a>
+                <button type="button" 
+                class="btn btn-secondary position-relative"
+                style="padding:0px">
+                    <a href="{% url 'shop:coffee_order' %}"
+                    title="To the Coffee Ordering Page"               
+                    data-bs-toggle="popover" 
+                    data-bs-trigger="hover" 
+                    data-bs-content="There you can book some dose Coffe. From half a dose to two doses.
+                    With milk, sugar, and flavoring.">
+                        <img src='/static/image/koffe.jpeg'
+                        class="img-thumbnail" 
+                        style="width:150px;height:150px;">
+                    </a>
+                </button>
                 <p>If you want to book a few servings of coffee, click on the cup picture.</p>
             </center>
         </div>
@@ -80,7 +84,7 @@
                     data-bs-content="There you can indicate when the next coffee portions will be ready. 
                     Only for STAFF "> 
                         <img src='/static/image/coffee_machine_1.jfif'
-                        
+                        class="img-thumbnail"
                         style="width:150px;height:150px;">
                         {% if coffees %}
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
@@ -108,7 +112,7 @@
                 <button type="button" 
                 class="btn btn-secondary position-relative"
                 style="padding:0px">
-                    <a href="{% url 'shop:coffee_make' %}"
+                    <a href="{% url 'shop:coffee_booking' %}"
                     title="To the Coffee Booking Page"               
                     data-bs-toggle="popover" 
                     data-bs-trigger="hover" 
