@@ -93,7 +93,7 @@ def coffee_make_time(request, pk):
             coffee4.c_make_date = dtf
             coffee4.c_reg_time = timezone.now() 
             coffee4.save()
-            adat = "jel"
+            adat = dtf
             return HttpResponse(
                 status=204,
                 headers={
@@ -193,12 +193,13 @@ def coffee_order_form(request, pkey):
             coffee2.save()
             coffee_1.c_make_dose = dose-coffee2.coffee_dose
             coffee_1.save()
+            adat = coffee2.coffe_user
             return HttpResponse(
                 status=204,
                 headers={
                     'HX-Trigger': json.dumps({
                         "coffeeTableChanged": None,
-                        "showMessage": f"{adat} updated."
+                        "showMessage": f"{adat} ordered."
                     })
                 }
             )

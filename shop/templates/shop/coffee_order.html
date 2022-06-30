@@ -21,7 +21,10 @@
     <div class="row-sm-2">
         <div class="col-sm-2 right">
             <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_home' %}" {% endif %}
-                title="Back Coffee Home Page">                
+                title="Back Coffee Page"               
+                data-bs-toggle="popover" 
+                data-bs-trigger="hover" 
+                data-bs-content="Order, Make, Booking">
                 <img src ="{% static '/image/koffe.jpeg' %}" class="rounded" 
                 style="width:100px;height:100px; border:5px solid; "; alt="choice">                 
             </a>
@@ -30,13 +33,6 @@
             <h1> Next Coffee Shop:</h1>
         </div>    
     </div>
-    <a class="btn btn-secondary btn-sm m-1" 
-    href="#" 
-    title="Header 3" 
-    data-bs-toggle="popover" 
-    data-bs-trigger="hover" 
-    data-bs-content="Popover text 3">
-    <span class="fa fa-cog"> Hover over me </span></a>
 </div>
 
 <div class="container sm "
