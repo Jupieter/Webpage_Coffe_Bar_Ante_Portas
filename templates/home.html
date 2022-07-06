@@ -29,8 +29,8 @@
 <h6>password:    Enter1</h6>
 
 <div class="container">
-    <div class="row p-4 ">
-        <div class="col-sm-3 centered">
+    <div class="row p-2 ">
+        <div class="col-md-3 centered">
             <center>
                 <h4> Next Coffee:</h4>
                 <button type="button" 
@@ -52,12 +52,12 @@
         </div>
     
     
-        <div class="col-sm-5 centered p-3">
+        <div class="col-md-4 centered p-3">
             {% for coffee in coffees %}
             <div class="row p-2 ">
                 <div class="card bg-brown text-white">
                     <h3 class="card-title text-center">
-                        <div class="d-flex flex-wrap justify-content-center mt-2">
+                        <div class="d-flex flex-wrap justify-content-center mt-1">
                             <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
                         </div>
                     </h3>
@@ -70,8 +70,8 @@
 
 {% if user.is_staff %}
 
-    <div class="row  p-4 ">
-        <div class="col-sm-3 centered">
+    <div class="row p-2 ">
+        <div class="col-md-3 centered p-3">
             <center>
                 <button type="button" 
                 class="btn btn-secondary position-relative"
@@ -98,43 +98,43 @@
                 </button>
             </center>
         </div>
-        <div class="col-sm-5 centered">
-                {% for ware in wares %}
-                    <li style="color:red;font-style:bold">Out of stock: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
-                {% endfor %}
-        </div>
-    </div>
-
-    <div class="row  p-4 ">
-        <div class="col-sm-3 centered">
+        
+        <div class="col-md-2 centered p-3">
             <center>
                 <button type="button" 
                 class="btn btn-secondary position-relative"
                 style="padding:0px">
-                    <a href="{% url 'shop:coffee_booking' %}"
-                    title="To the Coffee Booking Page"               
-                    data-bs-toggle="popover" 
-                    data-bs-trigger="hover" 
-                    data-bs-content="On this page you can record the depletion of finished 
+                <a href="{% url 'shop:coffee_booking' %}"
+                title="To the Coffee Booking Page"               
+                data-bs-toggle="popover" 
+                data-bs-trigger="hover" 
+                data-bs-content="On this page you can record the depletion of finished 
                     and consumed raw materials. Only for STAFF ">  
-                        <img src='/static/image/coffe_book_1.png'
-                        class="img-thumbnail" 
-                        style="width:150px;height:150px;">
-                        {% if coffees2 %}
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            <h4>Open {{coffees2|length}}</h4>
-                        </span>
-                        {% else %}
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                            <h4>Arranged</h4>
-                        </span>
-                        {% endif %}
-                    </a>
-                </button>
-            </center>   
-        </div>
-{% endif %}
+                    <img src='/static/image/coffe_book_1.png'
+                    class="img-thumbnail" 
+                    style="width:150px;height:150px;">
+                    {% if coffees2 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <h4>Open {{coffees2|length}}</h4>
+                    </span>
+                    {% else %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                        <h4>Arranged</h4>
+                    </span>
+                    {% endif %}
+                </a>
+            </button>
+        </center>   
+    </div>
+</div>
 
+<div class="col-md-5 centered p-3">
+        {% for ware in wares %}
+            <li style="color:red;font-style:bold">Out of stock: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>
+        {% endfor %}
+</div>
 
-
+{% endif %}   
+    
+    
 {% endblock %}

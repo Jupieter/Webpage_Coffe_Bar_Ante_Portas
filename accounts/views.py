@@ -4,6 +4,9 @@ from .forms import RegisterForm, LoginForm
 from .models import User
 # from django.utils.http import is_safe_url
 from django.contrib import messages
+# token generator
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 User = get_user_model()
 
@@ -68,5 +71,16 @@ def login_page(request):
 
     
     return render(request, "accounts/login.html", {"form": form, 'adat': adat})
-    
+
+def token_gen(request):
+    adat1 = []
+    adat2 = []
+    for user in User.objects.all():
+        Token.objects.get_or_create(user=user)
+        token = Token.objects.filter(user=user)
+        print(user, token) 
+        adat1.append(user)
+        adat2.append(token)
+    context = {'adat1':adat1, 'adat2':adat2} 
+    return render(request, "accounts/token.html", context)    
     

@@ -42,5 +42,7 @@ function closeModal() {
   })
 })()
 
+//based:
 // https://blog.benoitblanchon.fr/django-htmx-modal-form/
+// https://www.bugbytes.io/posts/django-bokeh-and-htmx-data-driven-bar-charts/  YT video in it.
 

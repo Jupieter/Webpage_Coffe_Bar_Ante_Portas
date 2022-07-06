@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_template_maths',
+    'rest_framework',
+    #(2022.07.05) https://www.django-rest-framework.org/api-guide/authentication/
+    'rest_framework.authtoken', 
+
     
 
         # our apps
@@ -49,7 +53,17 @@ INSTALLED_APPS = [
     'raw_material',
     'static',
     'shop', 
+    'c_app',
 ]
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ]
+}
+
 # AUTH_USER_MODEL = "users_management.UserManage"
 AUTH_USER_MODEL = 'accounts.User'   # changes the built-in user model to ours
 

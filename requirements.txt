@@ -6,3 +6,7 @@ sqlparse
 django-template-maths
 django-htmx
 django-widget-tweaks
+djangorestframework
+markdown
+django-filter
+serializers

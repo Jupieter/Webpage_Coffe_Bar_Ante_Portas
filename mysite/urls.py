@@ -9,6 +9,8 @@ from .views import home_page, contact_page, view_modal_mess, proba
 app_name = 'mysite'
 
 urlpatterns = [
+    path('c_app/', include('c_app.urls')),
+    path('api/', include('rest_framework.urls')),
     path('proba', proba, name="proba"),
     path('admin/', admin.site.urls),
     path('', home_page, name="home_url"),

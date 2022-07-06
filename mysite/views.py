@@ -16,7 +16,7 @@ def home_page(request):
     coffees = coffees1.order_by('c_make_date')
     wares1 = ProductAcquisition.objects.filter(store_status=3)
     for ware in wares1:
-        if ware.stock / ware.ware_type.ware_weight < 0.98:
+        if ware.stock / ware.ware_type.ware_weight < 0.08:
             wares.append(ware)
     return render(request, "home.html", {'sub_site_logo':sub_site_logo, 
         'coffees':coffees,'coffees2':coffees2, 'wares':wares})
