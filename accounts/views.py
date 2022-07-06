@@ -78,9 +78,9 @@ def token_gen(request):
     for user in User.objects.all():
         Token.objects.get_or_create(user=user)
         token = Token.objects.filter(user=user)
-        print(user, token) 
         adat1.append(user)
         adat2.append(token)
+        # print(user, token) 
     context = {'adat1':adat1, 'adat2':adat2} 
     return render(request, "accounts/token.html", context)    
     
