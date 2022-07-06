@@ -6,7 +6,7 @@ from rest_framework import generics, permissions
 from knox.models import AuthToken
 from django.contrib.auth import login
 from rest_framework import permissions
-from rest_framework.authtoken.serializers import AuthTokenSerializer
+# from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 
 # from .serializers import UserSerializer, RegisterSerializer
@@ -14,19 +14,6 @@ from .serializers import *
 from  shop.models import *
 
 # Create your views here.
-@api_view(['POST'])
-def logins(request):
-    if request.method == 'POST':
-        serializer = LoginSerializer(data=data)
-        data = {}
-        if serializer.is_valid():
-            account = serializer.save()
-            data['response'] = "Succesfully login"
-            data['email'] = account.email
-            data['password'] = account.password
-        else:
-            data = serializer.error        
-        return Response(data, status=status.HTTP_200_OK)
         
 @api_view(['GET'])
 def all_tasks(request):
@@ -62,8 +49,26 @@ class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
+        print('r: ', request)
+        serializer = MyAuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+        print('u: ', user)
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
+# https://studygyaan.com/django/django-rest-framework-tutorial-register-login-logout
+# https://james1345.github.io/django-rest-knox/
+
+@api_view(['POST'])
+def logins(request):
+    if request.method == 'POST':
+        serializer = LoginSerializer(data=data)
+        data = {}
+        if serializer.is_valid():
+            account = serializer.save()
+            data['response'] = "Succesfully login"
+            data['email'] = account.email
+            data['password'] = account.password
+        else:
+            data = serializer.error        
+        return Response(data, status=status.HTTP_200_OK)
