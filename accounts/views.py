@@ -6,7 +6,8 @@ from .models import User
 from django.contrib import messages
 # token generator
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
+# from rest_framework.authtoken.models import Token
+from knox.models import AuthToken
 
 User = get_user_model()
 
@@ -76,11 +77,11 @@ def token_gen(request):
     adat1 = []
     adat2 = []
     for user in User.objects.all():
-        Token.objects.get_or_create(user=user)
-        token = Token.objects.filter(user=user)
+        AuthToken.objects.create(user=user)[1]
+        token = AuthToken.objects.filter(user=user)
         adat1.append(user)
         adat2.append(token)
-        # print(user, token) 
+        print(user, '---',token) 
     context = {'adat1':adat1, 'adat2':adat2} 
     return render(request, "accounts/token.html", context)    
     

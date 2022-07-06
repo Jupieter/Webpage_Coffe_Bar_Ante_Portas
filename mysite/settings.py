@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     #(2022.07.05) https://www.django-rest-framework.org/api-guide/authentication/
     'rest_framework.authtoken', 
-
+    # (2022.07.06.) https://studygyaan.com/django/django-rest-framework-tutorial-register-login-logout
+    'knox',
     
 
         # our apps
@@ -57,10 +58,10 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
     ]
 }
 

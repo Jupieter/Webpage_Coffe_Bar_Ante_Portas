@@ -116,4 +116,5 @@ class User(AbstractBaseUser, PermissionsMixin):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        # https://www.youtube.com/watch?v=Wq6JqXqOzCE
     
