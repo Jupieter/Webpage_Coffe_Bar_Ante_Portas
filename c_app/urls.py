@@ -8,7 +8,7 @@ app_name = 'c_app'
 
 urlpatterns = [
     # path('api-token-auth/', authtoken_views.obtain_auth_token),
-    path('', views.all_tasks, name='all_tasks'),
+    path('read/', views.all_tasks, name='all_tasks'),
     path('create/', views.create_task, name='create_task'),
     path('logins/', views.logins, name='logins'),
     path('register/', RegisterAPI.as_view(), name='register'),

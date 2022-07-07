@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from shop.models import *
+from .models import *
 from django.contrib.auth.models import User
 from accounts.models import *
 
@@ -79,3 +80,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['password']
             )
         return user
+
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = '__all__'

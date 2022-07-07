@@ -1,34 +1,46 @@
+# django-rest authentication
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-# knox token auth
+# knox token authentication
 from rest_framework import generics, permissions
 from knox.models import AuthToken
 from django.contrib.auth import login
 from rest_framework import permissions
 # from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
-
 # from .serializers import UserSerializer, RegisterSerializer
 from .serializers import *
 from  shop.models import *
+from  .models import *
 
 # Create your views here.
-        
 @api_view(['GET'])
-def all_tasks(request):
+def c_make(request):
     tasks = CoffeeMake.objects.all()
     serializer = CoffeeMakeSerializer(tasks, many=True)
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def all_tasks(request):
+    tasks = Task.objects.all()
+    # print(tasks)
+    serializer = TaskSerializer(tasks, many=True)
+    print('GET: ',serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+        
+
 @api_view(['POST'])
 def create_task(request):
     data = request.data
-    serializer = CoffeeMakeSerializer(data=data)
+    print('POST: ', data)
+    serializer = TaskSerializer(data=data)
     if serializer.is_valid():
         ser_data = serializer.data
-        CoffeeMake.objects.create(name=ser_data['name'])
+        Task.objects.create(name=ser_data['name'])
         
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -45,9 +57,9 @@ class RegisterAPI(generics.GenericAPIView):
         "token": AuthToken.objects.create(user)[1]
         })
 
+
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
-
     def post(self, request, format=None):
         print('r: ', request)
         serializer = MyAuthTokenSerializer(data=request.data)
