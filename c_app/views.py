@@ -1,4 +1,5 @@
 # django-rest authentication
+import datetime
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -16,6 +17,17 @@ from  shop.models import *
 from  .models import *
 
 # Create your views here.
+@api_view(['GET'])
+def firstcoffee(request):
+    dt= datetime.datetime.now()
+    dt_start = dt
+    dt_end = dt + datetime.timedelta(hours=26)
+    tasks = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
+    # tasks = CoffeeMake.objects.all()
+    serializer = FirstCoffeeSerializer(tasks, many=True)
+    print(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 @api_view(['GET'])
 def c_make(request):
     tasks = CoffeeMake.objects.all()

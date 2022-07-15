@@ -49,6 +49,11 @@ class MyAuthTokenSerializer(serializers.Serializer):
         return attrs
 
 
+class FirstCoffeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CoffeeMake
+        fields = ['c_make_date']
+
 class CoffeeMakeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoffeeMake
