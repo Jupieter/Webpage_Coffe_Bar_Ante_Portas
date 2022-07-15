@@ -86,7 +86,7 @@
                 {% for order in ordered %}
                 {% if order.coffee_selected.id == coffee.id  %}
                 <tr> 
-                    <td class="col-sm-2">{{order.id}}., {{order.coffe_user}}
+                    <td class="col-sm-2">{{order.id}}., <b>{{order.coffe_user}}</b>
                         <br> {{order.coffee_reg}}
                     </td>
                     <td class="col-sm-2">{{order.coffee_dose}}</td>                    
