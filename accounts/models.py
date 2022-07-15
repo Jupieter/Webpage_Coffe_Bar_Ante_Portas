@@ -11,7 +11,7 @@ from rest_framework.authtoken.models import Token
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, first_name=None, last_name=None, is_active=True, is_staff=False, is_superuser=False):
+    def create_user(self, email, username, password=None, first_name=None, last_name=None, is_active=True, is_staff=False, is_superuser=False):
         if not email:
             raise ValueError('Users must have an email address')
         if not password:
@@ -19,6 +19,7 @@ class UserManager(BaseUserManager):
 
         user_obj = self.model(
             email=self.normalize_email(email),
+            username = username,
             first_name=first_name,
             last_name=last_name
         )
@@ -54,6 +55,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
         max_length=80,
         verbose_name='Email'
+    )
+    username = models.CharField(
+        default="Empty",
+        max_length=30,
+        verbose_name='Userame'
     )
     first_name = models.CharField(
         null=True,

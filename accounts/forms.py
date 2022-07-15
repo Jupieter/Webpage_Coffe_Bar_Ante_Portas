@@ -42,7 +42,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'active', 'superuser')
+        fields = ('email', 'password', 'username', 'active', 'superuser')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -94,6 +94,15 @@ class RegisterForm(forms.Form):
             attrs={
                 "class": "form-control",
                 "placeholder": "Email"
+            }
+        )
+    )
+    username = forms.CharField(
+        label='User Name',
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "User Name"
             }
         )
     )

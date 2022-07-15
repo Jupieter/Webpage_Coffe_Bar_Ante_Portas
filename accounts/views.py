@@ -19,9 +19,10 @@ def register_page(request):
         data = form.cleaned_data
         email = data.get('email')
         password = data.get('password')
+        username = data.get('username')
         first_name = data.get('first_name')
         last_name = data.get('last_name')
-        new_user = User.objects.create_user(email, password, first_name, last_name)
+        new_user = User.objects.create_user(email, password, username, first_name, last_name)
         if new_user is not None:
             messages.success(request, "Created User.")
             return redirect('accounts:login')
