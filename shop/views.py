@@ -292,4 +292,3 @@ def coffee_booking_pk(request, pkey):
     return redirect('shop/coffee_booking.html')
     ''' return render(request, 'shop/booking_pk.html', 
     {'pkey':pkey, 'coffees3':coffees3, 'orders3':orders3, 'adat':adat, 'alap':alap})'''
-

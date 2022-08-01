@@ -18,7 +18,7 @@ from  .models import *
 
 # Create your views here.
 @api_view(['GET'])
-def firstcoffee(request):
+def todaytcoffee(request):
     dt= datetime.datetime.now()
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=26)
