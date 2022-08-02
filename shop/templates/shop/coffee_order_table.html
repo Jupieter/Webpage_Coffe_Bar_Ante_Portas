@@ -37,45 +37,48 @@
                             hx-target="#dialog"
                             title="Change the date">
                             <span class="fa fa-clock-o"></span>
-                        </a>
-                        <a class="btn btn-secondary btn-sm m-1"
-                        href="#" 
-                        title="Popover Header"
-                        data-bs-toggle="popover"
-                        data-bs-trigger="hover"
-                        data-bs-content="Some content inside the popover"
-                        data-placement="top">
-                            <span class="fa fa-cog">Test Popover</span>
-                        </a>
+                            </a>
 
-                        <a class="btn btn-danger btn-sm m-1" 
-                            hx-get="{% url 'view_modal_mess' %}"
-                            hx-vals='{"headx": "WARNING", "txtx":"Ooops Somthing is bad","background":"red"}'
-                            hx-target="#modals-here" 
-                            hx-trigger="click"
-                            class="btn btn-primary"
-	                        _="on htmx:afterOnLoad wait 10ms then add .show to #modalMessenger then add .show to #modal-backdrop">
-                            <span class="fa fa-cog"> Test Modal</span>
-                        </a>
-                        <a class="btn btn-success btn-sm m-1" 
-                            hx-get="{% url 'view_modal_mess' %}"
-                            hx-vals='{"headx": "SUCCESS", "txtx":"Oh yeah It is cool","background":"green"}'
-                            hx-target="#modals-here" 
-                            hx-trigger="click"
-                            class="btn btn-primary"
-	                        _="on htmx:afterOnLoad wait 10ms then add .show to #modalMessenger then add .show to #modal-backdrop">
-                            <span class="fa fa-cog"> Test Modal</span>
-                        </a>
-                        {% endif %}
+                            <!--a class="btn btn-secondary btn-sm m-1"
+                            href="#" 
+                            title="Popover Header"
+                            data-bs-toggle="popover"
+                            data-bs-trigger="hover"
+                            data-bs-content="Some content inside the popover"
+                            data-placement="top">
+                                <span class="fa fa-cog">Test Popover</span>
+                            </a-->
 
-                        {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
-                        <a class="btn btn-primary btn-sm m-1" 
-                        hx-get="{% url 'shop:coffee_order_form' pkey=coffee.pk %}"
-                        hx-target="#dialog"
-                        title="Order a Coffe!">
-                            <span class="fa fa-shopping-basket"> I'd like one.</span></a>
-                        {% else %}
-                            <p style="color:red; font-size: 24px;">It's full</p>
+                            {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
+                                <a class="btn btn-primary btn-sm m-1" 
+                                hx-get="{% url 'shop:coffee_order_form' pkey=coffee.pk %}"
+                                hx-target="#dialog"
+                                title="Order a Coffe!">
+                                    <span class="fa fa-shopping-basket"> I'd like one.</span>
+                                {% else %}
+                                    <p style="color:red; font-size: 24px;">It's full</p>
+                                </a>
+                            {% endif %}
+
+                            <a class="btn btn-danger btn-sm m-1" 
+                                hx-get="{% url 'view_modal_mess' %}"
+                                hx-vals='{"headx": "WARNING", "txtx":"Ooops Somthing is bad","background":"red"}'
+                                hx-target="#modals-here" 
+                                hx-trigger="click"
+                                class="btn btn-primary"
+                                _="on htmx:afterOnLoad wait 10ms then add .show to #modalMessenger then add .show to #modal-backdrop">
+                                <span class="fa fa-cog"> Test Modal</span>
+                            </a>
+
+                            <a class="btn btn-success btn-sm m-1" 
+                                hx-get="{% url 'view_modal_mess' %}"
+                                hx-vals='{"headx": "SUCCESS", "txtx":"Oh yeah It is cool","background":"green"}'
+                                hx-target="#modals-here" 
+                                hx-trigger="click"
+                                class="btn btn-primary"
+                                _="on htmx:afterOnLoad wait 10ms then add .show to #modalMessenger then add .show to #modal-backdrop">
+                                <span class="fa fa-cog"> Test Modal</span>
+                            </a>
                         {% endif %}
 
                     </th>
