@@ -16,21 +16,27 @@ from .serializers import *
 from  shop.models import *
 from  .models import *
 
+def dt_coffee_make(hourS=1):
+    dt= datetime.datetime.now()
+    dt_start = dt
+    dt_end = dt + datetime.timedelta(hours=hourS)
+    print(dt_start)
+    print(dt_end)
+    tasks = CoffeeMake.objects.filter(c_make_date__range=(dt_start, dt_end))
+    return tasks
+
+
 # Create your views here.
 @api_view(['GET'])
 def todaytcoffee(request):
-    dt= datetime.datetime.now()
-    dt_start = dt
-    dt_end = dt + datetime.timedelta(hours=26)
-    tasks = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
-    # tasks = CoffeeMake.objects.all()
+    tasks = dt_coffee_make(10)
     serializer = FirstCoffeeSerializer(tasks, many=True)
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def c_make(request):
-    tasks = CoffeeMake.objects.all()
+    tasks = dt_coffee_make(10)
     serializer = CoffeeMakeSerializer(tasks, many=True)
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)

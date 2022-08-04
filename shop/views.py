@@ -138,7 +138,7 @@ def coffee_order(request):
 def coffee_order_table(request):
     dt= datetime.datetime.now()
     dt_start = dt
-    dt_end = dt + datetime.timedelta(hours=36)
+    dt_end = dt + datetime.timedelta(hours=16)
     coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
     coffees = coffees1.order_by('id')
     adat = []
