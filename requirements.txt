@@ -2,6 +2,7 @@ asgiref
 Django==4.0.4
 Pillow~=9.0.1
 pytz~=2019.3
+psycopg2
 sqlparse
 django-template-maths
 django-htmx

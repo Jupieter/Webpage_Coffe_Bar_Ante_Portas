@@ -38,9 +38,10 @@ class UserManager(BaseUserManager):
         )
         return user_obj
 
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, email, username=None, password=None):
         user_obj = self.create_user(
             email,
+            username=username,
             password=password,
             is_staff=True,
             is_superuser=True
@@ -57,7 +58,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='Email'
     )
     username = models.CharField(
-        default="Empty",
+        null=False,
+        blank=False,
         max_length=30,
         verbose_name='Userame'
     )
@@ -86,9 +88,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name='Is Super User'
     )
 
-    USERNAME_FIELD = 'email'    # username
+    USERNAME_FIELD = 'email'   # username
     # USERNAME_FIELD and password are required by default
-    REQUIRED_FIELDS = []    # python manage.py createsuperuser
+    REQUIRED_FIELDS = ['username']    # python manage.py createsuperuser
 
     objects = UserManager()
 

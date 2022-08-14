@@ -23,9 +23,9 @@
 
 <div class="container pt-2">
     {% if ware.acquisition == True %}
-        <h2> Termék: {{ware.id}} {{ware.ware_type.ware_brand}} {{ware.ware_type.ware_brand_name}} {{ware.ware_type.ware_weight}}g ( {{ware.ware_type.ware_type}} ) {{ware.ware_type.ware_price}}Ft</h2>
+        <h2> Ware: {{ware.id}} {{ware.ware_type.ware_brand}} {{ware.ware_type.ware_brand_name}} {{ware.ware_type.ware_weight}}g ( {{ware.ware_type.ware_type}} ) {{ware.ware_type.ware_price}}Ft</h2>
     {% else %}
-        <h2> Termék: {{ware.id}} {{ware.ware_brand}} {{ware.ware_brand_name}} {{ware.ware_weight}}g ( {{ware.ware_type}} {{  ware.ware_price}}Ft ) </h2>
+        <h2> Ware: {{ware.id}} {{ware.ware_brand}} {{ware.ware_brand_name}} {{ware.ware_weight}}g ( {{ware.ware_type}} {{  ware.ware_price}}Ft ) </h2>
     {% endif %}
 </div>
 
@@ -39,8 +39,8 @@
         <h4>{{form.as_p}}</h4>
         
         {% else %}
-            <h4> Beszerző: {{user}}</h4>
-            <h4> Átadva: {{now}}</h4>
+            <h4> Purchaser: {{user}}</h4>
+            <h4> Given: {{now}}</h4>
             {% for forms in form %}
                 {% if forms.name == 'acquisition_price' %}
                     <div class="visible">

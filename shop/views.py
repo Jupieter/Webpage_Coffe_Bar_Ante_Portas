@@ -33,7 +33,7 @@ def coffee_make(request):
     wares=[]
     dt= datetime.datetime.now().date()
     for ind, ware in enumerate(wares1):
-        if ware.ware_type.ware_type.ware_types == 'Kávé':
+        if ware.ware_type.ware_type.id == 1:
             wares.append(ware)
     return render(request, 'shop/coffee_make.html', {'wares':wares,'dt':dt, 'stock_min':stock_min})
 

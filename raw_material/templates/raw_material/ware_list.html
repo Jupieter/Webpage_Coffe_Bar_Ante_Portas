@@ -32,7 +32,13 @@
             </div>
             
             <div class="col-sm-8">
-                <h2 style="text-align:center">{{ware_type_list}} lista</h2>
+                <h2 style="text-align:center">{{ware_type_list}} list</h2>                
+            </div>
+            <div class="col-sm-2">
+                {% if user.is_staff %}
+                <a class="btn btn-primary btn-lg" href="{% url 'raw_material:ware_new' %}">   
+                    <span class="fa fa-plus"> New ware</span></a>
+                {% endif %}    
             </div>
     </div>
 
@@ -40,11 +46,11 @@
         <table class="table table-sm-6 table-hover">
             <thead class="table-dark">
                 <tr>  
-                    <th class="col-sm-1">     Márka    </th>
-                    <th class="col-sm-1">    Típus     </th>
-                    <th class="col-sm-1">Kiszerelés [g]</th>
-                    <th class="col-sm-1">  Csomag ára  </th>
-                    <th class="col-sm-1">  Szerkeszt   </th>
+                    <th class="col-sm-1">     Brand    </th>
+                    <th class="col-sm-1">    Type     </th>
+                    <th class="col-sm-1">Packaging weight [g]</th>
+                    <th class="col-sm-1">  Price  </th>
+                    <th class="col-sm-1">  Edit   </th>
                     
                 </tr>
                 <i class="glyphicon glyphicon-plus"></i>
