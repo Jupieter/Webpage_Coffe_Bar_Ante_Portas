@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 from pathlib import Path
 import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-5)$-=p%0_dj^r0o_ogtp+*z=kr5rl#(^z3ck#*hc5&e^k*!whd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.1:5500','.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.1:5500','.pythonanywhere.com', 'coffeeanteportas.herokuapp.com']
 
 
 # Application definition
@@ -111,12 +112,20 @@ DATABASES = {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'coffee_bars',
+    #     'USER': 'postgres',
+    #     'PASSWORD':'password',
+    #     'HOST':'localhost',
+    #     'PORT':'5432',
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'coffee_bars',
-        'USER': 'postgres',
-        'PASSWORD':'password',
-        'HOST':'localhost',
+        'NAME': 'd9dtool169mj54',
+        'USER': 'ypzjnxzxhrrhyv',
+        'PASSWORD':'f64937b5ccb7d97758060782f6fb9f5af52cf0d980480a48ad52326faaa4046f',
+        'HOST':'ec2-54-228-218-84.eu-west-1.compute.amazonaws.com',
         'PORT':'5432',
     }
 }
@@ -157,8 +166,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_ROOT = '/static/'
+django_heroku.settings(locals())
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     ]
