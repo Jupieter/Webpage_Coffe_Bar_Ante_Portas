@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from shop.models import *
 from .models import *
+from shop.models import *
+from raw_material.models import *
 from django.contrib.auth.models import User
 from accounts.models import *
 
@@ -9,6 +10,30 @@ from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
+
+
+class ActiveCoffeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductAcquisition
+        fields = '__all__'
+
+
+class FirstCoffeeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CoffeeMake
+        fields = ['c_make_date']
+
+
+class CoffeeMakeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CoffeeMake
+        fields = '__all__'
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
 
 
 class MyAuthTokenSerializer(serializers.Serializer):
@@ -49,28 +74,12 @@ class MyAuthTokenSerializer(serializers.Serializer):
         return attrs
 
 
-class FirstCoffeeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CoffeeMake
-        fields = ['c_make_date']
-
-class CoffeeMakeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CoffeeMake
-        fields = '__all__'
-
-class LoginSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
-
-
-
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'email', 'password')
+
 
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
@@ -85,6 +94,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             validated_data['password']
             )
         return user
+
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:

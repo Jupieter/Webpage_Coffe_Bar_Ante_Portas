@@ -1,5 +1,6 @@
 # django-rest authentication
 import datetime
+import json
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -14,6 +15,7 @@ from knox.views import LoginView as KnoxLoginView
 # from .serializers import UserSerializer, RegisterSerializer
 from .serializers import *
 from  shop.models import *
+from  shop.views import active_coffee, dose_weight
 from  .models import *
 
 def dt_coffee_make(hourS=1):
@@ -28,8 +30,29 @@ def dt_coffee_make(hourS=1):
 
 # Create your views here.
 @api_view(['GET'])
+def active_coffe_ware(request):
+    act_ware = active_coffee()
+    dose_wgt = dose_weight(1)
+    print(act_ware, ':', dose_wgt)
+    coffe_ware = []
+    for ware in act_ware:
+        w_id = ware.id
+        w_name = str(ware.ware_type)
+        w_dose = int(ware.stock / dose_wgt)
+        print(w_id, w_name, w_dose)
+        i = {"w_id":w_id,"w_name":w_name,"w_dose":w_dose}
+        i_json = json.dumps(i)
+        coffe_ware.append(i_json)
+    data = coffe_ware
+    print(data)
+    # serializer = ActiveCoffeeSerializer(act_ware, many=True)
+    # rint(serializer.data)
+    return Response(data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
 def todaytcoffee(request):
     tasks = dt_coffee_make(10)
+    print(tasks)
     serializer = FirstCoffeeSerializer(tasks, many=True)
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)

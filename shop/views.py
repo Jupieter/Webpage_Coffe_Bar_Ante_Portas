@@ -26,8 +26,32 @@ def coffee_home(request):
         'coffees':coffees,'coffees2':coffees2, 'wares':wares})
 
 
+def dose_weight(pk=1):
+    # wt = WareTypes.objects.all()
+    wt = WareTypes.objects.filter(id=pk)
+    print('WT:',wt)
+    for i in wt:
+        print('Ware type i=', i)
+        dose_weight = i.ware_wght
+    print(dose_weight)
+    return dose_weight
+    
+def active_coffee():
+    wares1 = ProductAcquisition.objects.filter(store_status=3)
+    wares=[]
+    for ware in wares1:
+        if ware.ware_type.ware_type.id == 1:
+            wares.append(ware)
+    print(wares)
+    return wares
 
 def coffee_make(request):
+    wares = active_coffee()
+    stock_min = 40
+    dt= datetime.datetime.now().date()
+    return render(request, 'shop/coffee_make.html', {'wares':wares,'dt':dt, 'stock_min':stock_min})
+
+def coffee_make2(request):
     wares1 = ProductAcquisition.objects.filter(store_status=3)
     stock_min = 40
     wares=[]
