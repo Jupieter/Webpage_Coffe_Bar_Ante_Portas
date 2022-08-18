@@ -51,7 +51,7 @@ def active_coffe_ware(request):
 
 @api_view(['GET'])
 def todaytcoffee(request):
-    tasks = dt_coffee_make(10)
+    tasks = dt_coffee_make(20)
     print(tasks)
     serializer = FirstCoffeeSerializer(tasks, many=True)
     print(serializer.data)
@@ -59,7 +59,7 @@ def todaytcoffee(request):
 
 @api_view(['GET'])
 def c_make(request):
-    tasks = dt_coffee_make(10)
+    tasks = dt_coffee_make(20)
     serializer = CoffeeMakeSerializer(tasks, many=True)
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
