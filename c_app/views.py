@@ -24,7 +24,8 @@ def dt_coffee_make(hourS=1):
     dt_end = dt + datetime.timedelta(hours=hourS)
     print(dt_start)
     print(dt_end)
-    tasks = CoffeeMake.objects.filter(c_make_date__range=(dt_start, dt_end))
+    tasks1 = CoffeeMake.objects.filter(c_make_date__range=(dt_start, dt_end))
+    tasks = tasks1.order_by('c_make_date')
     return tasks
 
 
