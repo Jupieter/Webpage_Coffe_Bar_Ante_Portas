@@ -14,6 +14,7 @@ from rest_framework import permissions
 from knox.views import LoginView as KnoxLoginView
 # from .serializers import UserSerializer, RegisterSerializer
 from .serializers import *
+from  raw_material.models import ProductAcquisition
 from  shop.models import *
 from  shop.views import active_coffee, dose_weight
 from  .models import *
@@ -27,7 +28,49 @@ def dt_coffee_make(hourS=1):
     tasks1 = CoffeeMake.objects.filter(c_make_date__range=(dt_start, dt_end))
     tasks = tasks1.order_by('c_make_date')
     return tasks
+    
+@api_view(['GET'])
+def c_make(request):
+    tasks = dt_coffee_make(20)
+    serializer = CoffeeMakeSerializer(tasks, many=True)
+    print(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def coffe_make(request):
+    data = request.data
+    print('POST: ', data)
+    serializer = CoffeeMakeSerializerSave(data=data)
+    print('serializer: ', serializer)
+    print('*  *   *   *  *')
+
+    if serializer.is_valid():
+        ser_data = serializer.data
+        print('VALID ser_data',ser_data)
+        print(ser_data['c_make_dose'])
+        ware = ProductAcquisition.objects.filter(id = ser_data['c_make_ware'])
+        user = User.objects.filter(id = ser_data['c_make_user'])
+        print('ware: ', ware)
+        print('user: ', user)
+        # CoffeeMake.objects.create(
+        #     c_make_dose = ser_data['c_make_dose'],
+        #     c_make_user = user,
+        #     c_make_date = ser_data['c_make_date'],
+        #     c_reg_time = timezone.now(),
+        #     c_make_ware = ware,
+        #     )
+        coffe_new = CoffeeMake(
+            c_make_ware = ware,
+            c_make_dose = ser_data['c_make_dose'],
+            c_make_user = user,
+            c_make_date = ser_data['c_make_date'],
+            c_reg_time = timezone.now()
+            )
+        coffe_new.save() 
+    else:
+        print('INVALID ')    
+    return Response(serializer.data, status=status.HTTP_200_OK)
+    #    return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Create your views here.
 @api_view(['GET'])
@@ -58,33 +101,7 @@ def todaytcoffee(request):
     print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-@api_view(['GET'])
-def c_make(request):
-    tasks = dt_coffee_make(20)
-    serializer = CoffeeMakeSerializer(tasks, many=True)
-    print(serializer.data)
-    return Response(serializer.data, status=status.HTTP_200_OK)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def all_tasks(request):
-    tasks = Task.objects.all()
-    # print(tasks)
-    serializer = TaskSerializer(tasks, many=True)
-    print('GET: ',serializer.data)
-    return Response(serializer.data, status=status.HTTP_200_OK)
-        
-
-@api_view(['POST'])
-def create_task(request):
-    data = request.data
-    print('POST: ', data)
-    serializer = TaskSerializer(data=data)
-    if serializer.is_valid():
-        ser_data = serializer.data
-        Task.objects.create(name=ser_data['name'])
-        
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -104,7 +121,9 @@ class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
     def post(self, request, format=None):
         print('r: ', request)
+        print('data: ', request)
         serializer = MyAuthTokenSerializer(data=request.data)
+        print('serializer: ', serializer)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         print('u: ', user)
@@ -116,8 +135,9 @@ class LoginAPI(KnoxLoginView):
 @api_view(['POST'])
 def logins(request):
     if request.method == 'POST':
+        data = request.data
         serializer = LoginSerializer(data=data)
-        data = {}
+        # data = {}
         if serializer.is_valid():
             account = serializer.save()
             data['response'] = "Succesfully login"
@@ -126,3 +146,29 @@ def logins(request):
         else:
             data = serializer.error        
         return Response(data, status=status.HTTP_200_OK)
+
+# Learning objects:
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def all_tasks(request):
+    tasks = Task.objects.all()
+    print(tasks)
+    serializer = TaskSerializer(tasks, many=True)
+    print('GET: ',serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+        
+
+@api_view(['POST'])
+def create_task(request):
+    data = request.data
+    print('POST: ', data)
+    serializer = TaskSerializer(data=data)
+    print('serializer: ', serializer)
+    if serializer.is_valid():
+        ser_data = serializer.data
+        print('VALID ser_data',ser_data)
+        # Task.objects.create(name=ser_data['name'])
+        Task.objects.create(
+            name = ser_data['name'], 
+            age = ser_data['age'])        
+        return Response(serializer.data, status=status.HTTP_200_OK)

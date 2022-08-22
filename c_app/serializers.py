@@ -21,13 +21,19 @@ class ActiveCoffeeSerializer(serializers.ModelSerializer):
 class FirstCoffeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoffeeMake
-        fields = ['c_make_date']
+        fields = '__all__'
 
+
+class CoffeeMakeSerializerSave(serializers.ModelSerializer):
+    class Meta:
+        model = CoffeeMake
+        fields = ['c_make_user', 'c_make_dose','c_make_date','c_make_ware']
+        # fields = ['c_make_ware', 'c_make_dose', 'c_make_user', 'c_make_date', 'c_reg_time']
 
 class CoffeeMakeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CoffeeMake
-        fields = '__all__'
+        fields = ['c_make_date']
 
 
 class LoginSerializer(serializers.ModelSerializer):
@@ -71,6 +77,7 @@ class MyAuthTokenSerializer(serializers.Serializer):
             raise serializers.ValidationError(msg, code='authorization')
 
         attrs['user'] = user
+        print('attrs',attrs)
         return attrs
 
 
