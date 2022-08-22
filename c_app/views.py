@@ -48,10 +48,10 @@ def coffe_make(request):
         ser_data = serializer.data
         print('VALID ser_data',ser_data)
         print(ser_data['c_make_dose'])
-        ware = ProductAcquisition.objects.filter(id = ser_data['c_make_ware'])
-        user = User.objects.filter(id = ser_data['c_make_user'])
-        print('ware: ', ware)
-        print('user: ', user)
+        ware = ProductAcquisition.objects.filter(id = ser_data['c_make_ware'])[0]
+        user = User.objects.filter(id = ser_data['c_make_user'])[0]
+        print('ware: ', ware, type(ware))
+        print('user: ', user, type(user))
         # CoffeeMake.objects.create(
         #     c_make_dose = ser_data['c_make_dose'],
         #     c_make_user = user,
