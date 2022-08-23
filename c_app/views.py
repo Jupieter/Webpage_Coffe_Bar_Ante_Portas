@@ -119,14 +119,29 @@ class RegisterAPI(generics.GenericAPIView):
 
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
+
+    def get_post_response_data(self, request, token, instance):
+        print('instance', instance.user.id)
+        UserSerializer = self.get_user_serializer_class()
+
+        data = {
+            'expiry': self.format_expiry_datetime(instance.expiry),
+            'token': token,
+            'user_pk': instance.user.id
+        }
+        if UserSerializer is not None:
+            data["user"] = UserSerializer(
+                request.user,
+                context=self.get_context()
+            ).data
+            print('request.user',request.user)
+        return data
+
     def post(self, request, format=None):
-        print('r: ', request)
-        print('data: ', request)
         serializer = MyAuthTokenSerializer(data=request.data)
         print('serializer: ', serializer)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        print('u: ', user)
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
 # https://studygyaan.com/django/django-rest-framework-tutorial-register-login-logout
