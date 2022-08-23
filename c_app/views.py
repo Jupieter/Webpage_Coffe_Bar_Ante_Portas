@@ -127,7 +127,8 @@ class LoginAPI(KnoxLoginView):
         data = {
             'expiry': self.format_expiry_datetime(instance.expiry),
             'token': token,
-            'user_pk': instance.user.id
+            'user_pk': instance.user.id,
+            'is_staff': instance.user.staff
         }
         if UserSerializer is not None:
             data["user"] = UserSerializer(
