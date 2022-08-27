@@ -1,5 +1,6 @@
 import json
 import datetime
+from datetime import timezone
 # from asyncio.windows_events import NULL
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
@@ -11,7 +12,8 @@ from .forms import CoffeeMakerForm, CoffeeOrderForm, CoffeeTimeForm
 
 def coffee_home(request):
     sub_site_logo = "src=static/image/coffe_bean_heart.png"
-    dt= datetime.datetime.now()
+    # dt= datetime.datetime.now()
+    dt= timezone.now()
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=36)
     wares = []
@@ -48,14 +50,16 @@ def active_coffee():
 def coffee_make(request):
     wares = active_coffee()
     stock_min = 40
-    dt= datetime.datetime.now().date()
+    # dt= datetime.datetime.now().date()
+    dt= timezone.now().date()
     return render(request, 'shop/coffee_make.html', {'wares':wares,'dt':dt, 'stock_min':stock_min})
 
 def coffee_make2(request):
     wares1 = ProductAcquisition.objects.filter(store_status=3)
     stock_min = 40
     wares=[]
-    dt= datetime.datetime.now().date()
+    # dt= datetime.datetime.now().date()
+    dt= timezone.now().date()
     for ind, ware in enumerate(wares1):
         if ware.ware_type.ware_type.id == 1:
             wares.append(ware)
@@ -84,7 +88,8 @@ def coffee_make_form(request, pkey):
     alrt ='';    cm = None
     if  ware.stock < dose_weight*0.08:
         alrt = "Nagyon kevés a kibontott anyag készlet. Kérem ellenőrizze!"
-    dt= datetime.datetime.now()  
+    # dt= datetime.datetime.now()
+    dt= timezone.now() 
     if request.method == "POST":
         form = CoffeeMakerForm(request.POST)
         if form.is_valid():
@@ -160,7 +165,8 @@ def coffee_order(request):
     return render(request, 'shop/coffee_order.html')
 
 def coffee_order_table(request):
-    dt= datetime.datetime.now()
+    # dt= datetime.datetime.now()
+    dt= timezone.now() 
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=16)
     coffees1 = CoffeeMake.objects.filter(c_make_date__range =(dt_start, dt_end))
@@ -198,17 +204,17 @@ def coffee_order_form(request, pkey):
     wares = ProductAcquisition.objects.filter(store_status=3)
     sugar = []; milk = []; flavour = []; adat = []
     for ware in wares:
-        if ware.ware_type.ware_type.ware_types == 'Cukor':
+        if ware.ware_type.ware_type.id == 2:
             dt1 = ware.id
             dt2 = ware
             dt = (dt1,dt2)
             sugar.append(dt)
-        elif ware.ware_type.ware_type.ware_types == 'Tej': 
+        elif ware.ware_type.ware_type.id == 3: 
             dt1 = ware.id
             dt2 = ware
             dt = (dt1,dt2)
             milk.append(dt)
-        elif ware.ware_type.ware_type.ware_types == 'Ízesítő': 
+        elif ware.ware_type.ware_type.id == 4: 
             dt1 = ware.id
             dt2 = ware
             dt = (dt1,dt2)
@@ -272,7 +278,8 @@ def coffee_order_form(request, pkey):
     return render(request, 'shop/c_order_form.html', context )
 
 def coffee_booking(request):
-    dt= datetime.datetime.now()
+    # dt= datetime.datetime.now()
+    dt= timezone.now() 
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=36)
     coffees1 = CoffeeMake.objects.filter(c_book__isnull=True).filter(c_make_date__lt=dt)
