@@ -8,6 +8,7 @@ app_name = 'c_app'
 
 urlpatterns = [
     # path('api-token-auth/', authtoken_views.obtain_auth_token),
+    path('coffe_friends/', views.coffe_friends, name='coffe_friends'),
     path('act_ware/', views.active_coffe_ware, name='active_coffe_ware'),
     path('todaytcoffee/', views.todaytcoffee, name='todaytcoffee'),
     path('coffe_make/', views.coffe_make, name='coffe_make'),

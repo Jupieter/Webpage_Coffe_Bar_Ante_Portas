@@ -1,6 +1,7 @@
 # django-rest authentication
 import datetime
 import json
+from urllib import request
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -19,12 +20,15 @@ from  shop.models import *
 from  shop.views import active_coffee, dose_weight
 from  .models import *
 
+
+
 def dt_coffee_make(hourS=1):
+    # dt= timezone.now()
     dt= datetime.datetime.now()
     dt_start = dt
     dt_end = dt + datetime.timedelta(hours=hourS)
-    print(dt_start)
-    print(dt_end)
+    # print("dt_start", dt_start)
+    # print("dt_end", dt_end)
     tasks1 = CoffeeMake.objects.filter(c_make_date__range=(dt_start, dt_end))
     tasks = tasks1.order_by('c_make_date')
     return tasks
@@ -33,32 +37,25 @@ def dt_coffee_make(hourS=1):
 def c_make(request):
     tasks = dt_coffee_make(20)
     serializer = CoffeeMakeSerializer(tasks, many=True)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def coffe_make(request):
     data = request.data
-    print('POST: ', data)
+    #print('POST: ', data)
     serializer = CoffeeMakeSerializerSave(data=data)
-    print('serializer: ', serializer)
-    print('*  *   *   *  *')
+    # print('serializer: ', serializer)
+    # print('*  *   *   *  *')
 
     if serializer.is_valid():
         ser_data = serializer.data
-        print('VALID ser_data',ser_data)
-        print(ser_data['c_make_dose'])
+        # print('VALID ser_data',ser_data)
+        # print(ser_data['c_make_dose'])
         ware = ProductAcquisition.objects.filter(id = ser_data['c_make_ware'])[0]
         user = User.objects.filter(id = ser_data['c_make_user'])[0]
-        print('ware: ', ware, type(ware))
-        print('user: ', user, type(user))
-        # CoffeeMake.objects.create(
-        #     c_make_dose = ser_data['c_make_dose'],
-        #     c_make_user = user,
-        #     c_make_date = ser_data['c_make_date'],
-        #     c_reg_time = timezone.now(),
-        #     c_make_ware = ware,
-        #     )
+        # print('ware: ', ware, type(ware))
+        # print('user: ', user, type(user))
         coffe_new = CoffeeMake(
             c_make_ware = ware,
             c_make_dose = ser_data['c_make_dose'],
@@ -70,7 +67,7 @@ def coffe_make(request):
     else:
         print('INVALID ')    
     return Response(serializer.data, status=status.HTTP_200_OK)
-    #    return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 # Create your views here.
 @api_view(['GET'])
@@ -89,17 +86,48 @@ def active_coffe_ware(request):
         coffe_ware.append(i_json)
     data = coffe_ware
     print(data)
-    # serializer = ActiveCoffeeSerializer(act_ware, many=True)
-    # rint(serializer.data)
     return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def todaytcoffee(request):
     tasks = dt_coffee_make(20)
-    print(tasks)
+    # print(tasks)
     serializer = FirstCoffeeSerializer(tasks, many=True)
-    print(serializer.data)
+    # print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+def next_to_friends(next_cof):
+    # print("next_cof", next_cof)
+    friends1 = CoffeeOrder.objects.filter(coffee_selected = next_cof)
+    friends = []
+    for friend in friends1:
+        a = str(friend.c_user())
+        # print(a)
+        friends.append(a)
+    return friends
+
+@api_view(['POST'])
+def coffe_friends(request):
+    # print("request:  ", request)
+    check = False
+    if request.method == 'POST':
+        data = request.data
+        for key in data:
+            # print(key)
+            if key == "coffee_selected":
+                # print("key", key, data[key])
+                friends = next_to_friends(data[key])
+                # print(friends)
+                for friend in friends:
+                    check  = True
+                    # print("friend", friend, type(friend))
+                if check == False:
+                    friends = ["Be the First!"]      
+            else:
+                friends = ["The request key invalid"]
+
+    return Response(friends, status=status.HTTP_200_OK)
+
 
 
 
@@ -121,7 +149,7 @@ class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
 
     def get_post_response_data(self, request, token, instance):
-        print('instance', instance.user.id)
+        # print('instance', instance.user.id)
         UserSerializer = self.get_user_serializer_class()
 
         data = {
@@ -135,12 +163,12 @@ class LoginAPI(KnoxLoginView):
                 request.user,
                 context=self.get_context()
             ).data
-            print('request.user',request.user)
+            # print('request.user',request.user)
         return data
 
     def post(self, request, format=None):
         serializer = MyAuthTokenSerializer(data=request.data)
-        print('serializer: ', serializer)
+        # print('serializer: ', serializer)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)

@@ -12,6 +12,11 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 
+class CoffeFriend(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
+
 class ActiveCoffeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductAcquisition

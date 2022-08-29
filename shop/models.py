@@ -73,4 +73,10 @@ class CoffeeOrder(models.Model):
         default=User)
     coffee_reg = models.DateTimeField('Rögzítés dátuma', default=timezone.now)
 
+    def __str__(self):
+        c_selected = str(self.id) + ":" + str(self.coffee_selected) + ":" + str(self.coffe_user)
+        return c_selected
     
+    def c_user(self):
+        c_user = self.coffe_user
+        return c_user
