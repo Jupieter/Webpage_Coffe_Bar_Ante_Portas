@@ -91,8 +91,13 @@ def active_coffe_ware(request):
 @api_view(['GET'])
 def coffe_notify(request):
     max_id = CoffeeMake.objects.order_by('-id')[0].id
+    new_date = CoffeeMake.objects.order_by('-id')[0].c_make_date
+    # max_id = CoffeeMake.objects.values('id').order_by('-id').first()
+    # new_date = CoffeeMake.objects.values('c_make_date').order_by('-id').first()
     print(max_id)
-    data = {"max_id", max_id}
+    print(new_date)
+    # tasks = CoffeeMake.objects.filter(c_make_date__range=(dt_start, dt_end))
+    data = {"max_id": max_id, "new_date": new_date}
     return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
