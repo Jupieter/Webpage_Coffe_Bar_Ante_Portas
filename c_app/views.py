@@ -89,7 +89,7 @@ def active_coffe_ware(request):
     return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def coffe_notify(request):
+def coffee_notify(request):
     max_id = CoffeeMake.objects.order_by('-id')[0].id
     new_date = CoffeeMake.objects.order_by('-id')[0].c_make_date
     # max_id = CoffeeMake.objects.values('id').order_by('-id').first()
