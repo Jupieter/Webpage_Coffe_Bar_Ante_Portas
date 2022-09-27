@@ -89,6 +89,13 @@ def active_coffe_ware(request):
     return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
+def coffe_notify(request):
+    max_id = CoffeeMake.objects.order_by('-id')[0].id
+    print(max_id)
+    data = {"max_id", max_id}
+    return Response(data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
 def todaytcoffee(request):
     tasks = dt_coffee_make(20)
     # print(tasks)
