@@ -23,7 +23,9 @@ from  .models import *
 
 def coffee_order_data():
     wares = ProductAcquisition.objects.filter(store_status=3)
-    sugar = []; milk = []; flavour = []
+    sugar = [json.dumps({"type_id":2, "w_id":0, "w_name":"Zero Sugar", "w_dose":0})]
+    milk = [json.dumps({"type_id":2, "w_id":0, "w_name":"Zero Milk", "w_dose":0})]
+    flavour = [json.dumps({"type_id":3, "w_id":0, "w_name":"Zero Flavour", "w_dose":0})]
     for ware in wares:
         if ware.ware_type.ware_type.id == 2:
             type_id = ware.ware_type.ware_type.id 
