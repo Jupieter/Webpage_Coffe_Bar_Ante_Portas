@@ -60,19 +60,6 @@ def coffee_order_data():
 @api_view(['GET'])
 def c_order_data(request):
     sgr, mlk, flvr = coffee_order_data()
-    sugar = []; milk = []; flavour = []
-    # for i in sgr:
-    #     print(i)
-    #     sugar.append(i)
-    # for i in mlk:
-    #     milk.append(i)
-    # for i in flvr:
-    #     flavour.append(i)
-    # tasks = [json.dumps(sugar), json.dumps(milk), json.dumps(flavour)]
-    # print(tasks)
-    # serializer = TastesSerializer(tasks, many=True)
-    # data = {"sugar":sugar, "milk":milk, "flavour":flavour}
-    # print(serializer.data)
     data = [sgr, mlk, flvr]
     return Response(data, status=status.HTTP_200_OK)
 
