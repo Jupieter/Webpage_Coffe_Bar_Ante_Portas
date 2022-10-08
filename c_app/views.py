@@ -21,6 +21,60 @@ from  shop.views import active_coffee, dose_weight
 from  .models import *
 
 
+def coffee_order_data():
+    wares = ProductAcquisition.objects.filter(store_status=3)
+    sugar = []; milk = []; flavour = []
+    for ware in wares:
+        if ware.ware_type.ware_type.id == 2:
+            type_id = ware.ware_type.ware_type.id 
+            dose_wgt = dose_weight(type_id)
+            w_id = ware.id
+            w_name = str(ware.ware_type)
+            w_dose = int(ware.stock / dose_wgt)
+            # print(w_id, w_name, w_dose)
+            i = {"type_id":type_id, "w_id":w_id, "w_name":w_name, "w_dose":w_dose}
+            i_json = json.dumps(i)
+            sugar.append(i_json)
+        elif ware.ware_type.ware_type.id == 3: 
+            type_id = ware.ware_type.ware_type.id 
+            dose_wgt = dose_weight(type_id)
+            w_id = ware.id
+            w_name = str(ware.ware_type)
+            w_dose = int(ware.stock / dose_wgt)
+            # print(w_id, w_name, w_dose)
+            i = {"type_id":type_id, "w_id":w_id, "w_name":w_name, "w_dose":w_dose}
+            i_json = json.dumps(i)
+            milk.append(i_json)
+        elif ware.ware_type.ware_type.id == 4: 
+            type_id = ware.ware_type.ware_type.id 
+            dose_wgt = dose_weight(type_id)
+            w_id = ware.id
+            w_name = str(ware.ware_type)
+            w_dose = int(ware.stock / dose_wgt)
+            # print(w_id, w_name, w_dose)
+            i = {"type_id":type_id, "w_id":w_id, "w_name":w_name, "w_dose":w_dose}
+            i_json = json.dumps(i)
+            flavour.append(i_json)
+    return sugar, milk, flavour
+
+@api_view(['GET'])
+def c_order_data(request):
+    sgr, mlk, flvr = coffee_order_data()
+    sugar = []; milk = []; flavour = []
+    # for i in sgr:
+    #     print(i)
+    #     sugar.append(i)
+    # for i in mlk:
+    #     milk.append(i)
+    # for i in flvr:
+    #     flavour.append(i)
+    # tasks = [json.dumps(sugar), json.dumps(milk), json.dumps(flavour)]
+    # print(tasks)
+    # serializer = TastesSerializer(tasks, many=True)
+    # data = {"sugar":sugar, "milk":milk, "flavour":flavour}
+    # print(serializer.data)
+    data = [sgr, mlk, flvr]
+    return Response(data, status=status.HTTP_200_OK)
 
 def dt_coffee_make(hourS=1):
     # dt= timezone.now()

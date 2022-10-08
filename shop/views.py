@@ -197,6 +197,7 @@ def coffee_order_remove(request, pk):
     ''' context = {'coffees':coffee1, 'adat':dose,'adat2':coffee2.coffee_dose,  'adat3':coffee1.c_make_dose }
     return  render(request, 'shop/c_error.html', context ) '''
 
+
 def coffee_order_form(request, pkey):
     proba = ''
     coffee_1 = get_object_or_404(CoffeeMake, pk=pkey)
