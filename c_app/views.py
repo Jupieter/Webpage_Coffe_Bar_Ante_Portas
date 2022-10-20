@@ -21,6 +21,34 @@ from  shop.views import active_coffee, dose_weight
 from  .models import *
 
 
+@api_view(['POST'])
+def c_order_save(request):
+    data = request.data
+    print('POST: ', data)
+    serializer = CoffeeOrderSerializerSave(data=data)
+    print('serializer: ', serializer)
+    if serializer.is_valid():
+        ser_data = serializer.data
+        print('VALID ser_data',ser_data)
+        # print(ser_data['c_make_dose'])
+        # ware = ProductAcquisition.objects.filter(id = ser_data['c_make_ware'])[0]
+        # user = User.objects.filter(id = ser_data['c_make_user'])[0]
+        # print('ware: ', ware, type(ware))
+        # print('user: ', user, type(user))
+        # coffe_new = CoffeeMake(
+        #     c_make_ware = ware,
+        #     c_make_dose = ser_data['c_make_dose'],
+        #     c_make_user = user,
+        #     c_make_date = ser_data['c_make_date'],
+        #     c_reg_time = timezone.now()
+        #     )
+        # coffe_new.save() 
+    else:
+        print('INVALID ') 
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
 def coffee_order_data():
     wares = ProductAcquisition.objects.filter(store_status=3)
     coffee = []
@@ -146,29 +174,22 @@ def active_coffe_ware(request):
 def coffee_notify(request):
     max_id = CoffeeMake.objects.order_by('-id')[0].id
     new_date = CoffeeMake.objects.order_by('-id')[0].c_make_date
-    # max_id = CoffeeMake.objects.values('id').order_by('-id').first()
-    # new_date = CoffeeMake.objects.values('c_make_date').order_by('-id').first()
     print(max_id)
     print(new_date)
-    # tasks = CoffeeMake.objects.filter(c_make_date__range=(dt_start, dt_end))
     data = {"max_id": max_id, "new_date": new_date}
     return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def todaytcoffee(request):
     tasks = dt_coffee_make(60)
-    # print(tasks)
     serializer = FirstCoffeeSerializer(tasks, many=True)
-    # print(serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 def next_to_friends(next_cof):
-    # print("next_cof", next_cof)
     friends1 = CoffeeOrder.objects.filter(coffee_selected = next_cof)
     friends = []
     for friend in friends1:
         a = str(friend.c_user())
-        # print(a)
         friends.append(a)
     return friends
 
