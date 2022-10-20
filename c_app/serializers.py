@@ -33,7 +33,9 @@ class CoffeeOrderSerializerSave(serializers.ModelSerializer):
     class Meta:
         model = CoffeeOrder
         fields = '__all__'
-        # fields = ['c_make_ware', 'c_make_dose', 'c_make_user', 'c_make_date', 'c_reg_time']
+        # fields = ['coffee_selected', 'coffee_dose', 'coffe_user', 'sugar_choice', 'sugar_dose', 'milk_choice', 'milk_dose', 'flavour_choice', 'flavour_dose']
+        # fields = ['coffee_selected', 'coffee_dose', 'sugar_choice', 'sugar_dose', 'milk_choice', 'milk_dose', 'flavour_choice', 'flavour_dose', 'coffe_user', coffee_reg]
+
 
 
 class CoffeeMakeSerializerSave(serializers.ModelSerializer):

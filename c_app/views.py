@@ -30,19 +30,27 @@ def c_order_save(request):
     if serializer.is_valid():
         ser_data = serializer.data
         print('VALID ser_data',ser_data)
-        # print(ser_data['c_make_dose'])
-        # ware = ProductAcquisition.objects.filter(id = ser_data['c_make_ware'])[0]
-        # user = User.objects.filter(id = ser_data['c_make_user'])[0]
-        # print('ware: ', ware, type(ware))
-        # print('user: ', user, type(user))
-        # coffe_new = CoffeeMake(
-        #     c_make_ware = ware,
-        #     c_make_dose = ser_data['c_make_dose'],
-        #     c_make_user = user,
-        #     c_make_date = ser_data['c_make_date'],
-        #     c_reg_time = timezone.now()
-        #     )
-        # coffe_new.save() 
+
+        coffee = CoffeeMake.objects.filter(id = ser_data['coffee_selected'])[0]
+        ser_data['coffee_selected'] = coffee
+        print('coffee: ', coffee, type(coffee))
+        
+        user = User.objects.filter(id = ser_data['coffe_user'])[0]
+        ser_data['coffe_user'] = user
+        print('user: ', user, type(user))
+
+        for wr in ['sugar_choice', 'milk_choice', 'flavour_choice']:
+            pk = ser_data[wr]
+            print(ser_data[wr])
+            if pk != None and pk != 0:
+                ware = ProductAcquisition.objects.filter(id = pk)[0]
+            else:
+                ware = None
+            ser_data[wr] = ware
+            print('ware: ', ware, type(ware))
+
+        ser_data['coffee_reg'] = timezone.now()
+        serializer.create(ser_data)
     else:
         print('INVALID ') 
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -132,12 +140,8 @@ def coffe_make(request):
 
     if serializer.is_valid():
         ser_data = serializer.data
-        # print('VALID ser_data',ser_data)
-        # print(ser_data['c_make_dose'])
         ware = ProductAcquisition.objects.filter(id = ser_data['c_make_ware'])[0]
         user = User.objects.filter(id = ser_data['c_make_user'])[0]
-        # print('ware: ', ware, type(ware))
-        # print('user: ', user, type(user))
         coffe_new = CoffeeMake(
             c_make_ware = ware,
             c_make_dose = ser_data['c_make_dose'],
