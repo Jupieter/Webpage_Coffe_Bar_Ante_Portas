@@ -23,22 +23,22 @@ from  .models import *
 
 @api_view(['POST'])
 def c_order_save(request):
+    ''' Save to databse the ordered does & wares'''
     data = request.data
     print('POST: ', data)
     serializer = CoffeeOrderSerializerSave(data=data)
     print('serializer: ', serializer)
     if serializer.is_valid():
         ser_data = serializer.data
-        print('VALID ser_data',ser_data)
-
+        #  from string "id" coffee choice --> the object from the database CoffeeMake
         coffee = CoffeeMake.objects.filter(id = ser_data['coffee_selected'])[0]
         ser_data['coffee_selected'] = coffee
-        print('coffee: ', coffee, type(coffee))
-        
+        dose = coffee.c_make_dose
+        # from string "id" user --> the object from the database User
         user = User.objects.filter(id = ser_data['coffe_user'])[0]
         ser_data['coffe_user'] = user
         print('user: ', user, type(user))
-
+        # ware choice id type is string --> into object from the database ProductAcquisition
         for wr in ['sugar_choice', 'milk_choice', 'flavour_choice']:
             pk = ser_data[wr]
             print(ser_data[wr])
@@ -48,9 +48,19 @@ def c_order_save(request):
                 ware = None
             ser_data[wr] = ware
             print('ware: ', ware, type(ware))
+        # ware dose from string  --> to decimal
+        from decimal import Decimal
+        for wd in ['coffee_dose', 'sugar_dose', 'milk_dose', 'flavour_dose']:
+            w_dose = ser_data[wd]
+            w_dose = Decimal(w_dose)
+            ser_data[wd] = w_dose
 
         ser_data['coffee_reg'] = timezone.now()
         serializer.create(ser_data)
+        # ordered dose of coffee minus from the possible doses
+        coffee.c_make_dose = dose-ser_data["coffee_dose"]
+        # print(coffee.c_make_dose, type(coffee.c_make_dose), type(dose), dose, type(ser_data["coffee_dose"]), ser_data["coffee_dose"])
+        coffee.save()
     else:
         print('INVALID ') 
     return Response(serializer.data, status=status.HTTP_200_OK)
