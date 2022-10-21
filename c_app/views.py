@@ -81,7 +81,7 @@ def coffee_order_data():
             print(task.c_make_ware)
             print(task.c_make_dose)
             
-            i = {"type_id": 1, "w_id":task.id, "w_name":str(task.c_make_ware), "w_dose":task.c_make_dose}
+            i = {"type_id": 1, "w_id":task.id, "w_name":str(task.c_make_ware), "w_dose":str(task.c_make_dose)}
             i_json = json.dumps(i)
             coffee.append(i_json)
     for ware in wares:
