@@ -75,14 +75,13 @@ def coffee_order_data():
     flavour = [json.dumps({"type_id":3, "w_id":0, "w_name":"Zero Flavour", "w_dose":0})]
     tasks = dt_coffee_make(60)
     print(tasks)
-    from decimal import Decimal
     for task in tasks:
             print(task.c_make_ware.id)
             print(task.id)
             print(task.c_make_ware)
             print(task.c_make_dose)
             
-            i = {"type_id": 1, "w_id":task.id, "w_name":str(task.c_make_ware), "w_dose":Decimal(task.c_make_dose)}
+            i = {"type_id": 1, "w_id":task.id, "w_name":str(task.c_make_ware), "w_dose":task.c_make_dose}
             i_json = json.dumps(i)
             coffee.append(i_json)
     for ware in wares:
