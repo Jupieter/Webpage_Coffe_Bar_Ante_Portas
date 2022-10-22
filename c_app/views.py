@@ -25,9 +25,9 @@ from  .models import *
 def c_order_save(request):
     ''' Save to databse the ordered does & wares'''
     data = request.data
-    print('POST: ', data)
+    # print('POST: ', data)
     serializer = CoffeeOrderSerializerSave(data=data)
-    print('serializer: ', serializer)
+    # print('serializer: ', serializer)
     if serializer.is_valid():
         ser_data = serializer.data
         #  from string "id" coffee choice --> the object from the database CoffeeMake
@@ -37,17 +37,17 @@ def c_order_save(request):
         # from string "id" user --> the object from the database User
         user = User.objects.filter(id = ser_data['coffe_user'])[0]
         ser_data['coffe_user'] = user
-        print('user: ', user, type(user))
+        # print('user: ', user, type(user))
         # ware choice id type is string --> into object from the database ProductAcquisition
         for wr in ['sugar_choice', 'milk_choice', 'flavour_choice']:
             pk = ser_data[wr]
-            print(ser_data[wr])
+            # print(ser_data[wr])
             if pk != None and pk != 0:
                 ware = ProductAcquisition.objects.filter(id = pk)[0]
             else:
                 ware = None
             ser_data[wr] = ware
-            print('ware: ', ware, type(ware))
+            # print('ware: ', ware, type(ware))
         # ware dose from string  --> to decimal
         from decimal import Decimal
         for wd in ['coffee_dose', 'sugar_dose', 'milk_dose', 'flavour_dose']:
@@ -74,14 +74,18 @@ def coffee_order_data():
     milk = [json.dumps({"type_id":2, "w_id":0, "w_name":"Zero Milk", "w_dose":0})]
     flavour = [json.dumps({"type_id":3, "w_id":0, "w_name":"Zero Flavour", "w_dose":0})]
     tasks = dt_coffee_make(60)
-    print(tasks)
+    # print(tasks)
     for task in tasks:
-            print(task.c_make_ware.id)
-            print(task.id)
-            print(task.c_make_ware)
-            print(task.c_make_dose)
-            
-            i = {"type_id": 1, "w_id":task.id, "w_name":str(task.c_make_ware), "w_dose":str(task.c_make_dose)}
+            # print(task.c_make_ware.id)
+            # print(task.id)
+            # print(task.c_make_ware)
+            # print(task.c_make_dose)
+            c_date = str(task.c_make_date)[0:10]
+            c_time = str(task.c_make_date)[11:16]
+            # print(c_date)
+            # print(c_time)
+            c_name = (c_date + "       " + c_time + "\n" + str(task.c_make_ware))
+            i = {"type_id": 1, "w_id":task.id, "w_name":c_name, "w_dose":str(task.c_make_dose)}
             i_json = json.dumps(i)
             coffee.append(i_json)
     for ware in wares:
@@ -171,26 +175,26 @@ def coffe_make(request):
 def active_coffe_ware(request):
     act_ware = active_coffee()
     dose_wgt = dose_weight(1)
-    print(act_ware, ':', dose_wgt)
+    # print(act_ware, ':', dose_wgt)
     coffe_ware = []
     for ware in act_ware:
         w_id = ware.id
         w_name = str(ware.ware_type)
         w_dose = int(ware.stock / dose_wgt)
-        print(w_id, w_name, w_dose)
+        # print(w_id, w_name, w_dose)
         i = {"w_id":w_id,"w_name":w_name,"w_dose":w_dose}
         i_json = json.dumps(i)
         coffe_ware.append(i_json)
     data = coffe_ware
-    print(data)
+    # print(data)
     return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def coffee_notify(request):
     max_id = CoffeeMake.objects.order_by('-id')[0].id
     new_date = CoffeeMake.objects.order_by('-id')[0].c_make_date
-    print(max_id)
-    print(new_date)
+    # print(max_id)
+    # print(new_date)
     data = {"max_id": max_id, "new_date": new_date}
     return Response(data, status=status.HTTP_200_OK)
 
@@ -298,21 +302,21 @@ def logins(request):
 @permission_classes([IsAuthenticated])
 def all_tasks(request):
     tasks = Task.objects.all()
-    print(tasks)
+    # print(tasks)
     serializer = TaskSerializer(tasks, many=True)
-    print('GET: ',serializer.data)
+    # print('GET: ',serializer.data)
     return Response(serializer.data, status=status.HTTP_200_OK)
         
 
 @api_view(['POST'])
 def create_task(request):
     data = request.data
-    print('POST: ', data)
+    # print('POST: ', data)
     serializer = TaskSerializer(data=data)
-    print('serializer: ', serializer)
+    # print('serializer: ', serializer)
     if serializer.is_valid():
         ser_data = serializer.data
-        print('VALID ser_data',ser_data)
+        # print('VALID ser_data',ser_data)
         # Task.objects.create(name=ser_data['name'])
         Task.objects.create(
             name = ser_data['name'], 
