@@ -11,5 +11,3 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name="logout"),
     path('token_gen/', token_gen, name="token_gen"),
 ]
-
-# urlpatterns = [path('accounts/', include('django.contrib.auth.urls'))]

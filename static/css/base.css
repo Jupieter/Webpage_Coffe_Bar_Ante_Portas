@@ -1,65 +1,79 @@
-h1 a {
-    color: #FCA205;
-    font-family: 'Lobster';
-}
 body {
-    padding-left: 15px;
+    background-color: 	#42220d;
+    background-image: url(/static/image/dark-wood-up-40.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    color: #c59245;
+    text-shadow: #dbc1ac;
+  }
+  .bg-brown {
+      background-color: 	#634832;
+  }
+
+/* Modify the background color */
+    
+.navbar-custom {
+    background-color: #42220d;
 }
-.page-header {
-    background-color: #ff9400;
-    margin-top: 0;
-    padding: 20px 20px 20px 40px;
+/* Modify brand and text color */
+    
+.navbar-custom  {
+    color: #452415;
+}
+.navbar-brand {
+    color: #452415;
+    font-size: 25px;
+    font-style: oblique;
+    text-shadow:     
+    -1px -1px 0 #e4c79b,
+    0   -1px 0 #e4c79b,
+    1px -1px 0 #e4c79b,
+    1px  0   0 #e4c79b,
+    1px  1px 0 #e4c79b,
+    0    1px 0 #e4c79b,
+   -1px  1px 0 #e4c79b,
+   -1px  0   0 #e4c79b;
 }
 
-.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
-    color: #ffffff;
-    font-size: 36pt;
-    text-decoration: none;
+.navbar-brand:hover {
+    background-color: 	#e4c79b;
+    color: #634832;
+    font-size: 25px;
+    font-style: oblique;
 }
 
-.content {
-    margin-left: 40px;
+
+.navbar-toggler{
+    background-image: url('/static/image/coffee-ante-porta-32.png');
+    background-repeat: no-repeat;
+    background-size: 70%;
 }
+
+.nav-item .nav-link {
+    color: #e4c79b;
+
+    font-size: 20px;
+    font-style: oblique;
+}
+.nav-item .nav-link:hover{
+    background-color: 	#e4c79b;
+    color: #634832;
+    font-size: 20px;
+    font-style: oblique;
+}
+
+
 
 h1, h2, h3, h4 {
     font-family: 'Lobster', cursive;
+    color: 	#dbc1ac;
 }
 
-.date {
-    float: right;
-    color: #526dc5;
+.bg-brown {
+    background-color: 	#634832;
 }
 
-.save {
-    float: right;
+.text-capuccino {
+    color: #dbc1ac;
 }
-
-.post-form textarea, .post-form input {
-    width: 100%;
-}
-
-.top-menu, .top-menu:hover, .top-menu:visited {
-    color: #ffffff;
-    float: right;
-    font-size: 26pt;
-    margin-right: 20px;
-}
-
-.post {
-    margin-bottom: 70px;
-}
-
-.post h1 a, .post h1 a:visited {
-    color: #000000;
-}
-
-.comment {
-    margin: 20px 0px 20px 20px;
-}
-
-.visible {
-    visibility: visible;
-  }
-  .invisible {
-    visibility: hidden;
-  }

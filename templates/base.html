@@ -1,6 +1,6 @@
-{% load static %}
 {% load livereload_tags %}
 {% livereload_script %}
+{% load static %}
 {% load django_template_maths %}
 
 <!DOCTYPE html>
@@ -19,20 +19,21 @@
 <body>
     <div id="modals-here"></div>
     <div class="page-header">
-        <div class="row-md-1">
+    </div>
+    
+    <div class="content container border border-0 border-warning">
+        <div class="row row-md-12 pb-2">
+            <img src= "/static/image/CoffeBarTop.png"  class="img-fluid">
+        </div>
+
+
+        <div class="row-md-12 border border-0 border-warning">
             <div class="col-md-12">
-                {% include "base/navbar.html" with site_title='I-mee Coffee'  site_logo="src='/static/image/coffe_draw.webp'" %}             
+                {% include "base/navbar.html" with site_title='Coffee Ante Portas'  site_logo="src='/static/image/coffe_draw.webp'" %}             
             </div>
         </div>        
-    </div>
 
-    <div class="content container">
-        <div class="row">
-            <br>
-            <br>
-            <br>
-        </div>
-    <div class="row"></div>
+        <div class="row"></div>
         
             
         {% block content %}{% endblock %}

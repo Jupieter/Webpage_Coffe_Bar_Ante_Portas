@@ -2,39 +2,26 @@
 {% load django_template_maths %}
 
 {% block title %}
-    Homepage
+    CoffeeBar
 {% endblock %}
 
 
 {% block style %}    
     <style>
-        body {
-          background-image: url(/static/image/coffee_bg_7.jpg);
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-size: 100% 100%;
-        }
-        .bg-brown {
-            background-color: rgb(80, 45, 45);
-        }
+
     </style>
 {% endblock %}
 
 {% block content %}
-<h1>Coffe Bar Ante Portas </h1>
-<h2> THIS SITE UNDER CONSTRUCTION</h2>
-<h6> THIS SITE IS A DJANGO TUTORIAL (and GIT :-)</h6>
 
-<h6> staff login:    boss@staff.com</h6>
-<h6>password:    Enter1</h6>
 
 <div class="container">
-    <div class="row p-2 ">
-        <div class="col-md-3 centered">
+    <div class="row p-2 border border-0 border-warning">
+        <div class="col-md-3 centered p-1 border border-0 border-warning">
             <center>
                 <h4> Next Coffee:</h4>
                 <button type="button" 
-                class="btn btn-secondary position-relative"
+                class="btn btn-waring position-relative"
                 style="padding:0px">
                     <a href="{% url 'shop:coffee_order' %}"
                     title="To the Coffee Ordering Page"               
@@ -47,15 +34,16 @@
                         style="width:150px;height:150px;">
                     </a>
                 </button>
-                <p>If you want to book a few servings of coffee, click on the cup picture.</p>
+                <p></p>
+                <h6>If you want to book a few servings of coffee, click on the cup picture.</h6>
             </center>
         </div>
     
     
-        <div class="col-md-4 centered p-3">
+        <div class="col-md-6 centered p-3 border border-0 border-warning">
             {% for coffee in coffees %}
             <div class="row p-2 ">
-                <div class="card bg-brown text-white">
+                <div class="card bg-brown text-capuccino">
                     <h3 class="card-title text-center">
                         <div class="d-flex flex-wrap justify-content-center mt-1">
                             <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
@@ -68,13 +56,13 @@
     </div>
 
 
-{% if user.is_staff %}
+    {% if user.is_staff %}
 
     <div class="row p-2 ">
         <div class="col-md-3 centered p-3">
             <center>
                 <button type="button" 
-                class="btn btn-secondary position-relative"
+                class="btn btn-warning position-relative"
                 style="padding:0px">
                     <a href="{% url 'shop:coffee_make' %}"
                     title="To the Coffee Making Page"               
@@ -99,7 +87,7 @@
             </center>
         </div>
         
-        <div class="col-md-2 centered p-3">
+        <div class="col-md-3 centered p-3">
             <center>
                 <button type="button" 
                 class="btn btn-secondary position-relative"
@@ -125,6 +113,14 @@
                 </a>
             </button>
         </center>   
+    </div>
+    <div class="col-md-6 centered p-3 border border-0 border-warning">
+        <h2>Coffe Bar Ante Portas </h2>
+        <h4> THIS SITE UNDER CONSTRUCTION</h4>
+        <h6> THIS SITE IS A DJANGO TUTORIAL (and GIT :-)</h6>
+
+        <h6> staff login:    boss@staff.com</h6>
+        <h6>password:    Enter1</h6>
     </div>
 </div>
 

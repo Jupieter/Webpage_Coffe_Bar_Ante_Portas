@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ['127.0.0.1', '127.0.0.1:5500','.pythonanywhere.com', 'coffeeant
 # Application definition
 
 INSTALLED_APPS = [
-    'livereload',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
 
         # our apps
     'widget_tweaks',
+    'livereload',
     'mysite',
     'accounts',
     'raw_material',
@@ -111,28 +111,45 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://medium.com/analytics-vidhya/provisioning-a-test-postgresql-database-on-heroku-for-your-django-app-febb2b5d3b29  
 
 #Updates Database Configuration
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'daj30gbdr495rf',
-    #     'USER': 'ysryzutqypikcl',
-    #     'PASSWORD':'d38a2217967e816dc680e8af0ec7ca3d7d41b3f0f8692b34899e2aed352c00fb',
-    #     'HOST':'ec2-34-251-115-141.eu-west-1.compute.amazonaws.com',
-    #     'PORT':'5432',
-    # }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'coffee_bars',
-    #     'USER': 'postgres',
-    #     'PASSWORD':'password',
-    #     'HOST':'localhost',
-    #     'PORT':'5432',
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'test' in sys.argv:
+    #Configuration for test database
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'd54bboccjovub6',
+            'USER': 'vnwxcvguzavagl',
+            'PASSWORD': '0787536bf4c76fb6ad2ea111bc80b45e5603696a72ef15bee0194c73b9083b4f',
+            'HOST': 'ec2-34-247-72-29.eu-west-1.compute.amazonaws.com',
+            'PORT': 5432,
+            'TEST': {
+                'NAME': 'd54bboccjovub6', #This is an important entry
+            }
+        }
     }
-    # }
-}
+else:
+  #Default configuration
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'daj30gbdr495rf',
+            'USER': 'ysryzutqypikcl',
+            'PASSWORD':'d38a2217967e816dc680e8af0ec7ca3d7d41b3f0f8692b34899e2aed352c00fb',
+            'HOST':'ec2-34-251-115-141.eu-west-1.compute.amazonaws.com',
+            'PORT':'5432',
+        }
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': BASE_DIR / 'db.sqlite3',
+        # }
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        #     'NAME': 'coffee_bars',
+        #     'USER': 'postgres',
+        #     'PASSWORD':'password',
+        #     'HOST':'localhost',
+        #     'PORT':'5432',
+        # }
+    }
 
 
 # Password validation
@@ -163,21 +180,20 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
-# django_heroku.settings(locals())
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+django_heroku.settings(locals())
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     ]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = "/media/"
-# MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 
 LOGIN_REDIRECT_URL = 'home_url'
