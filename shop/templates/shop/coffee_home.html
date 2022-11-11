@@ -6,19 +6,13 @@
     Coffee Home
 {% endblock %}
 {% block style %}    
-    <style>
-        h2  {
-        text-align: left;
-        color: rgb(133, 82, 0);
-        }
-    </style>
 {% endblock %}  
 
 {% block content %}
 
 <div class="container pt-2 middle ">
     <div class="col-sm-6 right ">
-        <h1> Coffe Shop Functions </h1>
+        <h1 class="txt-shadow"> Coffe Shop Functions </h1>
     </div>    
 </div>
 
@@ -31,7 +25,8 @@
             data-bs-trigger="hover" 
             data-bs-content="There you can book some dose Coffe. From half a dose to two doses.
             With milk, sugar, and flavoring.">              
-            <img src ="{% static '/image/koffe.jpeg' %}" class="img-thumbnail" 
+            <img src ="{% static '/image/koffe.jpeg' %}" 
+            class="img-thumbnail btn-border " 
             style="width:200px;height:200px;" alt="choice">                 
         </a>
     </div>
@@ -45,13 +40,14 @@
             data-bs-trigger="hover" 
             data-bs-content="There you can indicate when the next coffee portions will be ready. 
             Only for STAFF ">                
-            <img src ="{% static '/image/coffee_machine_1.jfif' %}"  class="img-thumbnail" 
+            <img src ="{% static '/image/coffee_machine_1.jfif' %}"  
+            class="img-thumbnail btn-border " 
             style="width:200px;height:200px;"; alt="choice">               
         </a>
         </div>
         <div class="col-sm-4">
             {% if coffees %}
-            <h4> Number of coffees waiting to be brewed: {{coffees|length}}</h4>
+            <h4 class="txt-shadow"> Number of coffees waiting to be brewed: {{coffees|length}}</h4>
             {% else %}
             <h2 style="color:red; font-style:bold" > There is no coffee waiting to be brewed </h4>
             {% endif %}
@@ -69,7 +65,8 @@
             data-bs-trigger="hover" 
             data-bs-content="On this page you can record the depletion of finished 
             and consumed raw materials. Only for STAFF ">               
-                <img src ="{% static '/image/coffe_book_1.png' %}"  class="img-thumbnail" 
+                <img src ="{% static '/image/coffe_book_1.png' %}"  
+                class="img-thumbnail btn-border " 
                 style="width:200px;height:200px;"; alt="choice">                
             </a>
         </div>

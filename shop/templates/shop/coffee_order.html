@@ -11,8 +11,8 @@
 {% block content %}
 
 <div class="container sm ">
-    <div class="row-sm-2">
-        <div class="col-sm-2 right">
+    <div class="row p-3">
+        <div class="col-sm-3 ">
             <a  {% if user.is_authenticated %} href="{% url 'shop:coffee_home' %}" {% endif %}
                 title="Back Coffee Page"               
                 data-bs-toggle="popover" 
@@ -22,8 +22,8 @@
                 style="width:100px;height:100px; "; alt="choice">                 
             </a>
         </div>
-        <div class="col-sm-6 right">
-            <h1> Next Coffee Shop:</h1>
+        <div class="col-sm-9 ">
+            <h1 class="txt-shadow p-2"> Next Coffee Shop:</h1>
         </div>    
     </div>
 </div>

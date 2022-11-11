@@ -98,10 +98,14 @@ h1, h2, h3, h4 {
     background-color: #e4c79b;
     color: #452415;
 }
+.img-thumbnail {
+    border-radius: 10px
+}
 .btn-border {
     border:4px solid;
     border-color: #634832;
     box-shadow: 10px 10px 5px #1a0c02;
+    border-radius: 15px
 }
 .btn-capuccino {
     color: #42220d;
@@ -110,4 +114,7 @@ h1, h2, h3, h4 {
 .btn-brown {
     color: #e4c79b ;
     background-color: #42220d;
+}
+.txt-shadow {
+    text-shadow: 10px 10px 3px #1a0c02;
 }

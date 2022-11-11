@@ -6,19 +6,6 @@
 {% endblock %}
 
 {% block style %}    
-    <style>
-        body {
-          background-image: url(/static/image/coffee_bg_6.jpgg);
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-size: 100% 100%;
-        }
-        h2  {
-        text-align: middle;
-        color: rgb(51, 31, 1);
-        }
-        td { font-size: 10px;}
-    </style>
 {% endblock %}  
 
 {% block content %}
@@ -31,12 +18,12 @@
                 data-bs-toggle="popover" 
                 data-bs-trigger="hover" 
                 data-bs-content="Order, Make, Booking">                
-                <img src ="{% static '/image/coffe_book_1.png' %}" class="rounded" 
-                style="width:100px;height:100px; border:5px solid; "; alt="choice">                 
+                <img src ="{% static '/image/coffe_book_1.png' %}" class="rounded btn-border" 
+                style="width:100px;height:100px; "; alt="choice">                 
             </a>
         </div>
         <div class="col-sm-6 right">
-            <h1> Következő Kávézás: </h1>
+            <h1 class="txt-shadow"> Következő Kávézás: </h1>
         </div>    
     </div>
 </div>
@@ -44,8 +31,8 @@
 <div class="container sm ">
     {% for coffee in coffees %}
     <div class="row-sm-6">
-        <table class="table table table-hover">
-            <thead class="table-dark">
+        <table class="table btn-border  table-hover ">
+            <thead class="table-brown">
                 <tr>  
                     <th class="col-sm-2">{{coffee.id}}, 
                         {{coffee.c_make_ware.ware_type.ware_brand}}, 
@@ -57,7 +44,7 @@
                     <th class="col-sm-1">  Ízesítő választás / adag </th>                    
                     {% if user.is_authenticated %}
                     <th class="col-sm-1">                        
-                        <a class="btn btn-primary btn-sm" href="{% url 'shop:coffee_booking_pk' pkey=coffee.pk %}">
+                        <a class="btn btn-capuccino btn-sm" href="{% url 'shop:coffee_booking_pk' pkey=coffee.pk %}">
                             <span class="fa fa-book"> Könyvelem </span></a>
                         {% else %}
                         <th>Betelt</th>
@@ -65,7 +52,7 @@
                     
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-capuccino">
                 {% for order in ordered %}
                 <tr> 
                     {% if order.coffee_selected.id == coffee.id  %}
