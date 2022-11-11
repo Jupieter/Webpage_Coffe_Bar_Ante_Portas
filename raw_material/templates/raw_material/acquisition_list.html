@@ -17,6 +17,9 @@
         td, th  {
         text-align: center;
         }
+        h1, h2, h3, h4 {
+            text-shadow: 10px 10px 3px #1a0c02;
+        }
 
     </style>
 {% endblock %}    
@@ -35,7 +38,7 @@
                             <form method="POST" >{% csrf_token %}
                                                                  
                                 <h4> 
-                                    <button type="submit" class="save btn btn-primary middle"> 
+                                    <button type="submit" class="save btn btn-brown middle"> 
                                         {{form}}                                  
                                     </button>
                                 </h4>
@@ -122,24 +125,24 @@
                         {% if user.is_staff %}
 
                             {% if ware.store_status == 1 %}
-                                <a class="btn btn-primary btn-sm" 
+                                <a class="btn btn-brown btn-sm" 
                                 href="{% url 'raw_material:acquisition_edit' pkey=ware.pk %}" >
                                 <span class="fa fa-pencil"></span></a>
-                                <a class="btn btn-primary btn-sm" 
+                                <a class="btn btn-brown btn-sm" 
                                 href="{% url 'raw_material:acquisition_storing' pkey=ware.pk %}"
                                 onclick="return confirm('Az árut bevételezi?')">
                                 <span class="fa fa-cube"></span></a>
                             {% endif %}
 
                             {% if ware.store_status == 2 %}
-                                <a class="btn btn-primary btn-sm" 
+                                <a class="btn btn-brown btn-sm" 
                                 href="{% url 'raw_material:box_open' pkey=ware.pk %}" 
                                 onclick="return confirm('A csomag meg lett kezdve?')">
                                 <span class="fa fa-dropbox"></span></a>
                             {% endif %}
 
                             {% if ware.store_status == 3 %}
-                                <a class="btn btn-primary btn-sm" 
+                                <a class="btn btn-brown btn-sm" 
                                 href="{% url 'raw_material:box_empty' pkey=ware.pk %}" 
                                 onclick="return confirm('A csomag kiürült?')">
                                 <span class="fa fa-share-square-o"></span></a>

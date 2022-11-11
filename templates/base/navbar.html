@@ -29,10 +29,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             {% if user.is_staff %}
-              <a class="dropdown-item" href="{% url 'raw_material:acquisition_list' %}">Raktár</a>
+              <a class="dropdown-item" href="{% url 'raw_material:acquisition_list' %}">Storage</a>
             {% endif %}
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'raw_material:ware_choice' %}">Áruk beszerzése</a>
+          <a class="dropdown-item" href="{% url 'raw_material:ware_choice' %}">Procurement of goods</a>
         </div>
       </li>
       
@@ -44,10 +44,10 @@
           <a class="dropdown-item" href="{% url 'shop:coffee_home' %}">Home</a>
           <div class="dropdown-divider"></div>
             {% if user.is_staff %}
-              <a class="dropdown-item" href="{% url 'shop:coffee_make' %}">Főzés</a>
-              <a class="dropdown-item" href="{% url 'shop:coffee_booking' %}">Könyvelés</a>
+              <a class="dropdown-item" href="{% url 'shop:coffee_make' %}">Making</a>
+              <a class="dropdown-item" href="{% url 'shop:coffee_booking' %}">Booking</a>
             {% endif %}
-          <a class="dropdown-item" href="{% url 'shop:coffee_order' %}">Rendelés</a>
+          <a class="dropdown-item" href="{% url 'shop:coffee_order' %}">Ordering</a>
         </div>
       </li>
 

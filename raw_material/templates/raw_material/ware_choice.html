@@ -7,15 +7,9 @@
 
 {% block style %}    
     <style>
-        body {
-          background-image: url(/static/image/bean_bg.jpg);
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-size: 100% 100%;
-        }
-        h2, h3 {
+        h1, h2, h3 {
         text-align: left;
-        color:blanchedalmond;
+        text-shadow: 10px 10px 3px #1a0c02;
         }
         
     </style>
@@ -27,12 +21,12 @@
 
     <div class="row">
         <div class="col-sm-8">
-            <h1 style="text-align:center">Alapanyagok választása</h1>
+            <h1 style="text-align:center">Choice of ware</h1>
         </div>
         <div class="col-sm-2">
             {% if user.is_staff %}
-            <a class="btn btn-primary btn-lg" href="{% url 'raw_material:ware_new' %}">   
-                <span class="fa fa-plus"> Új árucikk</span></a>
+            <a class="btn btn-capuccino btn-lg" href="{% url 'raw_material:ware_new' %}">   
+                <span class="fa fa-plus"> New ware</span></a>
             {% endif %}    
         </div>
     </div>
