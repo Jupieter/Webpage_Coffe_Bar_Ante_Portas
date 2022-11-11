@@ -1,7 +1,7 @@
 {% for coffee in coffees %}
     <div class="row-sm-12">
-        <table class="table table table-hover">
-            <thead class="table-light">
+        <table class="table table-hover border">
+            <thead class="table-brown">
                 <div id="demo"></div>
                 <div id="coffee{{coffee.id}}"></div>
                 <tr>
@@ -19,7 +19,7 @@
                         {% if user.is_staff %} 
                             {% if coffee.c_order_yes %}
                                 <a class="btn btn-outline-danger btn-sm m-1" 
-                                    onclick=alertVisible({{coffee.id}})
+                                    onclick=alertVisible(coffee.id)
                                     title="Delete with condition">
                                 <span class="fa fa-trash-o"></span>
                                 </a>
@@ -32,7 +32,7 @@
                                 </a>
                             {% endif %}
                             
-                            <a class="btn btn-primary btn-sm m-1" 
+                            <a class="btn btn-capuccino btn-sm m-1" 
                             hx-get="{% url 'shop:coffee_make_time' pk=coffee.pk %}"
                             hx-target="#dialog"
                             title="Change the date">
@@ -51,7 +51,7 @@
                             {% endif %}
 
                             {% if user.is_authenticated and coffee.c_make_dose >= 0.5 %}
-                                <a class="btn btn-primary btn-sm m-1" 
+                                <a class="btn btn-capuccino btn-sm m-1" 
                                 hx-get="{% url 'shop:coffee_order_form' pkey=coffee.pk %}"
                                 hx-target="#dialog"
                                 title="Order a Coffe!">
@@ -85,7 +85,7 @@
                     
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-capuccino">
                 {% for order in ordered %}
                 {% if order.coffee_selected.id == coffee.id  %}
                 <tr> 

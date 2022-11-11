@@ -21,7 +21,7 @@
             <center>
                 <h4> Next Coffee:</h4>
                 <button type="button" 
-                class="btn btn-waring position-relative"
+                class="btn position-relative"
                 style="padding:0px">
                     <a href="{% url 'shop:coffee_order' %}"
                     title="To the Coffee Ordering Page"               
@@ -30,7 +30,7 @@
                     data-bs-content="There you can book some dose Coffe. From half a dose to two doses.
                     With milk, sugar, and flavoring.">
                         <img src='/static/image/koffe.jpeg'
-                        class="img-thumbnail" 
+                        class="img-thumbnail btn-border" 
                         style="width:150px;height:150px;">
                     </a>
                 </button>
@@ -43,10 +43,10 @@
         <div class="col-md-6 centered p-3 border border-0 border-warning">
             {% for coffee in coffees %}
             <div class="row p-2 ">
-                <div class="card bg-brown text-capuccino">
+                <div class="card bg-brown" style="background-color:#634832; box-shadow: 10px 10px 5px #1a0c02;">
                     <h3 class="card-title text-center">
                         <div class="d-flex flex-wrap justify-content-center mt-1">
-                            <a><span class="badge hours">{{coffee.c_make_date}}</span></a> 
+                            <a><span class="badge hours" style="color: #e4c79b;">{{coffee.c_make_date}}</span></a> 
                         </div>
                     </h3>
                 </div>
@@ -62,7 +62,7 @@
         <div class="col-md-3 centered p-3">
             <center>
                 <button type="button" 
-                class="btn btn-warning position-relative"
+                class="btn position-relative"
                 style="padding:0px">
                     <a href="{% url 'shop:coffee_make' %}"
                     title="To the Coffee Making Page"               
@@ -71,7 +71,7 @@
                     data-bs-content="There you can indicate when the next coffee portions will be ready. 
                     Only for STAFF "> 
                         <img src='/static/image/coffee_machine_1.jfif'
-                        class="img-thumbnail"
+                        class="img-thumbnail btn-border"
                         style="width:150px;height:150px;">
                         {% if coffees %}
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
@@ -90,7 +90,7 @@
         <div class="col-md-3 centered p-3">
             <center>
                 <button type="button" 
-                class="btn btn-secondary position-relative"
+                class="btn position-relative"
                 style="padding:0px">
                 <a href="{% url 'shop:coffee_booking' %}"
                 title="To the Coffee Booking Page"               
@@ -99,7 +99,7 @@
                 data-bs-content="On this page you can record the depletion of finished 
                     and consumed raw materials. Only for STAFF ">  
                     <img src='/static/image/coffe_book_1.png'
-                    class="img-thumbnail" 
+                    class="img-thumbnail btn-border" 
                     style="width:150px;height:150px;">
                     {% if coffees2 %}
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -115,7 +115,7 @@
         </center>   
     </div>
     <div class="col-md-6 centered p-3 border border-0 border-warning">
-        <h2>Coffe Bar Ante Portas </h2>
+        <h1>Coffe Bar Ante Portas </h1>
         <h4> THIS SITE UNDER CONSTRUCTION</h4>
         <h6> THIS SITE IS A DJANGO TUTORIAL (and GIT :-)</h6>
 

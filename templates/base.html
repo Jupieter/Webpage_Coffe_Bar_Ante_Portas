@@ -22,21 +22,20 @@
     </div>
     
     <div class="content container border border-0 border-warning">
-        <div class="row row-md-12 pb-2">
-            <img src= "/static/image/CoffeBarTop.png"  class="img-fluid">
-        </div>
-
-
-        <div class="row-md-12 border border-0 border-warning">
-            <div class="col-md-12">
-                {% include "base/navbar.html" with site_title='Coffee Ante Portas'  site_logo="src='/static/image/coffe_draw.webp'" %}             
+        <div class="container  border border-0 border-warning">
+            <div class="row row-md-12 pb-2">
+                <img src= "/static/image/CoffeBarTop.png"  class="img-fluid">
             </div>
-        </div>        
+            <div class="row-md-12 border border-0 border-warning">
+                    {% include "base/navbar.html" with site_title='Coffee Ante Portas'  site_logo="src='/static/image/coffe_draw.webp'" %}             
+            </div>        
+            <div class="row"></div>    
+        </div> 
+        <div class="container overflow-auto" >
 
-        <div class="row"></div>
-        
+            {% block content %}{% endblock %}
+        </div>    
             
-        {% block content %}{% endblock %}
     </div>
 
     <div class="row">

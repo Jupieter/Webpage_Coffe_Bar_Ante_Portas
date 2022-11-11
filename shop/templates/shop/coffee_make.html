@@ -6,18 +6,6 @@
 {% endblock %}
 
 {% block style %}    
-    <style>
-        body {
-          background-image: url(/static/image/coffee_bg_6.jpgg);
-          background-repeat: no-repeat;
-          background-attachment: fixed;
-          background-size: 100% 100%;
-        }
-        h2  {
-        text-align: middle;
-        color: rgb(51, 31, 1);
-        }
-    </style>
 {% endblock %}  
 
 {% block content %}
@@ -30,8 +18,8 @@
                 data-bs-toggle="popover" 
                 data-bs-trigger="hover" 
                 data-bs-content="Order, Make, Booking">             
-                <img src ="{% static '/image/coffee_machine_1.jfif' %}" class="rounded" 
-                style="width:100px;height:100px; border:5px solid; "; alt="choice">                 
+                <img src ="{% static '/image/coffee_machine_1.jfif' %}" class="rounded btn-border" 
+                style="width:100px;height:100px; "; alt="choice">                 
             </a>
         </div>
         <div class="col-sm-6 right">
@@ -43,8 +31,8 @@
 
 <div class="container sm ">
     <div class="row-sm-6">
-        <table class="table table table-hover border">
-            <thead class="table-dark">
+        <table class="table table-hover border">
+            <thead class="table-brown">
                 <tr>  
                     <th class="col-sm-1">     Brand    </th>
                     <th class="col-sm-1">    Type     </th>
@@ -55,7 +43,7 @@
                     
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-capuccino">
                 {% for ware in wares %}
                 <tr> 
                     <td>{{ware.ware_type.ware_brand}}</td>
@@ -70,7 +58,7 @@
                     <td>{{ware.id}}</td>
                     <td>
                         {% if user.is_staff %}
-                        <a class="btn btn-primary btn-sm" 
+                        <a class="btn btn-brown btn-sm" 
                         href="{% url 'shop:coffee_make_form' pkey=ware.pk %}">
                         <span class="fa fa-shopping-basket"></span></a>
                         {% endif %}
