@@ -118,3 +118,10 @@ h1, h2, h3, h4 {
 .txt-shadow {
     text-shadow: 10px 10px 3px #1a0c02;
 }
+
+input[type=range]::-webkit-slider-runnable-track{
+    background: #e4c79b ;
+}
+input[type=range]::-webkit-slider-thumb{
+    background: #42220d ;
+}
