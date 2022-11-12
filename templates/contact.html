@@ -4,26 +4,46 @@
 
 {% block content %}
 <style>
-    body {
-      background-image: url(/static/coffee_bg_6.jpg);
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-      color: rgb(178, 169, 155);
-    }
+        h1, h2, h3, h4 {
+            text-shadow: 10px 10px 3px #1a0c02;
+        }
+        .techn {
+            max-width: 100%;
+            align-items: left;
+        }
+        .app {
+            max-width: 140%;
+            align-items: center;
+        }
 </style>
 
-    <div class="text-center">
+    <div class="text-center" >
         <br>
         <h1>Contact Page</h1>
         <br>
-        <br>
-        <br>
-        <br>
     </div>
     <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-sm-6 col-12">
+        <div class="row d-flex justify-content-center p-2">
+            <div class="col-sm-3 ">
+                <img src="\static\image\CoffeeBar_1.gif" 
+                class="app"
+                alt="MobilApp CoffeBar Main & Log" 
+                title="CoffeBar MobilApp"
+                >
+                <br>
+                <img src="\static\image\CoffeeBar_2.gif" 
+                class="app"
+                alt="MobilApp CoffeBar Main & Log" 
+                title="CoffeBar MobilApp"
+                >
+                <br>
+                <img src="\static\image\CoffeeBar_3.gif"
+                class="app"
+                alt="MobilApp CoffeBar Main & Log" 
+                title="CoffeBar MobilApp"
+                >
+            </div>
+            <div class="col-sm-7 border-1 border-warning p-2" style="background-color: #42220d;">
                 <h3> THIS SITE UNDER CONSTRUCTION</h3>
                 <h4> THIS SITE IS A DJANGO TUTORIAL (and GIT :-)</h4>
                 <p>At my workplace, the receptionist makes the coffee and arranges an appointment for when the coffee will be ready.
@@ -43,13 +63,48 @@
                 <p>Reminder for the next coffee and appointment booking. (Login and TOKEN communication)</p>
                 <p>Mobil app on GITHUB: https://github.com/Jupieter/CoffeeShop_Test </p>
                 <br>
-                <p> (2022.05.30) The main principle failed. I wanted a pure django creation without jawascript. </p>
+                <p> (2022.05.30) The main principle failed. I wanted a pure django creation without javascript. </p>
                 <p> (2022.06.15) First use the Bootsrap modal </p>
                 <p> (2022.06.22) Little game with JawaScript Bootsrap Alert </p>
                 <p> (2022.06.27) New Universal Message Modal with htmx (hx-vals)</p>
                 <p> (2022.08.04) Run the CoffeeShop Mobil app on Android</p>
-                <p> (2022.08.05) CoffeeShop Mobil app communicate with the webpage CoffeBar</p>
+                <p> (2022.08.05) CoffeeShop Mobil app communicate with the webpage CoffeBar [token]</p>
+                <p> (2022.10.05) CoffeeShop Mobil app had been finished</p>
+                <p> (2022.11.01) CoffeBar site UX/UI step from back-end to front-end </p>
 
+            </div>
+            <div class="col-sm-2 p-3" style="background-color: rgba(241, 215, 165, 0.8);">
+                <a href="https://github.com/Jupieter/I-me-coffee" target="_blank">
+                    <img class="techn" src="\static\image\github.png" 
+                    alt="GITHUB" title="GITHUB">
+                </a>
+                <img class="techn" src="\static\image\python.png" 
+                alt="python"                 title="Python"
+                >
+                <img class="techn" src="\static\image\django-512.png" 
+                alt="Django"                 title="Django"
+                >
+                <img class="techn" src="\static\image\pytest.png" 
+                alt="pytest"                 title="Pytest"
+                >
+                <img class="techn" src="\static\image\django REST.png" 
+                alt="Django-REST"            title="Django-REST"
+                >
+                <img class="techn" src="\static\image\sqlite.png" 
+                alt="sqlite"            title="sqlite"
+                >
+                <img class="techn" src="\static\image\pythonanywhere.png" 
+                alt="pythonanywhere"            title="pythonanywhere"
+                >
+                <img class="techn" src="\static\image\posgresql.png" 
+                alt="posgresql"            title="PostgreSQL"
+                >
+                <img class="techn" src="\static\image\heroku.png" 
+                alt="heroku"            title="heroku"
+                >
+                <img class="techn" src="\static\image\pngegg.png" 
+                alt="mysql"            title="MySQL"
+                >
             </div>
         </div>
     </div>

@@ -41,7 +41,7 @@
             Coffee-Bar
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{% url 'shop:coffee_home' %}">Home</a>
+          <a class="dropdown-item" href="{% url 'shop:coffee_home' %}">Coffe Shop</a>
           <div class="dropdown-divider"></div>
             {% if user.is_staff %}
               <a class="dropdown-item" href="{% url 'shop:coffee_make' %}">Making</a>
