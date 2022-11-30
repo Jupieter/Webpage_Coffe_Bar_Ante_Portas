@@ -3,8 +3,7 @@ from django.urls import reverse, resolve
 from mysite.views import home_page, proba, contact_page
 
 
-class TestMainUrls(SimpleTestCase):
-    print("TestMainUrls")
+class Test_Main_Urls(SimpleTestCase):
 
     def test_home_url_resolves(self):
         url = reverse('home_url')
@@ -18,21 +17,23 @@ class TestMainUrls(SimpleTestCase):
         url = reverse('contact_page')
         self.assertEqual(resolve(url).func, contact_page)
 
-class TestsMainViews(TestCase):
-    print("TestsMainViews")
+class Tests_Main_Views(TestCase):
 
     def setUp(self) -> None:
         self.client = Client()        
-        self.urls_list = ['/raw_material/', '/contact/', '/shop/', '/accounts/login/',  '/api/', '/admin/']
+        self.urls_list = ['/raw_material/', '/contact/', '/shop/', '/accounts/login/', '/api/login/']
 
     def  test_home_page(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "home.html")
+        self.assertContains(response, "Next Coffee:")
 
-    def  test_raw_material_page(self):
-        response = self.client.get('/raw_material/')
-        self.assertEqual(response.status_code, 200)
     
+    def  test_raw_material_page(self):
+        response = self.client.get('/admin/')
+        self.assertEqual(response.status_code, 302)
+
     def test_urls_loop(self):
         for urls in self.urls_list:
             response = self.client.get(urls)
