@@ -6,8 +6,6 @@ from raw_material.urls import *
 class TestUrls(SimpleTestCase):
 
     def test_ware_choice_url_resolves(self):
-        url = "még semmi"
-        # url = reverse('ware_choice')
+        url = reverse('ware_choice')
         print(url)
-        # print(resolve(url))
-        # self.assertEqual(resolve(url).func, ware_list)
+        # self.assertEqual(resolve(url).func, ware_choice)
