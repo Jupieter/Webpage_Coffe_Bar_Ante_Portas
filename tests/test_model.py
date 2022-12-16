@@ -2,10 +2,11 @@ from django.test import TestCase
 from datetime import timezone, datetime
 from raw_material.models import WareTypes, WareData, ProductAcquisition
 from accounts.models import User
+from shop.models import CoffeeMake, CoffeeOrder
 
 
 class DB_Creator():
-    def user_creator(self, mail  = "test@admin.com", pswd= "ABC123", u_name = "Tester", fn = "John", ln ="Doe"):
+    def user_creator(self, mail  = "test@admin.com", u_name = "Tester", pswd= "ABC123", fn = "John", ln ="Doe"):
         user_c = User.objects.create_user(
         email = mail,
         username = u_name,
@@ -20,6 +21,7 @@ class DB_Creator():
         ware_wght = ware_wg
         )
         return ware_t
+
     def ware_data_creator(
         ware_typ,
         ware_bd = "Brand_1",
@@ -36,7 +38,7 @@ class DB_Creator():
         )
         return ware_d
 
-def ware_product_creator(self, ware_typ, acq_price = 111, acq_user=None):
+    def ware_product_creator(ware_typ, acq_price = 111, acq_user=None):
         ware_d = ProductAcquisition.objects.create(
             ware_type = ware_typ,
             acquisition_price = acq_price,
@@ -107,9 +109,10 @@ class Test_1_WareTypes(TestCase):
         self.assertEqual(WareTypes.objects.count(), 1)
 
     def test_ware_types_by_id(self):
-        wt = WareTypes.objects.get(id=1)
-        self.assertEqual(wt.ware_types, "Something")
-        self.assertEqual(wt.ware_wght, 77) 
+        wt_1 = WareTypes.objects.get(id=1)
+        self.assertEqual(wt_1.ware_types, "Something")
+        self.assertEqual(wt_1.ware_wght, 77) 
+        self.assertEqual(wt_1.__str__(), 'Something')
 
 
 class Test_2_WareData(TestCase):
@@ -129,19 +132,28 @@ class Test_2_WareData(TestCase):
     def test_ware_data_count(self):
         self.assertEqual(WareTypes.objects.count(), 4)
     
-    def test_ware_data_by_id(self):
-        self.assertEqual(WareData.objects.get(id=1).ware_brand, "Brand_1")
-        self.assertEqual(WareData.objects.get(id=1).ware_brand_name, "Brand_Name_1")
-        self.assertEqual(WareData.objects.get(id=1).ware_weight, 99)
-        self.assertEqual(WareData.objects.get(id=1).ware_price, 9)
+    def test_ware_data_by_detail(self):
+        wd_1 = WareData.objects.get(id=1)
+        self.assertEqual(wd_1.ware_brand, "Brand_1")
+        self.assertEqual(wd_1.ware_brand_name, "Brand_Name_1")
+        self.assertEqual(wd_1.ware_weight, 99)
+        self.assertEqual(wd_1.ware_price, 9)
+        self.assertEqual(wd_1.__str__(), 'Brand_1, Brand_Name_1, Coffee')
 
 
 class Test_3_ProductAcquisition(TestCase):
     
     def setUp(self) -> None:
         # User create
-        # u_ser = User.objects.create_user(self, "test@admin.com", "ABC123", "Tester", "John", "Doe")
-        # u_ser.save()
+        user_list = [
+        ["test@acquisition.com", "Acquisitor", "ABC001", "Ac", "Qu"],
+        ["test@store.com", "Storer", "ABC002", "St0", "Re"],
+        ["test@open.com", "Opener", "ABC003", "Op", "En"],
+        ["test@empty.com", "Emptyr", "ABC004", "Em", "Pty"],
+        ]
+        for i in range(4): 
+            u_ser = DB_Creator.user_creator(self, user_list[i][0], user_list[i][1], user_list[i][2], user_list[i][3])
+            u_ser.save()
         # WareTypes load with Data
         ware_type_list = [ ["Coffee", 7], ["Milk", 50], ["Sugar", 50], ["Flavour", 50] ]
         for ware_type_data in ware_type_list: 
@@ -161,6 +173,88 @@ class Test_3_ProductAcquisition(TestCase):
             wd = DB_Creator.ware_data_creator(wt, ware_data_list[i][0], ware_data_list[i][1], ware_data_list[i][2], ware_data_list[i][3])
             wd.save()
         
-        pa = DB_Creator.ware_product_creator(self, WareData.objects.get(id=1), 699)
+        ware_pa = WareData.objects.get(id=1)
+        u_ser = User.objects.get(id=1)
+        pa = DB_Creator.ware_product_creator(ware_pa, 699, u_ser)
         pa.save()
     
+    def test_product_acquisition_count(self):
+        self.assertEqual(ProductAcquisition.objects.count(), 1)
+
+    def test_product_acquisition_by_detail(self):
+        pa_1 = ProductAcquisition.objects.get(id=1)
+        self.assertEqual(pa_1.ware_type.ware_brand, "Brand_Coffee")
+        self.assertEqual(pa_1.store_status, 0)
+        self.assertEqual(pa_1.acquisition_price, 699)
+        self.assertEqual(pa_1.acquisiton_user.username, "Acquisitor")
+        self.assertEqual(pa_1.__str__(), "Brand_Coffee, Brand_Name_Coffee, Coffee, 1")
+        self.assertEqual(pa_1.store_user, None)
+        pa_1.store_user = User.objects.get(id=2)
+        self.assertEqual(pa_1.store_user.username, "Storer")
+        self.assertEqual(pa_1.open_user, None)
+        pa_1.open_user = User.objects.get(id=3)
+        self.assertEqual(pa_1.open_user.username, "Opener")
+        self.assertEqual(pa_1.empty_user, None)
+        pa_1.empty_user = User.objects.get(id=4)
+        self.assertEqual(pa_1.empty_user.username, "Emptyr")
+
+
+class Test_4_CoffeeMake(TestCase):
+
+    def setUp(self) -> None:
+        # User create
+        user_list = [
+        ["test@acquisition.com", "Acquisitor", "ABC001", "Ac", "Qu"],
+        ["test@store.com", "Storer", "ABC002", "St0", "Re"],
+        ["test@open.com", "Opener", "ABC003", "Op", "En"],
+        ["test@make.com", "Maker", "ABC004", "Ma", "Ker"],
+        ]
+        for i in range(4): 
+            u_ser = DB_Creator.user_creator(self, user_list[i][0], user_list[i][1], user_list[i][2], user_list[i][3])
+            u_ser.save()
+        # WareTypes load with Data
+        ware_type_list = [ ["Coffee", 7], ["Milk", 50], ["Sugar", 50], ["Flavour", 50] ]
+        for ware_type_data in ware_type_list: 
+            wt_types = ware_type_data[0]
+            wt_wght = ware_type_data[1]
+            wt = DB_Creator.ware_type_creator(wt_types, wt_wght)
+            wt.save()
+        # WareData load with Data
+        ware_data_list = [
+            ["Brand_Coffee", "Brand_Name_Coffee", 250, 900,],
+            ["Brand_Milk", "Brand_Name_Milk", 500, 800,],
+            ["Brand_Sugar", "Brand_Name_Sugar", 100, 700,],
+            ["Brand_Flavour", "Brand_Name_Flavour", 450, 600,]
+            ]
+        for i in range(4): 
+            wt = WareTypes.objects.get(id=i+1)
+            wd = DB_Creator.ware_data_creator(wt, ware_data_list[i][0], ware_data_list[i][1], ware_data_list[i][2], ware_data_list[i][3])
+            wd.save()
+        # ProductAcquisition load with Data
+        price_list = [699, 399, 299, 599]
+        for i in range(4): 
+            ware_pa = WareData.objects.get(id=i+1)
+            u_ser = User.objects.get(id=1)
+            pa = DB_Creator.ware_product_creator(ware_pa, price_list[i], u_ser)
+            pa.store_user = User.objects.get(id=2)
+            pa.open_user = User.objects.get(id=3)
+            pa.save()
+        
+        cm = CoffeeMake.objects.create(
+            c_make_ware = ProductAcquisition.objects.get(id=1),
+            c_make_dose = 4,
+            c_make_user = User.objects.get(id=4),
+            c_make_date = datetime(2022, 2, 22, 6, 6, 6, 0)
+        )
+        cm.save()
+    
+    def test_coffee_make_count(self):
+        self.assertEqual(CoffeeMake.objects.count(), 1)
+    
+    def test_coffee_make_by_detail(self):
+        cm_1 = CoffeeMake.objects.get(id=1)
+        self.assertEqual(cm_1.c_make_ware.ware_type.ware_brand, "Brand_Coffee")
+        self.assertEqual(cm_1.c_make_dose, 4.0)
+        self.assertEqual(cm_1.c_make_user.username, "Maker")
+        self.assertEqual(cm_1.c_make_date.__str__(), "2022-02-22 06:06:06")
+        self.assertEqual(cm_1.__str__(), "Brand_Coffee, Brand_Name_Coffee, Coffee, 1 / 1")
