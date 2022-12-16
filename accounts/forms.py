@@ -90,6 +90,7 @@ class RegisterForm(forms.Form):
         )
     )
     email = forms.EmailField(
+        label='Email',
         widget=forms.EmailInput(
             attrs={
                 "class": "form-control",
