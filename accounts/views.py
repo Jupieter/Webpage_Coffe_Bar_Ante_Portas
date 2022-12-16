@@ -40,12 +40,6 @@ def register_page(request):
 def login_page(request):
     if request.user.is_authenticated:
         return redirect('home_url')
-
-    
-    next_ = request.GET.get('next')
-    next_post = request.POST.get('next')
-    redirect_path = next_ or next_post or None
-    adat = 'Üres'
     form = LoginForm(request.POST or None)
     context = { "form": form }
 
@@ -54,25 +48,13 @@ def login_page(request):
         email = data.get('email')
         password = data.get('password')
         user = authenticate(request, email=email, password=password)
-        user_list = get_object_or_404(User, email=email)       
-        first_name = user_list.first_name
+        print("USER:    ", user)
         if user is not None:
-            adat = first_name
-            # render(request, "accounts/login.html",{"form": form, 'adat': adat} )
             login(request, user)
             return redirect('home_url')
-            try:
-                del request.session['guest_email_id']
-            except:
-                pass
-
         else:
-            # adat = ['invalid', email, password, user, first_name]
-            # render(request, "accounts/login.html", {"form": form, 'adat': adat})
-            messages.warning(request, 'Credentials error.')
-
-    
-    return render(request, "accounts/login.html", {"form": form, 'adat': adat})
+            messages.warning(request, 'Credentials error.')    
+    return render(request, "accounts/login.html", context)
 
 def token_gen(request):
     adat1 = []
