@@ -16,11 +16,11 @@ urlpatterns = [
     path('act_ware/', views.active_coffe_ware, name='active_coffe_ware'),
     path('todaytcoffee/', views.todaytcoffee, name='todaytcoffee'),
     path('coffe_make/', views.coffe_make, name='coffe_make'),
-    path('read_tasks/', views.all_tasks, name='all_tasks'),
-    path('create_task/', views.create_task, name='create_task'),
     path('logins/', views.logins, name='logins'),
     path('register/', RegisterAPI.as_view(), name='register'),
     path('login/', LoginAPI.as_view(), name='knox_login'),
     path('logout/', knox_views.LogoutView.as_view(), name='knox_login'),
     path('logoutall/', knox_views.LogoutAllView.as_view(), name='knox_login'),
+    path('read_tasks/', views.all_tasks, name='all_tasks'),
+    path('create_task/', views.create_task, name='create_task'),
 ]

@@ -3,6 +3,7 @@ from datetime import timezone, datetime
 from raw_material.models import WareTypes, WareData, ProductAcquisition
 from accounts.models import User
 from shop.models import CoffeeMake, CoffeeOrder
+from c_app.models import Task
 
 
 class DB_Creator():
@@ -111,7 +112,7 @@ class Test_1_WareTypes(TestCase):
     def test_ware_types_count(self):
         self.assertEqual(WareTypes.objects.count(), 1)
 
-    def test_ware_types_by_id(self):
+    def test_ware_types_by_detail(self):
         wt_1 = WareTypes.objects.get(id=1)
         self.assertEqual(wt_1.ware_types, "Something")
         self.assertEqual(wt_1.ware_wght, 77) 
@@ -343,3 +344,21 @@ class Test_5_CoffeeOrder(TestCase):
         self.assertLess("2022-02-22 06:06:06", co_1.coffee_reg.__str__())
         self.assertEqual(co_1.__str__(), "1:Brand_Coffee, Brand_Name_Coffee, Coffee, 1 / 1:Drinker")
         self.assertEqual(co_1.c_user().email, "test@drink.com")
+
+class Test_6_Task(TestCase):
+
+    def setUp(self) -> None:
+        task = Task.objects.create(
+            name = "Carmen",
+            age = 28
+        )
+        task.save()
+
+    def test_user_count(self):
+        self.assertEqual(Task.objects.count(), 1)
+    
+    def test_ware_types_by_detail(self):
+        task_1 = Task.objects.get(id=1)
+        self.assertEqual(task_1.name, "Carmen")
+        self.assertEqual(task_1.age, 28) 
+        self.assertEqual(task_1.__str__(), 'Carmen')
