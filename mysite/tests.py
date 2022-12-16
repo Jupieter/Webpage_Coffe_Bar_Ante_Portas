@@ -38,6 +38,10 @@ class Tests_Main_Views(TestCase):
         for urls in self.urls_list:
             response = self.client.get(urls)
             if response.status_code != 200:
-                print("urls: ", urls)
+                print("problem with urls: ", urls)
             self.assertEqual(response.status_code, 200)
+        
+    def test_url_admin(self):
+        response = self.client.get('/admin/')
+        self.assertEqual(response.status_code, 302)
 
