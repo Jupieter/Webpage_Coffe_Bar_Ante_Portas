@@ -26,7 +26,7 @@
         {{ form.as_p }}
         <button type="cancel" class="cancel btn btn-primary" onclick="window.history.back();">Cancel</button>
         {% if user.is_authenticated %}
-            <button type="submit" class="save btn btn-primary">Save</button>
+            <button id="submit" type="submit" class="save btn btn-primary">Save</button>
         {% endif %}
     </form>
 </div>
