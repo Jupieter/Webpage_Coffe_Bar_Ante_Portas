@@ -33,58 +33,58 @@ class WareData(models.Model):
        
 
 class StatusChoise(models.IntegerChoices):
-    MINDEGYIK = 0
-    BESZEREZVE  = 1
-    RAKTÁRON = 2
-    KIBONTVA = 3
-    ELFOGYOTT = 4
+    ALL = 0
+    ACQUIRED  = 1
+    IN_WAREHOUSE = 2
+    EXPANDED = 3
+    SOLD_OUT = 4
 
 
 class ProductAcquisition(models.Model):
     ware_type = models.ForeignKey(
         WareData, 
         on_delete=models.CASCADE, 
-        related_name = 'Áru', 
-        verbose_name = 'Áru')
-    store_status = models.IntegerField(default=0, choices=StatusChoise.choices, verbose_name="Raktározási státusz")
-    acquisition_price = models.IntegerField(default=0, verbose_name='Ára [Ft]')
+        related_name = 'Product', 
+        verbose_name = 'Product ty')
+    store_status = models.IntegerField(default=0, choices=StatusChoise.choices, verbose_name="Storage status")
+    acquisition_price = models.IntegerField(default=0, verbose_name='Price [Ft]')
 
     acquisiton_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=False, 
-        related_name ='Beszerző', 
-        verbose_name = 'Beszerző',
+        related_name ='Purchaser', 
+        verbose_name = 'Purchaser Person',
         default=User)
     acquisition_date = models.DateTimeField(
-        verbose_name='Beszerzés dátuma', 
+        verbose_name='Purchase date', 
         null=True, blank=True,)
 
     store_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=True,
-        related_name = 'Bevételezte',
-        verbose_name ='Bevételezte' )
+        related_name = 'Store_booking_person',
+        verbose_name ='Store booking person' )
     store_date = models.DateTimeField(
-        verbose_name='Raktározás dátuma', 
+        verbose_name='Store date', 
         null=True, blank=True,)
-    stock = models.IntegerField(default=0, verbose_name='Készleten [g]')
+    stock = models.IntegerField(default=0, verbose_name='In stock [g]')
 
     open_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=True,
-        related_name = 'Kibontotta',
-        verbose_name ='Kibontotta' )
+        related_name = 'Opening_booking_person',
+        verbose_name ='Opening booking person' )
     open_date = models.DateTimeField(
-        verbose_name='Kibontás dátuma', 
+        verbose_name='Opening date', 
         null=True, blank=True,)
     
     empty_user = models.ForeignKey(
         User, on_delete=models.SET_NULL, 
         null=True, blank=True,
-        related_name = 'Leírta',
-        verbose_name ='Leírta' )
+        related_name = 'Expiry_booking_person',
+        verbose_name ='Expiry booking person' )
     empty_date = models.DateTimeField(
-        verbose_name='Kifogyás dátuma', 
+        verbose_name='Expiry date', 
         null=True, blank=True,)
     
     def __str__(self):
