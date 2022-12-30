@@ -3,7 +3,6 @@ from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from tests.test_model import DB_Creator
 from time import sleep
 
 
