@@ -47,16 +47,16 @@ class Tests_Main_Views(TestCase):
         request.POST['headx'] = 'Test_HEAD'
         request.POST['txtx'] = 'Test_Text'
         request.POST['background'] = 'red'
-        response = view_modal_mess(request)
-        print(response)
+        response = view_modal_mess(request)                         
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Close')
         headx = "test_H"
         txtx = "Test_T"
         backg = "yellow"
         stylex = 'style=background:' + str(backg) 
         from django.shortcuts import render
         respo_2 = render(request, "modal_mess.html", {'headx':headx, 'txtx':txtx, 'stylex':stylex})
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Close')
+        self.assertEqual(respo_2.status_code, 200)
         self.assertContains(respo_2, 'Test_T')
 
         
