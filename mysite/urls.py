@@ -10,7 +10,7 @@ app_name = 'mysite'
 
 urlpatterns = [
     path('', home_page, name="home_url"),
-    path('proba', proba, name="proba"),
+    path('proba/', proba, name="proba"),
     path('contact/', contact_page, name='contact_page'),
     path('c_app/', include('c_app.urls')),
     path('api/', include('rest_framework.urls')),
