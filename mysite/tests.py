@@ -17,11 +17,15 @@ class Test_Main_Urls(SimpleTestCase):
         url = reverse('contact_page')
         self.assertEqual(resolve(url).func, contact_page)
 
+    def test_contact_url_proba(self):
+        url = reverse('proba')
+        self.assertEqual(resolve(url).func, proba)
+
 class Tests_Main_Views(TestCase):
 
     def setUp(self) -> None:
         self.client = Client()        
-        self.urls_list = ['/raw_material/', '/contact/', '/shop/', '/accounts/login/', '/api/login/']
+        self.urls_list = ['/raw_material/', '/contact/', '/shop/', '/accounts/login/', '/api/login/', "/proba/"]
 
     def  test_home_page(self):
         response = self.client.get("/")

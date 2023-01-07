@@ -16,6 +16,7 @@ class DB_Creator():
         last_name = ln
         )
         return user_c
+        
     def ware_type_creator(ware_typ = "ware_types", ware_wg = 1):
         ware_t = WareTypes.objects.create(
         ware_types = ware_typ,
