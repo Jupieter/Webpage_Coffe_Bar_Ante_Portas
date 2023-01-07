@@ -56,10 +56,10 @@
     </div>
 
 
-    {% if user.is_staff %}
-
+    
     <div class="row p-2 ">
         <div class="col-md-3 centered p-3">
+            {% if user.is_staff %}
             <center>
                 <h4 class="txt-shadow"> Make Coffee:</h4>
                 <br>
@@ -86,10 +86,12 @@
                         {% endif %}
                     </a>
                 </button>
+                {% endif %} 
             </center>
         </div>
         
         <div class="col-md-3 centered p-3">
+            {% if user.is_staff %}
             <center>
                 <h4 class="txt-shadow"> Booking:</h4>
                 <br>
@@ -116,6 +118,7 @@
                     {% endif %}
                 </a>
             </button>
+            {% endif %} 
         </center>   
     </div>
     <div class="col-md-6 centered p-3 bg-d">
@@ -127,7 +130,7 @@
         <h6 class="black-line">password:    Enter1</h6>
     </div>
 </div>
-
+{% if user.is_staff %}
 <div class="col-md-5 centered p-3">
         {% for ware in wares %}
             <li style="color:red;font-style:bold">Out of stock: {{ware}} : {{ware.stock|div:ware.ware_type.ware_weight }}[%]</li>

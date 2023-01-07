@@ -7,7 +7,7 @@ app_name = 'raw_material'
 
 urlpatterns = [
     path('', ware_choice, name='ware_choice'),
-    path('(<int:pk>)', ware_list, name='ware_list'),
+    path('(<int:pk>)/', ware_list, name='ware_list'),
     path('new/', ware_new, name='ware_new'),
     path('(<int:pk>)/(<int:pkey>)/edit/', 
         ware_edit, name='ware_edit'),

@@ -47,6 +47,81 @@ class DB_Creator():
             acquisiton_user = acq_user,
         )
         return ware_d
+    
+    def full_DB_begin(self):
+        # Staff User create
+        user_saff = User.objects.create_staff_user(
+        email = "staff@admin.com",
+        username = "STAFF",
+        password = "XYZ999",
+        first_name = "Stefi", 
+        last_name = "Stafi"
+        )
+        user_saff.save()
+
+        # User create
+        user_list = [
+        ["test@acquisition.com", "Acquisitor", "ABC001", "Ac", "Qu"],
+        ["test@store.com", "Storer", "ABC002", "St0", "Re"],
+        ["test@open.com", "Opener", "ABC003", "Op", "En"],
+        ["test@make.com", "Maker", "ABC004", "Ma", "Ker"],
+        ["test@drink.com", "Drinker", "ABC005", "Dr", "Ink"],
+        ]
+
+        for i in range(5): 
+            u_ser = DB_Creator.user_creator(self, user_list[i][0], user_list[i][1], user_list[i][2], user_list[i][3])
+            u_ser.save()
+
+        # WareTypes load with Data
+        ware_type_list = [ ["Coffee", 7, "coffee_bag.jpg"], ["Sugar", 50, "sugar.jpg"], ["Milk", 50, "milk.jpg"], ["Flavour", 50, "dijo.jpg"] ]
+        for ware_type_data in ware_type_list: 
+            wt_types = ware_type_data[0]
+            wt_wght = ware_type_data[1]
+            wt = DB_Creator.ware_type_creator(wt_types, wt_wght)
+            wt.ware_image = ware_type_data[2]
+            wt.save()
+            
+        # WareData load with Data
+        ware_data_list = [
+            ["Brand_Coffee", "Brand_Name_Coffee", 250, 900,],
+            ["Brand_Sugar", "Brand_Name_Sugar", 100, 700,],
+            ["Brand_Milk", "Brand_Name_Milk", 500, 800,],
+            ["Brand_Flavour", "Brand_Name_Flavour", 450, 600,]
+            ]
+        for i in range(4): 
+            wt = WareTypes.objects.get(id=i+1)
+            wd = DB_Creator.ware_data_creator(wt, ware_data_list[i][0], ware_data_list[i][1], ware_data_list[i][2], ware_data_list[i][3])
+            wd.save()
+        # ProductAcquisition load with Data
+        price_list = [699, 399, 299, 599]
+        for i in range(4): 
+            ware_pa = WareData.objects.get(id=i+1)
+            u_ser = User.objects.get(id=1)
+            pa = DB_Creator.ware_product_creator(ware_pa, price_list[i], u_ser)
+            pa.store_user = User.objects.get(id=2)
+            pa.open_user = User.objects.get(id=3)
+            pa.save()
+        
+        cm = CoffeeMake.objects.create(
+            c_make_ware = ProductAcquisition.objects.get(id=1),
+            c_make_dose = 4,
+            c_make_user = User.objects.get(id=5),
+            c_make_date = datetime(2022, 2, 22, 6, 6, 6, 0)
+        )
+        cm.save()
+
+        co = CoffeeOrder.objects.create(
+            coffee_selected = cm,
+            coffee_dose = 0.5,
+            sugar_choice = ProductAcquisition.objects.get(id=2),
+            sugar_dose = 1.0,
+            milk_choice = ProductAcquisition.objects.get(id=3),
+            milk_dose = 2.0,
+            flavour_choice = ProductAcquisition.objects.get(id=4),
+            flavour_dose = 1.5,
+            coffe_user = User.objects.get(id=6),
+        )
+        co.save()
 
 
 class Test_0_Account_User(TestCase):
@@ -207,51 +282,7 @@ class Test_3_ProductAcquisition(TestCase):
 class Test_4_CoffeeMake(TestCase):
 
     def setUp(self) -> None:
-        # User create
-        user_list = [
-        ["test@acquisition.com", "Acquisitor", "ABC001", "Ac", "Qu"],
-        ["test@store.com", "Storer", "ABC002", "St0", "Re"],
-        ["test@open.com", "Opener", "ABC003", "Op", "En"],
-        ["test@make.com", "Maker", "ABC004", "Ma", "Ker"],
-        ]
-        for i in range(4): 
-            u_ser = DB_Creator.user_creator(self, user_list[i][0], user_list[i][1], user_list[i][2], user_list[i][3])
-            u_ser.save()
-        # WareTypes load with Data
-        ware_type_list = [ ["Coffee", 7], ["Milk", 50], ["Sugar", 50], ["Flavour", 50] ]
-        for ware_type_data in ware_type_list: 
-            wt_types = ware_type_data[0]
-            wt_wght = ware_type_data[1]
-            wt = DB_Creator.ware_type_creator(wt_types, wt_wght)
-            wt.save()
-        # WareData load with Data
-        ware_data_list = [
-            ["Brand_Coffee", "Brand_Name_Coffee", 250, 900,],
-            ["Brand_Milk", "Brand_Name_Milk", 500, 800,],
-            ["Brand_Sugar", "Brand_Name_Sugar", 100, 700,],
-            ["Brand_Flavour", "Brand_Name_Flavour", 450, 600,]
-            ]
-        for i in range(4): 
-            wt = WareTypes.objects.get(id=i+1)
-            wd = DB_Creator.ware_data_creator(wt, ware_data_list[i][0], ware_data_list[i][1], ware_data_list[i][2], ware_data_list[i][3])
-            wd.save()
-        # ProductAcquisition load with Data
-        price_list = [699, 399, 299, 599]
-        for i in range(4): 
-            ware_pa = WareData.objects.get(id=i+1)
-            u_ser = User.objects.get(id=1)
-            pa = DB_Creator.ware_product_creator(ware_pa, price_list[i], u_ser)
-            pa.store_user = User.objects.get(id=2)
-            pa.open_user = User.objects.get(id=3)
-            pa.save()
-        
-        cm = CoffeeMake.objects.create(
-            c_make_ware = ProductAcquisition.objects.get(id=1),
-            c_make_dose = 4,
-            c_make_user = User.objects.get(id=4),
-            c_make_date = datetime(2022, 2, 22, 6, 6, 6, 0)
-        )
-        cm.save()
+        DB_Creator.full_DB_begin(self)
     
     def test_coffee_make_count(self):
         self.assertEqual(CoffeeMake.objects.count(), 1)
@@ -267,66 +298,7 @@ class Test_4_CoffeeMake(TestCase):
 class Test_5_CoffeeOrder(TestCase):
 
     def setUp(self) -> None:
-        # User create
-        user_list = [
-        ["test@acquisition.com", "Acquisitor", "ABC001", "Ac", "Qu"],
-        ["test@store.com", "Storer", "ABC002", "St0", "Re"],
-        ["test@open.com", "Opener", "ABC003", "Op", "En"],
-        ["test@make.com", "Maker", "ABC004", "Ma", "Ker"],
-        ["test@drink.com", "Drinker", "ABC005", "Dr", "Ink"],
-        ]
-
-        for i in range(5): 
-            u_ser = DB_Creator.user_creator(self, user_list[i][0], user_list[i][1], user_list[i][2], user_list[i][3])
-            u_ser.save()
-        # WareTypes load with Data
-        ware_type_list = [ ["Coffee", 7], ["Milk", 50], ["Sugar", 50], ["Flavour", 50] ]
-        for ware_type_data in ware_type_list: 
-            wt_types = ware_type_data[0]
-            wt_wght = ware_type_data[1]
-            wt = DB_Creator.ware_type_creator(wt_types, wt_wght)
-            wt.save()
-        # WareData load with Data
-        ware_data_list = [
-            ["Brand_Coffee", "Brand_Name_Coffee", 250, 900,],
-            ["Brand_Sugar", "Brand_Name_Sugar", 100, 700,],
-            ["Brand_Milk", "Brand_Name_Milk", 500, 800,],
-            ["Brand_Flavour", "Brand_Name_Flavour", 450, 600,]
-            ]
-        for i in range(4): 
-            wt = WareTypes.objects.get(id=i+1)
-            wd = DB_Creator.ware_data_creator(wt, ware_data_list[i][0], ware_data_list[i][1], ware_data_list[i][2], ware_data_list[i][3])
-            wd.save()
-        # ProductAcquisition load with Data
-        price_list = [699, 399, 299, 599]
-        for i in range(4): 
-            ware_pa = WareData.objects.get(id=i+1)
-            u_ser = User.objects.get(id=1)
-            pa = DB_Creator.ware_product_creator(ware_pa, price_list[i], u_ser)
-            pa.store_user = User.objects.get(id=2)
-            pa.open_user = User.objects.get(id=3)
-            pa.save()
-        
-        cm = CoffeeMake.objects.create(
-            c_make_ware = ProductAcquisition.objects.get(id=1),
-            c_make_dose = 4,
-            c_make_user = User.objects.get(id=4),
-            c_make_date = datetime(2022, 2, 22, 6, 6, 6, 0)
-        )
-        cm.save()
-
-        co = CoffeeOrder.objects.create(
-            coffee_selected = cm,
-            coffee_dose = 0.5,
-            sugar_choice = ProductAcquisition.objects.get(id=2),
-            sugar_dose = 1.0,
-            milk_choice = ProductAcquisition.objects.get(id=3),
-            milk_dose = 2.0,
-            flavour_choice = ProductAcquisition.objects.get(id=4),
-            flavour_dose = 1.5,
-            coffe_user = User.objects.get(id=5),
-        )
-        co.save()
+        DB_Creator.full_DB_begin(self)
                
     def test_coffee_make_count(self):
         self.assertEqual(CoffeeOrder.objects.count(), 1)
