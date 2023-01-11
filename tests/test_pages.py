@@ -164,7 +164,7 @@ class HomeTest(SeleniumTestCase):
         self.assertEqual(WareData.objects.count(), 4)
         sleep(1)
 
-    def acquisition_new_ware(self):
+    def acquisition_new_form(self):
         url = str(self.live_server_url) + "/raw_material/(1)/"
         self.driver.get(url)
         edit_button = self.driver.find_element(by=By.XPATH, value = '//a[@href="/raw_material/(1)/(1)/acquisition_new/"]')
@@ -177,19 +177,27 @@ class HomeTest(SeleniumTestCase):
         self.highlight(submit_button, 1.5, "orange", 5)
         submit_button.click()
         self.assertEqual(ProductAcquisition.objects.count(), 5)
-        sleep(1)
+        sleep(2)
+    
+    def acquisition_edit_form(self):
+        url = str(self.live_server_url) + "/raw_material/acquisition_list/"
+        self.driver.get(url)
+        edit_button = self.driver.find_element(by=By.XPATH, value = '//a[@href="/raw_material/(5)/edit/"]')
+        self.highlight(edit_button, 2.5, "orange", 5)
+        edit_button.click()
 
     def test_0_all(self):
         self.homepage_title()
-        self.homepage_to_contact()
-        self.back_to_homepage()
+        # self.homepage_to_contact()
+        # self.back_to_homepage()
         self.login_staff()
-        self.raw_material_menu_button()
-        self.click_four_ware_type()
-        self.add_new_ware()
-        self.edit_new_ware()
-        self.delete_new_ware()
-        self.acquisition_new_ware()
+        # self.raw_material_menu_button()
+        # self.click_four_ware_type()
+        # self.add_new_ware()
+        # self.edit_new_ware()
+        # self.delete_new_ware()
+        self.acquisition_new_form()
+        self.acquisition_edit_form()
 
         sleep(3)
         # self.driver.quit()
