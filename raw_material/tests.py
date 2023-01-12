@@ -3,6 +3,7 @@ from django.urls import reverse, resolve
 from raw_material.views import ware_choice, ware_list, ware_new
 from raw_material.urls import *
 from raw_material.models import WareTypes, WareData, ProductAcquisition
+from raw_material.forms import WareDataForm, WareListChoice, AquisitionForm, AquisitionStockedForm
 from accounts.models import User
 from shop.models import CoffeeMake, CoffeeOrder
 from tests.test_model import DB_Creator
@@ -117,3 +118,20 @@ class Tests_Raw_material_Views(TestCase):
             response = self.client.get(long_url)
             #   print(response)
             self.assertEqual(response.status_code, 302)
+    
+    def  test_14_raw_material_ware_edit_form(self):
+        w_type = WareTypes.objects.get(id=1)
+        data = {'ware_type' : w_type,
+        'ware_brand' : "TestBrand", 
+        'ware_brand_name': "TestBandName",
+        'ware_weight' : 10,
+        'ware_price': 20, 
+        }
+        form = WareDataForm(data=data)
+        # ware = get_object_or_404(WareData, pk=1) 
+        # print(ware)
+        # form = WareDataForm(instance=ware) 
+        self.assertTrue(form.is_valid())
+        # self.assertEqual(WareTypes.objects.count(), 4)
+        # wd = WareData.objects.all()
+        # print("WareData", wd)
