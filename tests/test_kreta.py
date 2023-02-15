@@ -39,8 +39,8 @@ class HomeTest(SeleniumTestCase):
         user_name = self.driver.find_element(by=By.NAME, value='UserName')
         user_password = self.driver.find_element(by=By.NAME, value='Password')
         submit_button = self.driver.find_element(by=By.ID, value="submit-btn")
-        user_name.send_keys('')
-        user_password.send_keys('')
+        user_name.send_keys('Jung Péter')
+        user_password.send_keys('azazazaz')
         self.driver.set_page_load_timeout(30)
         submit_button.click()
     
@@ -49,8 +49,14 @@ class HomeTest(SeleniumTestCase):
         self.driver.set_page_load_timeout(30)
         # element = WebDriverWait(self.driver, self.wait_time).until(lambda x: x.find_element(By.CLASS_NAME, "main-footer2"))
 
+    def back_one(self):
+        submit_button = self.driver.find_element(by=By.XPATH, value="//*[@class='fc-prev-button fc-button fc-state-default fc-corner-left']")
+        # <button type="button" class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right fc-state-disabled" disabled="disabled">ma</button>
+        #<button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button>
+        submit_button.click()
+        self.driver.set_page_load_timeout(30)
 
-    def book_the_lesson(self, class_button, book=False)
+    def book_the_lesson(self, class_button, book=False):
         self.driver.implicitly_wait(2)
         class_button.click()
         self.driver.set_page_load_timeout(30)
@@ -87,8 +93,7 @@ class HomeTest(SeleniumTestCase):
         act_num = 0
         red_block = []
         red_block_txt = []
-        print("")
-        # try:                
+        print("")            
         xpath_value = "//*[@class='fc-time-grid-event fc-v-event fc-event fc-start fc-end']"
         class_buttons = WebDriverWait(self.driver, self.wait_time).until(lambda x: x.find_elements(By.XPATH, xpath_value))        
         
@@ -117,5 +122,6 @@ class HomeTest(SeleniumTestCase):
         self.homepage_title()
         self.login_staff()
         self.go_to_e_naplo()
+        # self.back_one()
         self.click_on_red_block()
         sleep(4)
