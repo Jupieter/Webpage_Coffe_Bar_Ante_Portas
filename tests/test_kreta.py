@@ -39,8 +39,8 @@ class HomeTest(SeleniumTestCase):
         user_name = self.driver.find_element(by=By.NAME, value='UserName')
         user_password = self.driver.find_element(by=By.NAME, value='Password')
         submit_button = self.driver.find_element(by=By.ID, value="submit-btn")
-        user_name.send_keys('Jung Péter')
-        user_password.send_keys('azazazaz')
+        user_name.send_keys('')
+        user_password.send_keys('')
         self.driver.set_page_load_timeout(30)
         submit_button.click()
     
