@@ -3,6 +3,7 @@
     "I-me-coffee" Django based website <br>
      JobPlace - CoffeeBar
   </h1>
+  <a href="https://jupieter.pythonanywhere.com/"> https://jupieter.pythonanywhere.com/ </a>
   <h4> Another work "CoffeeShopTest" is a mobile app that connects to it thru REST API. </h4>
 <p> ordering, warehouse, booking, statement (later), </p>
 
